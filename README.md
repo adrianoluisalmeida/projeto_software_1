@@ -15,3 +15,5 @@
 ## Resultados
 
 **Checkpoint 1**
+
+[Documento Visão](https://github.com/adrianoluisalmeida/projeto_software_1/blob/master/documento_visao.pdf)
