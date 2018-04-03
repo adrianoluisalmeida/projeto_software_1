@@ -1,19 +1,35 @@
 # Projeto Software 1
 
-**Repositório da disciplina de projeto de software I - ufsm 2018 - Sistemas de Informação**
+### Repositório da disciplina de projeto de software I - ufsm 2018 - Sistemas de Informação ###
 
-*Grupo 2 - Adriano, Rhauani, Roger, Isabella, Marinara Rübenich*
+**Grupo 2 - Tema 2:**  
+- Adriano Almeida;  
+- Isabella Sakis;  
+- Marinara Rübenich;  
+- Rhauani Fazul;  
+- Roger Couto.
 
 ## Cronograma
-* ~~Checkpoint preliminar	- 22/03~~
-* Checkpoint 1 -	12/04
-* Checkpoint 2 -	03/05
-* Checkpoint 3 -	07/06
-* Checkpoint 4 -	28/06
+1. [~~Chekpoint Preliminar - 22/03~~](Checkpoint_Preliminar)
+1. [Checkpoint 1 -	12/04](Checkpoint_1)
+1. [Checkpoint 2 -	03/05](Checkpoint_2)
+1. [Checkpoint 3 -	07/06](Checkpoint_3)
+1. [Checkpoint 4 -	28/06](Checkpoint_4)
 
 
 ## Resultados
 
-**Checkpoint 1**
+1. **Checkpoint Preliminar**
+    * [Documento de Visão](Checkpoint_1/Documento_Visão.pdf)
 
-[Documento Visão](https://github.com/adrianoluisalmeida/projeto_software_1/blob/master/documento_visao.pdf)
+1. **Checkpoint 1**
+    * .
+    
+1. **Checkpoint 2**
+    * .
+    
+1. **Checkpoint 3**
+    * .
+    
+1. **Checkpoint 4**
+    * .
