@@ -23,7 +23,10 @@
     * [Documento de Visão](Checkpoint_1/Documento_Visão.pdf)
 
 1. **Checkpoint 1**
-    * .
+    * [Documento de Visão](Checkpoint_1/Documento_Visão.pdf)
+    * [Cronograma](Checkpoint_1/GerenciamentoProjeto(ProjectLibre)-PSI.pod)
+    * [Diagrama de Casos de Uso (Astah)](Checkpoint_1/UseCaseDiagram-PSI.asta)
+    * [Diagrama de Casos de Uso (Imagem)](Checkpoint_1/UseCaseDiagram-PSI.png)
     
 1. **Checkpoint 2**
     * .
