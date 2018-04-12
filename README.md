@@ -11,7 +11,7 @@
 
 ## Cronograma
 1. [~~Chekpoint Preliminar - 22/03~~](Checkpoint_Preliminar)
-1. [Checkpoint 1 -	12/04](Checkpoint_1)
+1. [~~Checkpoint 1 -	12/04~~](Checkpoint_1)
 1. [Checkpoint 2 -	03/05](Checkpoint_2)
 1. [Checkpoint 3 -	07/06](Checkpoint_3)
 1. [Checkpoint 4 -	28/06](Checkpoint_4)
@@ -30,7 +30,7 @@
     
 1. **Checkpoint 2**
     * [Diagrama de Classes (Astah)](Checkpoint_2/ClassDiagram-PSI.asta)
-    * [Diagrama de Classes (Imagem)](Checkpoint_2/ClassDiagram-PSI.png)
+    * [Diagrama de Classes (Imagem)](Checkpoint_2/ClassDiagram-PSI.jpg)
     
 1. **Checkpoint 3**
     * .
