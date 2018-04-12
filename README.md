@@ -1,6 +1,9 @@
 # Projeto Software 1
 
-### Repositório da disciplina de projeto de software I - ufsm 2018 - Sistemas de Informação ###
+### Repositório da disciplina de Projeto de Software I - UFSM 2018 - Sistemas de Informação ###
+
+**Professor:**
+- Daniel Welfer.
 
 **Grupo 2 - Tema 2:**  
 - Adriano Almeida;  
