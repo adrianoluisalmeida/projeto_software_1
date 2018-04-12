@@ -26,10 +26,11 @@
     * [Documento de Visão](Checkpoint_1/Documento_Visão.pdf)
 
 1. **Checkpoint 1**
-    * [Documento de Visão](Checkpoint_1/Documento_Visão.pdf)
-    * [Cronograma](Checkpoint_1/GerenciamentoProjeto(ProjectLibre)-PSI.pod)
+    * [Documento de Visão](Checkpoint_1/DocumentoVisão.pdf)
+    * [Cronograma](Checkpoint_1/Cronograma(ProjectLibre).pod)
     * [Diagrama de Casos de Uso (Astah)](Checkpoint_1/UseCaseDiagram-PSI.asta)
     * [Diagrama de Casos de Uso (Imagem)](Checkpoint_1/UseCaseDiagram-PSI.png)
+    * [Documento de Requisitos do Sistema](Checkpoint_1/DRS.pdf)
     
 1. **Checkpoint 2**
     * [Diagrama de Classes (Astah)](Checkpoint_2/ClassDiagram-PSI.asta)
