@@ -29,7 +29,8 @@
     * [Diagrama de Casos de Uso (Imagem)](Checkpoint_1/UseCaseDiagram-PSI.png)
     
 1. **Checkpoint 2**
-    * .
+    * [Diagrama de Classes (Astah)](Checkpoint_2/ClassDiagram-PSI.asta)
+    * [Diagrama de Classes (Imagem)](Checkpoint_2/ClassDiagram-PSI.png)
     
 1. **Checkpoint 3**
     * .
