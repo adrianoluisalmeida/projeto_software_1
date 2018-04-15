@@ -15,13 +15,13 @@ Prof. Daniel Welfer.
 4. [June 7, 2018 - 3th Checkpoint](checkpoints/checkpoint-3)
 5. [June 28, 2018 - 4th Checkpoint](checkpoints/checkpoint-4)
 
-## Artifacts
+### Artifacts
 
 - [X] **Initial Checkpoint**
     + [Vision Document](checkpoints/initial-checkpoint/PinMyHelp-VisionDocument.pdf)
 
 - [X] **1st Checkpoint**
-    + [Vision Document (update)](checkpoints/checkpoint-1/PinMyHelp-VisionDocument.pdf)
+    + [Vision Document](checkpoints/checkpoint-1/PinMyHelp-VisionDocument.pdf) (update)
     + [Project schedule/Gantt chart](checkpoints/checkpoint-1/PinMyHelp-Gantt.pod)
     + [Software Requirements Specification (SRS)](checkpoints/checkpoint-1/PinMyHelp-SRS.pdf)
     
