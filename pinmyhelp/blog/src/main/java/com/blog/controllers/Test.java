@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.polo.blog.controllers;
+package com.blog.controllers;
 
-import com.polo.blog.model.Post;
-import com.polo.blog.model.data.Model;
-import com.polo.blog.model.data.SessionManager;
+import com.blog.model.Post;
+import com.blog.model.data.Model;
+import com.blog.model.data.SessionManager;
 import java.util.List;
 
 /**

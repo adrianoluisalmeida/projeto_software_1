@@ -1,7 +1,7 @@
-package com.polo.blog.model;
+package com.blog.model;
 // Generated 14/04/2018 22:35:48 by Hibernate Tools 4.3.1
 
-import com.polo.blog.model.data.Model;
+import com.blog.model.data.Model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

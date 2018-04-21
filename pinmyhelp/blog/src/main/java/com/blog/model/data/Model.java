@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.polo.blog.model.data;
+package com.blog.model.data;
 
-import static com.polo.blog.model.data.SessionManager.beginSession;
-import static com.polo.blog.model.data.SessionManager.endSession;
-import static com.polo.blog.model.data.SessionManager.getSession;
+import static com.blog.model.data.SessionManager.beginSession;
+import static com.blog.model.data.SessionManager.endSession;
+import static com.blog.model.data.SessionManager.getSession;
 import static javax.persistence.GenerationType.IDENTITY;
 import java.lang.reflect.Field;
 import java.util.ArrayList;

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.polo.blog.controllers;
+package com.blog.controllers;
 
-import com.polo.blog.model.Post;
+import com.blog.model.Post;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

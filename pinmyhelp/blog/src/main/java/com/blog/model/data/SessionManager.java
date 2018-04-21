@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.polo.blog.model.data;
+package com.blog.model.data;
 
 import java.io.Serializable;
 import org.hibernate.HibernateException;
