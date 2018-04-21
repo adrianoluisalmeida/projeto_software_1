@@ -2,15 +2,12 @@ package com.polo.blog.model;
 // Generated 14/04/2018 22:35:48 by Hibernate Tools 4.3.1
 
 
-import com.polo.blog.model.data.DB;
-import static javax.persistence.GenerationType.IDENTITY;
+import com.polo.blog.model.data.Model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -21,9 +18,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="tag",catalog="blog")
-public class Tag  implements java.io.Serializable {
+public class Tag  extends Model {
 
-    private Integer id;
     private String nome;
     private List<Post> posts = new ArrayList<>();
 
@@ -31,18 +27,6 @@ public class Tag  implements java.io.Serializable {
         super();
     }
    
-    @Id 
-    @GeneratedValue(strategy=IDENTITY)
-    @Column(name="id", unique=true, nullable=false)
-    public Integer getId() {
-        return this.id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    
     @Column(name="nome", nullable=false, length=20)
     public String getNome() {
         return this.nome;
@@ -64,35 +48,6 @@ public class Tag  implements java.io.Serializable {
         this.posts = posts;
     }
 
-    public void save(){
-        if (id == null)
-            DB.insert(this);
-        else
-            DB.update(this);
-    }
-    
-    public void delete(){
-        if (id != null)
-            DB.delete(this);
-    }
-    
-    public static List<Tag> getAll(){
-        return (List<Tag>)DB.getAll(Tag.class);
-    }
-    
-    public static List<Tag> find(String text){
-        return (List<Tag>)DB.find(Tag.class,"nome like :nome", "%"+text+"%");
-    }
-
-    public boolean equals(Tag tag){
-        return this.id.equals(tag.id);
-    }
-    
-    @Override
-    public String toString(){
-        return "tag - id: "+id+", nome: "+nome+"";
-    }
-    
 }
 
 

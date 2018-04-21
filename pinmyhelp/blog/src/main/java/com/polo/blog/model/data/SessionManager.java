@@ -9,6 +9,7 @@ import java.io.Serializable;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 /**
@@ -20,9 +21,11 @@ public class SessionManager {
     private static final SessionFactory SESSION_FACTORY;
     
     private static Session activeSession = null;
+    private static Transaction activeTransaction = null;
     
     private static Class<?> sessionOpenerClass = null;
     private static String sessionOpenerMethodName = null;
+    
     
     
     static {
@@ -36,11 +39,9 @@ public class SessionManager {
         }
     }
     
-    public static boolean beginSession(boolean beginTransaction){
+    public static boolean beginSession(){
         if (activeSession == null){
             activeSession = SESSION_FACTORY.openSession();
-            if (beginTransaction)
-                activeSession.beginTransaction();
             StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
             StackTraceElement ee = stacktrace[2];
             sessionOpenerClass = ee.getClass();
@@ -51,27 +52,33 @@ public class SessionManager {
         return false;
     } 
     
+    private static boolean isSessionOpener(){
+        StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+        StackTraceElement ee = stacktrace[2];
+        return (sessionOpenerClass.equals(ee.getClass())
+                &&sessionOpenerMethodName.compareTo(ee.getMethodName()) == 0);
+    }
+    
     public static Session getSession(){
         return activeSession;
     }
-    
-    public static boolean endSession(boolean commit){
+        
+    public static boolean endSession(){
         if (activeSession != null){
             StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
             StackTraceElement ee = stacktrace[2];
-            if (sessionOpenerClass.equals(ee.getClass())
-            &&sessionOpenerMethodName.compareTo(ee.getMethodName()) == 0){
-                if (commit)
-                    activeSession.getTransaction().commit();
+            if (isSessionOpener()){
                 activeSession.close();
                 activeSession = null;
                 sessionOpenerClass = null;
                 sessionOpenerMethodName = null;
+                activeTransaction = null;
                 System.out.println("Session end!");
                 return true;
             }
         }
         return false;
     }
+    
     
 }

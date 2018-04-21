@@ -1,15 +1,10 @@
 package com.polo.blog.model;
 // Generated 14/04/2018 22:35:48 by Hibernate Tools 4.3.1
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import com.polo.blog.model.data.DB;
-import java.util.List;
+import com.polo.blog.model.data.Model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,9 +14,8 @@ import javax.persistence.Table;
  */
 @Entity(name="Arquivo")
 @Table(name="arquivo" ,catalog="blog")
-public class Arquivo  implements java.io.Serializable {
+public class Arquivo  extends Model {
 
-    private Integer id;
     private Post post;
     private String nome;
     private String descr;
@@ -43,16 +37,6 @@ public class Arquivo  implements java.io.Serializable {
        this.descr = descr;
     }
    
-    @Id @GeneratedValue(strategy=IDENTITY)
-    @Column(name="id", unique=true, nullable=false)
-    public Integer getId() {
-        return this.id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="post_id", nullable=false)
     public Post getPost() {
@@ -83,26 +67,6 @@ public class Arquivo  implements java.io.Serializable {
         this.descr = descr;
     }
 
-    public void save(){
-        if (id == null)
-            DB.insert(this);
-        else
-            DB.update(this);
-    }
-    
-    public void delete(){
-        if (id != null)
-            DB.delete(this);
-    }
-    
-    public static List<Arquivo> getAll(){
-        return (List<Arquivo>)DB.getAll(Arquivo.class);
-    }
-    
-    @Override
-    public String toString(){
-        return "Post - id: "+id+" nome: "+nome+" descr: "+descr;
-    }
 
 }
 
