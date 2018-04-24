@@ -1,43 +1,37 @@
-# Projeto Software 1
+# PinMyHelp 
 
-### Repositório da disciplina de Projeto de Software I - UFSM 2018 - Sistemas de Informação ###
+A software to help people to find volunteer opportunities online developed to the (ELC1073) Software Project I discipline, offered by UFSM to the Information Systems course. 
 
-**Professor:**
-- Daniel Welfer.
+### Group members
+Adriano Almeida ([adrianoluisalmeida](https://github.com/adrianoluisalmeida)), Isabella Sakis ([isasakis](https://github.com/isasakis)), Marinara Rübenich ([MarinaraRubenichF](https://github.com/MarinaraRubenichF)), Rhauani Fazul ([rwfazul](https://github.com/rwfazul)) and Roger Couto ([rogercouto](https://github.com/rogercouto)).
 
-**Grupo 2 - Tema 2:**  
-- Adriano Almeida;  
-- Isabella Sakis;  
-- Marinara Rübenich;  
-- Rhauani Fazul;  
-- Roger Couto.
+###  Advisor
+Prof. Daniel Welfer.
 
-## Cronograma
-1. [~~Chekpoint Preliminar - 22/03~~](Checkpoint_Preliminar)
-1. [~~Checkpoint 1 -	12/04~~](Checkpoint_1)
-1. [Checkpoint 2 -	03/05](Checkpoint_2)
-1. [Checkpoint 3 -	07/06](Checkpoint_3)
-1. [Checkpoint 4 -	28/06](Checkpoint_4)
+## Schedule
+1. [~~March 22, 2018 - Initial Checkpoint~~](checkpoints/initial-checkpoint)
+2. [~~April 12, 2018 - 1st Checkpoint~~](checkpoints/checkpoint-1)
+3. [May 3, 2018 - 2nd Checkpoint](checkpoints/checkpoint-2)
+4. [June 7, 2018 - 3th Checkpoint](checkpoints/checkpoint-3)
+5. [June 28, 2018 - 4th Checkpoint](checkpoints/checkpoint-4)
 
+### Artifacts
 
-## Resultados
+- [X] **Initial Checkpoint**
+    + [Vision Document](checkpoints/initial-checkpoint/PinMyHelp-VisionDocument.pdf)
 
-1. **Checkpoint Preliminar**
-    * [Documento de Visão](Checkpoint_1/Documento_Visão.pdf)
-
-1. **Checkpoint 1**
-    * [Documento de Visão](Checkpoint_1/DocumentoVisão.pdf)
-    * [Cronograma](Checkpoint_1/Cronograma(ProjectLibre).pod)
-    * [Diagrama de Casos de Uso (Astah)](Checkpoint_1/UseCaseDiagram-PSI.asta)
-    * [Diagrama de Casos de Uso (Imagem)](Checkpoint_1/UseCaseDiagram-PSI.png)
-    * [Documento de Requisitos do Sistema](Checkpoint_1/DRS.pdf)
+- [X] **1st Checkpoint**
+    + [Vision Document](checkpoints/checkpoint-1/PinMyHelp-VisionDocument.pdf) (update)
+    + [Project schedule/Gantt chart](checkpoints/checkpoint-1/PinMyHelp-Gantt.pod)
+    + [Software Requirements Specification (SRS)](checkpoints/checkpoint-1/PinMyHelp-SRS.pdf)
     
-1. **Checkpoint 2**
-    * [Diagrama de Classes (Astah)](Checkpoint_2/ClassDiagram-PSI.asta)
-    * [Diagrama de Classes (Imagem)](Checkpoint_2/ClassDiagram-PSI.jpg)
+- [ ] **2nd Checkpoint**
+    + [Use case diagram (.asta)](checkpoints/checkpoint-2/PinMyHelp-UseCaseDiagram.asta)
+    + [Use case diagram (.png)](checkpoints/checkpoint-2/PinMyHelp-UseCaseDiagram.png)
+    + [Class diagram (.asta)](checkpoints/checkpoint-2/PinMyHelp-ClassDiagram.asta)
+    + [Class diagram (.png) ](checkpoints/checkpoint-2/PinMyHelp-ClassDiagram.png)
     
-1. **Checkpoint 3**
-    * .
+- [ ] **3th Checkpoint**
+
     
-1. **Checkpoint 4**
-    * .
+- [ ] **4th Checkpoint**
