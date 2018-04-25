@@ -46,8 +46,8 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/blog?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">admin</property>
-    <mapping class="com.polo.blog.model.Post"/>
-    <mapping class="com.polo.blog.model.Arquivo"/>
-    <mapping class="com.polo.blog.model.Tag"/>
+    <mapping class="com.blog.model.Post"/>
+    <mapping class="com.blog.model.Arquivo"/>
+    <mapping class="com.blog.model.Tag"/>
   </session-factory>
 </hibernate-configuration>
