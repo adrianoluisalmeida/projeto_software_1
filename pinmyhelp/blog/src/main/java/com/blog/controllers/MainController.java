@@ -6,8 +6,6 @@
 package com.blog.controllers;
 
 import com.blog.model.Post;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

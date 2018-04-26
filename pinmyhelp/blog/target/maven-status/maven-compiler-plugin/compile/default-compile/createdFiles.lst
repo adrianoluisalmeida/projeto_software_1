@@ -1,7 +1,7 @@
-com/polo/blog/model/data/SessionManager.class
-com/polo/blog/model/Post.class
-com/polo/blog/controllers/MainController.class
-com/polo/blog/model/Tag.class
-com/polo/blog/controllers/Test.class
-com/polo/blog/model/data/DB.class
-com/polo/blog/model/Arquivo.class
+com/blog/model/Post.class
+com/blog/model/data/Model.class
+com/blog/model/Tag.class
+com/blog/model/Arquivo.class
+com/blog/model/data/SessionManager.class
+com/blog/controllers/Test.class
+com/blog/controllers/MainController.class
