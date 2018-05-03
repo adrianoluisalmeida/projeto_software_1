@@ -1,6 +1,8 @@
-Diagramas PinMyHelp
+[PinMyHelp](https://github.com/adrianoluisalmeida/projeto_software_1) > [checkpoints](https://github.com/adrianoluisalmeida/projeto_software_1/checkpoints) > checkpoint-2
 
-* Atores
+# Diagramas PinMyHelp
+
+- Atores
 	- Admin
 		- Diagrama de Classe de Análise
 	- Entidade
@@ -10,7 +12,7 @@ Diagramas PinMyHelp
 	- Voluntário
 		- Diagrama de Classe de Análise
 
-* Casos de Uso
+- Casos de Uso
 	- Diagrama de Casos de Uso
 	- Oferece Ajuda
 		- Descrição de Caso de Uso
@@ -37,5 +39,5 @@ Diagramas PinMyHelp
 	- Valida Cadastro
 		- Descrição de Caso de Uso
 	
-* Classes de Projeto
+- Classes de Projeto
 	- Digrama de Classes de Projeto
