@@ -245,10 +245,12 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `entidade_id` INT NULL,
   `requerente_id` INT NULL,
   `voluntario_id` INT NULL,
+  `ajuda_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_feedback_entidade1_idx` (`entidade_id` ASC),
   INDEX `fk_feedback_requerente1_idx` (`requerente_id` ASC),
   INDEX `fk_feedback_voluntario1_idx` (`voluntario_id` ASC),
+  INDEX `fk_feedback_ajuda1_idx` (`ajuda_id` ASC),
   CONSTRAINT `fk_feedback_entidade1`
     FOREIGN KEY (`entidade_id`)
     REFERENCES `entidade` (`id`)
@@ -262,6 +264,11 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   CONSTRAINT `fk_feedback_voluntario1`
     FOREIGN KEY (`voluntario_id`)
     REFERENCES `voluntario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+  CONSTRAINT `fk_feedback_ajuda1`
+    FOREIGN KEY (`ajuda_id`)
+    REFERENCES `ajuda` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
