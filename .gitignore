@@ -29,3 +29,4 @@ pinmyhelp/blog/nbactions.xml
 
 
 # End of https://www.gitignore.io/api/maven,netbeans,java-web
+/pinmyhelp/target/
