@@ -1,8 +1,8 @@
-package com.si.pinmyhelp.model;
+package br.com.pinmyhelp.model;
 // Generated 17/05/2018 15:02:51 by Hibernate Tools 4.3.1
 
 
-import com.si.pinmyhelp.model.data.Model;
+import br.com.pinmyhelp.model.data.Model;
 import javax.persistence.Column;
 import javax.persistence.Table;
 
@@ -32,7 +32,6 @@ public class Address  extends Model {
     public void setStreet(String street) {
         this.street = street;
     }
-
     
     @Column(name="number")
     public Integer getNumber() {
@@ -43,7 +42,6 @@ public class Address  extends Model {
         this.number = number;
     }
 
-    
     @Column(name="neib")
     public String getNeib() {
         return this.neib;
@@ -52,7 +50,6 @@ public class Address  extends Model {
     public void setNeib(String neib) {
         this.neib = neib;
     }
-
     
     @Column(name="postal_code", nullable=false, length=8)
     public String getPostalCode() {
@@ -62,7 +59,6 @@ public class Address  extends Model {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
-
     
     @Column(name="compl")
     public String getCompl() {
@@ -73,7 +69,6 @@ public class Address  extends Model {
         this.compl = compl;
     }
 
-    
     @Column(name="city", nullable=false)
     public String getCity() {
         return this.city;
@@ -82,8 +77,7 @@ public class Address  extends Model {
     public void setCity(String city) {
         this.city = city;
     }
-
-    
+   
     @Column(name="state", nullable=false, length=2)
     public String getState() {
         return this.state;
@@ -94,5 +88,3 @@ public class Address  extends Model {
     }
 
 }
-
-

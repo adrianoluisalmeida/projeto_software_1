@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.si.pinmyhelp.model.data;
+package br.com.pinmyhelp.model.data;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

@@ -43,19 +43,19 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/pinmyhelp?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost/pinmyhelp?useSSL=false</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">admin</property>
-    <mapping class="com.si.pinmyhelp.model.Claimant"/>
-    <mapping class="com.si.pinmyhelp.model.WorkingPeriod"/>
-    <mapping class="com.si.pinmyhelp.model.Disponibility"/>
-    <mapping class="com.si.pinmyhelp.model.Entity"/>
-    <mapping class="com.si.pinmyhelp.model.Address"/>
-    <mapping class="com.si.pinmyhelp.model.Voluntary"/>
-    <mapping class="com.si.pinmyhelp.model.Admin"/>
-    <mapping class="com.si.pinmyhelp.model.Help"/>
-    <mapping class="com.si.pinmyhelp.model.Feedback"/>
-    <mapping class="com.si.pinmyhelp.model.data.Model"/>
-    <mapping class="com.si.pinmyhelp.model.data.SessionManager"/>
+    <property name="hibernate.connection.password">1234</property>
+    <mapping class="br.com.pinmyhelp.model.Claimant"/>
+    <mapping class="br.com.pinmyhelp.model.WorkingPeriod"/>
+    <mapping class="br.com.pinmyhelp.model.Disponibility"/>
+    <mapping class="br.com.pinmyhelp.model.Entity"/>
+    <mapping class="br.com.pinmyhelp.model.Address"/>
+    <mapping class="br.com.pinmyhelp.model.Voluntary"/>
+    <mapping class="br.com.pinmyhelp.model.Admin"/>
+    <mapping class="br.com.pinmyhelp.model.Help"/>
+    <mapping class="br.com.pinmyhelp.model.Feedback"/>
+    <mapping class="br.com.pinmyhelp.model.data.Model"/>
+    <mapping class="br.com.pinmyhelp.model.data.SessionManager"/>
   </session-factory>
 </hibernate-configuration>

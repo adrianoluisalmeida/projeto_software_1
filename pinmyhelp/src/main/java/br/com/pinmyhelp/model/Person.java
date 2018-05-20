@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.si.pinmyhelp.model;
+package br.com.pinmyhelp.model;
 
-import com.si.pinmyhelp.model.data.Model;
+import br.com.pinmyhelp.model.data.Model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +15,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -51,7 +50,6 @@ public class Person extends Model{
         this.name = name;
     }
 
-    
     @Column(name="cpf", nullable=false, length=11)
     public String getCpf() {
         return this.cpf;
@@ -89,7 +87,6 @@ public class Person extends Model{
         this.bornDate = bornDate;
     }
 
-    
     @Column(name="prim_phone", nullable=false, length=11)
     public String getPrimPhone() {
         return this.primPhone;
@@ -109,7 +106,6 @@ public class Person extends Model{
         this.secPhone = secPhone;
     }
 
-    
     @Column(name="email", nullable=false)
     public String getEmail() {
         return this.email;
@@ -118,7 +114,6 @@ public class Person extends Model{
     public void setEmail(String email) {
         this.email = email;
     }
-
     
     @Column(name="bio", length=65535)
     public String getBio() {
@@ -139,7 +134,6 @@ public class Person extends Model{
         this.photo = photo;
     }
 
-    
     @Column(name="obs", length=65535)
     public String getObs() {
         return this.obs;
@@ -148,7 +142,6 @@ public class Person extends Model{
     public void setObs(String obs) {
         this.obs = obs;
     }
-
     
     @Column(name="score", precision=8)
     public BigDecimal getScore() {
@@ -167,7 +160,6 @@ public class Person extends Model{
         this.feedbacks = feedbacks;
     }
 
-    
     /**
      * @return the adress
      */
@@ -183,4 +175,5 @@ public class Person extends Model{
     public void setAddress(Address adress) {
         this.adress = adress;
     }
+    
 }

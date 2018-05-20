@@ -1,9 +1,9 @@
-package com.si.pinmyhelp.model;
+package br.com.pinmyhelp.model;
 // Generated 17/05/2018 15:02:51 by Hibernate Tools 4.3.1
 
 
-import com.si.pinmyhelp.model.data.Model;
-import com.si.pinmyhelp.model.types.GeoLocation;
+import br.com.pinmyhelp.model.data.Model;
+import br.com.pinmyhelp.model.types.GeoLocation;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,7 +73,6 @@ public class Entity  extends Model {
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
-
     
     @Column(name="password", nullable=false, length=35)
     public String getPassword() {
@@ -103,7 +102,6 @@ public class Entity  extends Model {
     public void setFundDate(Date fundDate) {
         this.fundDate = fundDate;
     }
-
     
     @Column(name="prim_phone", nullable=false, length=11)
     public String getPrimPhone() {
@@ -114,7 +112,6 @@ public class Entity  extends Model {
         this.primPhone = primPhone;
     }
 
-    
     @Column(name="sec_phone", length=11)
     public String getSecPhone() {
         return this.secPhone;
@@ -134,7 +131,6 @@ public class Entity  extends Model {
         this.email = email;
     }
 
-    
     @Column(name="logo", length=11)
     public String getLogo() {
         return this.logo;
@@ -153,7 +149,6 @@ public class Entity  extends Model {
     public void setObs(String obs) {
         this.obs = obs;
     }
-
     
     /**
      * @return the location
@@ -201,9 +196,4 @@ public class Entity  extends Model {
         this.workingPeriods = workingPeriods;
     }
 
-
-
-
 }
-
-

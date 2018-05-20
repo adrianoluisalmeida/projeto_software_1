@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.si.pinmyhelp.model.data;
+package br.com.pinmyhelp.model.data;
 
-import static com.si.pinmyhelp.model.data.SessionManager.beginSession;
-import static com.si.pinmyhelp.model.data.SessionManager.endSession;
-import static com.si.pinmyhelp.model.data.SessionManager.getSession;
+import static br.com.pinmyhelp.model.data.SessionManager.beginSession;
+import static br.com.pinmyhelp.model.data.SessionManager.endSession;
+import static br.com.pinmyhelp.model.data.SessionManager.getSession;
 
 import static javax.persistence.GenerationType.IDENTITY;
 import java.lang.reflect.Field;

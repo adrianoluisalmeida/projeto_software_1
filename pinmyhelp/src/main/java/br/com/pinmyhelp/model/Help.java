@@ -1,9 +1,9 @@
-package com.si.pinmyhelp.model;
+package br.com.pinmyhelp.model;
 // Generated 17/05/2018 15:02:51 by Hibernate Tools 4.3.1
 
 
-import com.si.pinmyhelp.model.data.Model;
-import com.si.pinmyhelp.model.types.GeoLocation;
+import br.com.pinmyhelp.model.data.Model;
+import br.com.pinmyhelp.model.types.GeoLocation;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -90,7 +90,6 @@ public class Help  extends Model{
     public void setFinDateTime(Date finDateTime) {
         this.finDateTime = finDateTime;
     }
-
     
    /**
      * @return the location
@@ -160,5 +159,3 @@ public class Help  extends Model{
     }
 
 }
-
-

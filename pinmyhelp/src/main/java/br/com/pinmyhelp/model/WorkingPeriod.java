@@ -1,8 +1,8 @@
-package com.si.pinmyhelp.model;
+package br.com.pinmyhelp.model;
 // Generated 17/05/2018 15:02:51 by Hibernate Tools 4.3.1
 
 
-import com.si.pinmyhelp.model.data.Model;
+import br.com.pinmyhelp.model.data.Model;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -58,7 +58,6 @@ public class WorkingPeriod  extends Model {
         this.endTime = endTime;
     }
 
-    
     @Column(name="week_days", length=7)
     public String getWeekDays() {
         return this.weekDays;
@@ -77,10 +76,5 @@ public class WorkingPeriod  extends Model {
     public void setOneDate(Date oneDate) {
         this.oneDate = oneDate;
     }
-
-
-
-
+    
 }
-
-

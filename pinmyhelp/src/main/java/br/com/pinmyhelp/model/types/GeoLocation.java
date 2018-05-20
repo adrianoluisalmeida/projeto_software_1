@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.si.pinmyhelp.model.types;
+package br.com.pinmyhelp.model.types;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -37,7 +37,6 @@ public class GeoLocation implements Serializable {
     public void setX(double x) {
         this.x = x;
     }
-
     
     @Column(name="y", nullable=false, precision=22, scale=0)
     public double getY() {
@@ -47,4 +46,5 @@ public class GeoLocation implements Serializable {
     public void setY(double y) {
         this.y = y;
     }
+    
 }
