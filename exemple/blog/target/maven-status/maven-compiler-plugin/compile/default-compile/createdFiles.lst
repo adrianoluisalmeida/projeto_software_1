@@ -1,7 +1,0 @@
-com/blog/model/Post.class
-com/blog/model/data/Model.class
-com/blog/model/Tag.class
-com/blog/model/Arquivo.class
-com/blog/model/data/SessionManager.class
-com/blog/controllers/Test.class
-com/blog/controllers/MainController.class
