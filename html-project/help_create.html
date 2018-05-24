@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Pin My Help | Oferecer Ajuda</title>
+    <title>Pin My Help | Nova Solicitação de Ajuda</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
@@ -37,13 +37,13 @@
 
             <!-- Links -->
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="dashboard.html">Dashboard
-                        <span class="sr-only">(current)</span>
+
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="requests.html">Solicitações</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="requests.html">Solicitações   <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="offers.html">Ofertas</a>
@@ -82,9 +82,12 @@
 <div class="container">
 
     <div class="row mt-5">
-        <div class="col-md-4 mt-3">
+        <div class="col-md-8 mt-3">
             <h3>Descrição da Solicitação</h3>
-            <p>Preciso de alguém que vá ao supermercado comprar banana, maça, abacate e laranja.</p>
+            <div class="md-form">
+                <input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker">
+                <label for="date-picker-example">Try me...</label>
+            </div>
             <hr>
             <h3>Meu endereço</h3>
             <p>RST 287, Camobi, Santa Maria RS, 2180, apto 300</p>
@@ -93,8 +96,19 @@
             <p>21/01/2019</p>
         </div>
         <div class="col-md-4 mt-3">
+
+
+            <!--Caso for uma entedidade, pode selecionar requerente-->
             <h3>Requerente</h3>
-            <table class="table table-striped">
+            <div class="form-group mb-0 mt-4">
+                <select name="objective" class="mdb-select form-control">
+                    <option value="" disabled selected>Selecione um requerente</option>
+                    <option value="1" selected>Pedro Soares</option>
+                    <option value="2">Maria Luísa</option>
+                </select>
+            </div>
+
+            <table class="table table-striped mt-3">
                 <tr>
                     <td><b>Nome</b></td>
                     <td>Pedro Soares</td>
@@ -113,27 +127,7 @@
                 </tr>
             </table>
         </div>
-        <div class="col-md-4 mt-3">
-            <h3>Voluntário</h3>
-            <table class="table table-striped">
-                <tr>
-                    <td><b>Nome</b></td>
-                    <td>Joaquim Ferreira</td>
-                </tr>
-                <tr>
-                    <td><b>CPF</b></td>
-                    <td>000.000.000-00</td>
-                </tr>
-                <tr>
-                    <td><b>E-mail</b></td>
-                    <td>joaquimfa@gmail.com.br</td>
-                </tr>
-                <tr>
-                    <td><b>Telefone</b></td>
-                    <td>00 0 0000-0000</td>
-                </tr>
-            </table>
-        </div>
+
     </div>
 
     <div class="row mt-5">
@@ -162,6 +156,11 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.datepicker').pickadate();
+    });
+</script>
 </body>
 
 </html>
