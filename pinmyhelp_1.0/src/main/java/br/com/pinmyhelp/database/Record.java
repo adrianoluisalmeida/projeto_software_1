@@ -3,12 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.csi.util;
+package br.com.pinmyhelp.database;
 
 /**
  *
  * @author adriano
  */
-public class Registro {
+public abstract class Record {
     
+    private Integer id;
+
+    public Record() {
+    }
+    
+    public Record(Integer id) {
+        this.id = id;
+    }
+ 
 }
