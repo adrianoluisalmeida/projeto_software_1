@@ -24,11 +24,12 @@
         <property name="suffix" value=".jsp"/>
     </bean>       
     
-<!--    <mvc:interceptors>
+    <!--
+    <mvc:interceptors>
         <bean class="br.csi.interceptor.AutorizadorInterceptor" />
-    </mvc:interceptors>-->
+    </mvc:interceptors -->
     
-    <context:component-scan base-package="br.csi.controller" />
+    <context:component-scan base-package="br.com.pinmyhelp.controller" />
     <mvc:annotation-driven />
     <!--
         <bean id="mysqlDataSource" class="org.apache.commons">
