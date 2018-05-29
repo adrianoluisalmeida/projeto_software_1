@@ -23,8 +23,15 @@ public class MainController {
         return new RedirectView("home", true); 
     }
    
+    
     @RequestMapping("home")
     public String home() {
+            
+        Model.getAll( Address.class );
+            
+            
+            
+            
         return "login";
     }
     
