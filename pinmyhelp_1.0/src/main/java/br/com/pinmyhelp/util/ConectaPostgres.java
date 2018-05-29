@@ -1,4 +1,4 @@
-package br.csi.util;
+package br.com.pinmyhelp.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
