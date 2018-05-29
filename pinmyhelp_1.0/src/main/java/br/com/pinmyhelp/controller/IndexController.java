@@ -1,5 +1,4 @@
-package br.csi.controller;
-import javax.servlet.http.HttpSession;
+package br.com.pinmyhelp.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-    public String index() {
-        
-        return "redirect:home";
+    @RequestMapping( value = {"", "/", "/home"} )
+    public String home() {
+        return "index";
     }
-
+    
     @RequestMapping("login")
     public String login() {
         return "login";
@@ -25,11 +24,6 @@ public class IndexController {
 //    public String cadatrar() {
 //        return "cadastrar";
 //    }
-
-    @RequestMapping(value = {"/home", "/"})
-    public String homeSite() {
-        return "site";
-    }
 
 //    @RequestMapping(value = {"/about"})
 //    public String about() {
