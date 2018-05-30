@@ -6,7 +6,7 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,13 +16,11 @@ import java.util.Collection;
  */
 public class HelpSolicitation extends Record {
     
-    // timestamp
     private Claimant claimant;
     private Entity entity;
     private String type;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    // startTime, endTime (?) ...
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private Double lagitude;
     private Double longitude;
     private Integer status;
@@ -36,7 +34,7 @@ public class HelpSolicitation extends Record {
         super(id);
     }
 
-    public HelpSolicitation(Claimant claimant, Entity entity, String type, LocalDate startDate, LocalDate endDate, Double lagitude, Double longitude, Integer status) {
+    public HelpSolicitation(Claimant claimant, Entity entity, String type, LocalDateTime startDate, LocalDateTime endDate, Double lagitude, Double longitude, Integer status) {
         this.claimant = claimant;
         this.entity = entity;
         this.type = type;
@@ -92,28 +90,28 @@ public class HelpSolicitation extends Record {
     /**
      * @return the startDate
      */
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
     /**
      * @param startDate the startDate to set
      */
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
     /**
      * @return the endDate
      */
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
     /**
      * @param endDate the endDate to set
      */
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

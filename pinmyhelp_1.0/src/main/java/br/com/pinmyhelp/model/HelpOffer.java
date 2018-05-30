@@ -13,12 +13,11 @@ import br.com.pinmyhelp.database.Record;
  */
 public class HelpOffer extends Record {
     
-    // timestamp
     private Voluntary voluntary;
     private Entity entity;
     private Integer status;
     private HelpSolicitation helpSolicitation;
-    private Feedback feedback; // feeback do Requerente (ou Entidade) sober a oferta
+    private Feedback feedback; // feedback do Requerente (ou Entidade) sobre a oferta
     
     public HelpOffer() {
     }

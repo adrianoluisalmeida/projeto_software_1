@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.pinmyhelp.model;
+package br.com.pinmyhelp.model.dao;
 
 /**
  *
  * @author rhau
  */
-public class HelpFeedback {
+public class VoluntaryDAO {
     
 }
