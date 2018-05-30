@@ -55,7 +55,7 @@
                         <br/>
                         <div class="col-md-12 mt-4">
                             <p class="font-small grey-text d-flex justify-content-center">Ainda não tem conta?
-                                <a href="#" class="font-weight-light ml-1"> Fazer Cadastro</a>
+                                <a href="${pageContext.request.contextPath}/account/register" class="font-weight-light ml-1"> Fazer Cadastro</a>
                             </p>
                         </div>
                     </div>
@@ -67,15 +67,6 @@
     </div> <!-- ./col -->
     </div> <!-- ./container -->
                                                                                        
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/mdb.js"></script>
-            
+   
 </body>
 </html>

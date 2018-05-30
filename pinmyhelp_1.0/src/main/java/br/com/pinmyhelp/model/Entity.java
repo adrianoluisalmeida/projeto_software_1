@@ -16,10 +16,11 @@ public class Entity extends User {
     private String name;
     private String cnpj;
     private LocalDate foundationDate;
-    private String phone;
+    private String firstPhone;
+    private String secondPhone;
     private String description;
     private Double score;
-    // logo
+    // atributo pra logo...
     private Address address;
     private String notes; // observacoes
 
@@ -81,17 +82,31 @@ public class Entity extends User {
     }
 
     /**
-     * @return the phone
+     * @return the firstPhone
      */
-    public String getPhone() {
-        return phone;
+    public String getFirstPhone() {
+        return firstPhone;
     }
 
     /**
-     * @param phone the phone to set
+     * @param firstPhone the firstPhone to set
      */
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setFirstPhone(String firstPhone) {
+        this.firstPhone = firstPhone;
+    }
+
+    /**
+     * @return the secondPhone
+     */
+    public String getSecondPhone() {
+        return secondPhone;
+    }
+
+    /**
+     * @param secondPhone the secondPhone to set
+     */
+    public void setSecondPhone(String secondPhone) {
+        this.secondPhone = secondPhone;
     }
 
     /**
@@ -152,7 +167,7 @@ public class Entity extends User {
 
     @Override
     public String toString() {
-        return "Entity{" + "name=" + name + ", cnpj=" + cnpj + ", foundationDate=" + foundationDate + ", phone=" + phone + ", description=" + description + ", score=" + score + ", address=" + address + ", notes=" + notes + '}';
+        return "Entity{" + "name=" + name + ", cnpj=" + cnpj + ", foundationDate=" + foundationDate + ", firstPhone=" + firstPhone + ", secondPhone=" + secondPhone + ", description=" + description + ", score=" + score + ", address=" + address + ", notes=" + notes + '}';
     }
-
+   
 }

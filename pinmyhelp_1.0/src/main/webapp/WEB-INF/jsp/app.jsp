@@ -8,13 +8,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Pin My Help <c:if test="${not empty title}">| ${title}</c:if></title>
+    <title>Pin My Help <c:if test="${not empty title}"> | ${title}</c:if></title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="${pageContext.request.contextPath}/assets/css/mdb.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/mdb.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="${pageContext.request.contextPath}/assets/css/custom.css" rel="stylesheet">
 </head>
@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark pink-color">
         <div class="container">
             <!-- Navbar brand -->
-            <a class="navbar-brand" href="dashboard.html">Pin My Help</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard">Pin My Help</a>
 
             <!-- Collapse button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -38,18 +38,18 @@
                 <!-- Links -->
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="dashboard.html">Dashboard
+                        <a class="nav-link" href="${pageContext.request.contextPath}/dashboard">Dashboard
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="requests.html">Solicitações</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/requests">Solicitações</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="offers.html">Ofertas</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/offers">Ofertas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="my_requests.html">Meus Pedidos</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/requests/my">Meus Pedidos</a>
                     </li>
                 </ul>
                 <!-- /Links -->

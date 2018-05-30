@@ -11,11 +11,11 @@ package br.com.pinmyhelp.model;
  */
 class Address {
     
-    private String postal_code;
+    private String postalCode;
     private String state;
     private String city;
-    private String neighborhood;
-    private String number;
+    private Integer neighborhood;
+    private String streetNumber;
     private String complement;
     private Double latitude;
     private Double longitude;
@@ -28,29 +28,36 @@ class Address {
         this.longitude = longitude;
     }
 
-    public Address(String postal_code, String state, String city, String neighborhood, String number, String complement, Double latitude, Double longitude) {
-        this.postal_code = postal_code;
+    public Address(String postalCode, Integer neighborhood, String streetNumber, String complement) {
+        this.postalCode = postalCode;
+        this.neighborhood = neighborhood;
+        this.streetNumber = streetNumber;
+        this.complement = complement;
+    }
+
+    public Address(String postalCode, String state, String city, Integer neighborhood, String streetNumber, String complement, Double latitude, Double longitude) {
+        this.postalCode = postalCode;
         this.state = state;
         this.city = city;
         this.neighborhood = neighborhood;
-        this.number = number;
+        this.streetNumber = streetNumber;
         this.complement = complement;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
     /**
-     * @return the postal_code
+     * @return the postalCode
      */
-    public String getPostal_code() {
-        return postal_code;
+    public String getPostalCode() {
+        return postalCode;
     }
 
     /**
-     * @param postal_code the postal_code to set
+     * @param postalCode the postalCode to set
      */
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     /**
@@ -84,29 +91,29 @@ class Address {
     /**
      * @return the neighborhood
      */
-    public String getNeighborhood() {
+    public Integer getNeighborhood() {
         return neighborhood;
     }
 
     /**
      * @param neighborhood the neighborhood to set
      */
-    public void setNeighborhood(String neighborhood) {
+    public void setNeighborhood(Integer neighborhood) {
         this.neighborhood = neighborhood;
     }
 
     /**
-     * @return the number
+     * @return the streetNumber
      */
-    public String getNumber() {
-        return number;
+    public String getStreetNumber() {
+        return streetNumber;
     }
 
     /**
-     * @param number the number to set
+     * @param streetNumber the streetNumber to set
      */
-    public void setNumber(String number) {
-        this.number = number;
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
     }
 
     /**
@@ -153,7 +160,7 @@ class Address {
 
     @Override
     public String toString() {
-        return "Address{" + "postal_code=" + postal_code + ", state=" + state + ", city=" + city + ", neighborhood=" + neighborhood + ", number=" + number + ", complement=" + complement + ", latitude=" + latitude + ", longitude=" + longitude + '}';
+        return "Address{" + "postalCode=" + postalCode + ", state=" + state + ", city=" + city + ", neighborhood=" + neighborhood + ", streetNumber=" + streetNumber + ", complement=" + complement + ", latitude=" + latitude + ", longitude=" + longitude + '}';
     }
-    
+
 }

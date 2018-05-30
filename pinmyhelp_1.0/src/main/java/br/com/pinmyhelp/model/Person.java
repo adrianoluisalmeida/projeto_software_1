@@ -17,10 +17,11 @@ public class Person extends User {
     private String cpf;
     private String rg;
     private LocalDate bornDate;
-    private String phone;
+    private String firstPhone;
+    private String secondPhone;
     private String biography;
     private Double score;
-    // photo
+    // atributo pra foto...
     private Address address;
     private String notes; // observacoes
 
@@ -38,7 +39,7 @@ public class Person extends User {
     public Person(Integer id, String email, String password) {
         super(id, email, password);
     }
-   
+
     /**
      * @return the name
      */
@@ -96,17 +97,31 @@ public class Person extends User {
     }
 
     /**
-     * @return the phone
+     * @return the firstPhone
      */
-    public String getPhone() {
-        return phone;
+    public String getFirstPhone() {
+        return firstPhone;
     }
 
     /**
-     * @param phone the phone to set
+     * @param firstPhone the firstPhone to set
      */
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setFirstPhone(String firstPhone) {
+        this.firstPhone = firstPhone;
+    }
+
+    /**
+     * @return the secondPhone
+     */
+    public String getSecondPhone() {
+        return secondPhone;
+    }
+
+    /**
+     * @param secondPhone the secondPhone to set
+     */
+    public void setSecondPhone(String secondPhone) {
+        this.secondPhone = secondPhone;
     }
 
     /**
@@ -138,6 +153,20 @@ public class Person extends User {
     }
 
     /**
+     * @return the address
+     */
+    public Address getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the address to set
+     */
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    /**
      * @return the notes
      */
     public String getNotes() {
@@ -151,23 +180,9 @@ public class Person extends User {
         this.notes = notes;
     }
 
-    /**
-     * @return the address
-     */
-    public Address getAddress() {
-        return address;
-    }
-
-    /**
-     * @param address the address to set
-     */
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-    
     @Override
     public String toString() {
-        return "Person{" + "name=" + getName() + ", cpf=" + getCpf() + ", rg=" + getRg() + ", bornDate=" + getBornDate() + ", phone=" + getPhone() + ", biography=" + getBiography() + ", score=" + getScore() + ", notes=" + getNotes() + ", address=" + getAddress() + '}';
+        return "Person{" + "name=" + name + ", cpf=" + cpf + ", rg=" + rg + ", bornDate=" + bornDate + ", firstPhone=" + firstPhone + ", secondPhone=" + secondPhone + ", biography=" + biography + ", score=" + score + ", address=" + address + ", notes=" + notes + '}';
     }
-    
+   
 }
