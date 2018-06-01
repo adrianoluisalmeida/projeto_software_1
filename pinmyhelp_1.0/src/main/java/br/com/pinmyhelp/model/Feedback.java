@@ -11,7 +11,7 @@ import br.com.pinmyhelp.database.Record;
  *
  * @author rhau
  */
-class Feedback extends Record {
+public class Feedback extends Record {
     
     private User sender;
     private Integer rating;

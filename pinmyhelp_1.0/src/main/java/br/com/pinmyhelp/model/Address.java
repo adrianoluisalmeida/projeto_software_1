@@ -9,7 +9,7 @@ package br.com.pinmyhelp.model;
  *
  * @author rhau
  */
-class Address {
+public class Address {
     
     private String postalCode;
     private String state;

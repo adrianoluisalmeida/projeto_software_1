@@ -13,9 +13,9 @@ import br.com.pinmyhelp.database.Record;
  */
 public class User extends Record {
     
-    private String email;
-    private String password;
-    private Boolean isAdmin;
+    protected String email;
+    protected String password;
+    protected Boolean isAdmin;
 
     public User() {
     }

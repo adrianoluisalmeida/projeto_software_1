@@ -54,57 +54,154 @@
                                     <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
                                         <div class="col-md-12" style="padding: 0">
 
+                                            <form action="${pageContext.request.contextPath}/account/create/person" method="POST" enctype="multipart/form-data">        
 
-                                            <div class="form-group mb-0 mt-4">
-                                                <select name="objective" class="mdb-select form-control">
-                                                    <option value="" disabled selected>Seu objetivo no Pin My Help</option>
-                                                    <option value="1">Quero Ajudar</option>
-                                                    <option value="2">Preciso de Ajuda</option>
-                                                </select>
+                                                <div class="form-group mb-0 mt-4">
+                                                    <select name="type" class="mdb-select form-control">
+                                                        <option value="" disabled selected>Seu objetivo no Pin My Help</option>
+                                                        <option value="Voluntary">Quero Ajudar</option>
+                                                        <option value="Entity">Preciso de Ajuda</option>
+                                                    </select>
+                                                </div>
+
+                                                <!--Body-->
+                                                <div class="md-form">
+                                                    <input type="text" name="name" id="Form-name" class="form-control">
+                                                    <label for="Form-name">Nome</label>
+                                                </div>
+
+                                                <!--Body-->
+                                                <div class="md-form">
+                                                    <input name="cpf" type="text" id="Form-cpf" class="form-control">
+                                                    <label for="Form-cpf">CPF</label>
+                                                </div>
+
+                                                <!--Body-->
+                                                <div class="md-form">
+                                                    <input name="rg" type="text" id="Form-rg" class="form-control">
+                                                    <label for="Form-rg">RG</label>
+                                                </div>
+
+                                                <!--Body-->
+                                                <div class="md-form">
+                                                    <input name="bornDate" id="Form-birth" type="text" class="form-control">
+                                                    <label for="Form-birth">Data Nascimento</label>
+                                                </div>
+
+
+                                                <div class="md-form">
+                                                    <input name="firstPhone" id="Form-phone" type="tel" class="form-control">
+                                                    <label for="Form-phone">Telefone</label>
+                                                </div>
+
+
+                                                <div class="md-form">
+                                                    <input type="text" name="email" id="Form-email" class="form-control">
+                                                    <label for="Form-email">Seu e-mail</label>
+                                                </div>
+
+                                                <div class="md-form pb-3">
+                                                    <input type="password" id="Form-pass" name="password" class="form-control">
+                                                    <label for="Form-pass">Senha</label>
+                                                    <div class="form-check">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row d-flex align-items-center mb-4">
+                                                    <div class="col-md-3 col-md-12 text-center">
+                                                        <button type="button"
+                                                                class="btn btn-pink btn-block btn-rounded z-depth-1 waves-effect waves-light">
+                                                            Cadastrar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="tab-pane fade" id="panel2" role="tabpanel">
+
+                                        <form action="${pageContext.request.contextPath}/account/create/entity" method="POST"  enctype="multipart/form-data">
+                                            <!--Body-->
+                                            <div class="md-form">
+                                                <input type="text" name="name" id="Form-social-name" class="form-control">
+                                                <label for="Form-social-name">Razão Social</label>
                                             </div>
 
                                             <!--Body-->
                                             <div class="md-form">
-                                                <input type="text" name="name" id="Form-name" class="form-control">
-                                                <label for="Form-name">Nome</label>
+                                                <input name="cnpj" type="text" id="Form-cnpj" class="form-control">
+                                                <label for="Form-cnpj">CNPJ</label>
                                             </div>
+
 
                                             <!--Body-->
                                             <div class="md-form">
-                                                <input name="cpf" type="text" id="Form-cpf" class="form-control">
-                                                <label for="Form-cpf">CPF</label>
-                                            </div>
-
-                                            <!--Body-->
-                                            <div class="md-form">
-                                                <input name="rg" type="text" id="Form-rg" class="form-control">
-                                                <label for="Form-rg">RG</label>
-                                            </div>
-
-                                            <!--Body-->
-                                            <div class="md-form">
-                                                <input name="date_birth" id="Form-birth" type="text" class="form-control">
-                                                <label for="Form-birth">Data Nascimento</label>
+                                                <input name="date_foundation" id="Form-foundation" type="text" class="form-control">
+                                                <label for="Form-foundation">Data Fundação</label>
                                             </div>
 
 
                                             <div class="md-form">
-                                                <input name="phone" id="Form-phone" type="tel" class="form-control">
-                                                <label for="Form-phone">Telefone</label>
+                                                <input name="phone" id="Form-phone-entity" type="tel" class="form-control">
+                                                <label for="Form-phone-entity">Telefone</label>
                                             </div>
 
 
                                             <div class="md-form">
-                                                <input type="text" name="email" id="Form-email" class="form-control">
-                                                <label for="Form-email">Seu e-mail</label>
+                                                <input type="text" name="email" id="Form-email-entity" class="form-control">
+                                                <label for="Form-email-entity">Seu e-mail</label>
                                             </div>
 
-                                            <div class="md-form pb-3">
-                                                <input type="password" id="Form-pass" name="password" class="form-control">
-                                                <label for="Form-pass">Senha</label>
+                                            <div class="md-form">
+                                                <input type="password" id="Form-pass-entity" name="password" class="form-control">
+                                                <label for="Form-pass-entity">Senha</label>
                                                 <div class="form-check">
                                                 </div>
                                             </div>
+                                            <h4>Endereço</h4>
+                                            <div class="row height-60">
+                                                <div class="col-8">
+                                                    <div class="md-form">
+                                                        <input type="text" name="cep" id="Form-cep" class="form-control">
+                                                        <label for="Form-cep">CEP</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="md-form">
+                                                        <input type="text" name="uf" id="Form-uf" class="form-control">
+                                                        <label for="Form-uf">UF</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row height-60">
+                                                <div class="col-6">
+                                                    <div class="md-form">
+                                                        <input type="text" name="distric" id="Form-distric" class="form-control">
+                                                        <label for="Form-distric">Bairro</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="md-form">
+                                                        <input type="text" name="city" id="Form-city" class="form-control">
+                                                        <label for="Form-city">Cidade</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="md-form">
+                                                <input type="text" name="complement" id="Form-complement" class="form-control">
+                                                <label for="Form-complement">Complemento</label>
+                                            </div>
+                                            <div class="md-form">
+                                                <textarea name="description" id="Form-description" class="form-control"></textarea>
+                                                <!--<input type="text" name="description" >-->
+                                                <label for="Form-description">Descrição da entidade</label>
+                                            </div>
+
 
                                             <div class="row d-flex align-items-center mb-4">
                                                 <div class="col-md-3 col-md-12 text-center">
@@ -115,99 +212,7 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-
-                                    </div>
-
-                                    <div class="tab-pane fade" id="panel2" role="tabpanel">
-                                        <!--Body-->
-                                        <div class="md-form">
-                                            <input type="text" name="name" id="Form-social-name" class="form-control">
-                                            <label for="Form-social-name">Razão Social</label>
-                                        </div>
-
-                                        <!--Body-->
-                                        <div class="md-form">
-                                            <input name="cnpj" type="text" id="Form-cnpj" class="form-control">
-                                            <label for="Form-cnpj">CNPJ</label>
-                                        </div>
-
-
-                                        <!--Body-->
-                                        <div class="md-form">
-                                            <input name="date_foundation" id="Form-foundation" type="text" class="form-control">
-                                            <label for="Form-foundation">Data Fundação</label>
-                                        </div>
-
-
-                                        <div class="md-form">
-                                            <input name="phone" id="Form-phone-entity" type="tel" class="form-control">
-                                            <label for="Form-phone-entity">Telefone</label>
-                                        </div>
-
-
-                                        <div class="md-form">
-                                            <input type="text" name="email" id="Form-email-entity" class="form-control">
-                                            <label for="Form-email-entity">Seu e-mail</label>
-                                        </div>
-
-                                        <div class="md-form">
-                                            <input type="password" id="Form-pass-entity" name="password" class="form-control">
-                                            <label for="Form-pass-entity">Senha</label>
-                                            <div class="form-check">
-                                            </div>
-                                        </div>
-                                        <h4>Endereço</h4>
-                                        <div class="row height-60">
-                                            <div class="col-8">
-                                                <div class="md-form">
-                                                    <input type="text" name="cep" id="Form-cep" class="form-control">
-                                                    <label for="Form-cep">CEP</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-4">
-                                                <div class="md-form">
-                                                    <input type="text" name="uf" id="Form-uf" class="form-control">
-                                                    <label for="Form-uf">UF</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row height-60">
-                                            <div class="col-6">
-                                                <div class="md-form">
-                                                    <input type="text" name="distric" id="Form-distric" class="form-control">
-                                                    <label for="Form-distric">Bairro</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-6">
-                                                <div class="md-form">
-                                                    <input type="text" name="city" id="Form-city" class="form-control">
-                                                    <label for="Form-city">Cidade</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="md-form">
-                                            <input type="text" name="complement" id="Form-complement" class="form-control">
-                                            <label for="Form-complement">Complemento</label>
-                                        </div>
-                                        <div class="md-form">
-                                            <textarea name="description" id="Form-description" class="form-control"></textarea>
-                                            <!--<input type="text" name="description" >-->
-                                            <label for="Form-description">Descrição da entidade</label>
-                                        </div>
-
-
-                                        <div class="row d-flex align-items-center mb-4">
-                                            <div class="col-md-3 col-md-12 text-center">
-                                                <button type="button"
-                                                        class="btn btn-pink btn-block btn-rounded z-depth-1 waves-effect waves-light">
-                                                    Cadastrar
-                                                </button>
-                                            </div>
-                                        </div>
+                                        </form>
                                     </div>
 
                                 </div>
@@ -223,15 +228,15 @@
             </div>
         </div>
 
- <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/mdb.js"></script>
-                
+        <!-- SCRIPTS -->
+        <!-- JQuery -->
+        <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/mdb.js"></script>
+
     </body>
 </html>

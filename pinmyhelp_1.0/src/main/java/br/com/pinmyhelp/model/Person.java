@@ -5,6 +5,7 @@
  */
 package br.com.pinmyhelp.model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 /**
@@ -13,17 +14,21 @@ import java.time.LocalDate;
  */
 public class Person extends User {
     
+    private String type;
     private String name;
     private String cpf;
     private String rg;
-    private LocalDate bornDate;
+    private Date bornDate;
     private String firstPhone;
     private String secondPhone;
     private String biography;
     private Double score;
-    // atributo pra foto...
+    private String profilePicture;
     private Address address;
     private String notes; // observacoes
+    
+    public static final String TYPE_CLAIMANT = "Claimant";
+    public static final String TYPE_VOLUNTARY = "Voluntary";
 
     public Person() {
     }
@@ -39,7 +44,26 @@ public class Person extends User {
     public Person(Integer id, String email, String password) {
         super(id, email, password);
     }
+    
+    //constructor for create controller
+    public Person(Integer id, String type, String name, String cpf, String rg, Date bornDate, String firstPhone) {
+        super(id);
+        this.type = type;
+        this.name = name;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.bornDate = bornDate;
+        this.firstPhone = firstPhone;
+    }
+   
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+    
     /**
      * @return the name
      */
@@ -85,14 +109,14 @@ public class Person extends User {
     /**
      * @return the bornDate
      */
-    public LocalDate getBornDate() {
+    public Date getBornDate() {
         return bornDate;
     }
 
     /**
      * @param bornDate the bornDate to set
      */
-    public void setBornDate(LocalDate bornDate) {
+    public void setBornDate(Date bornDate) {
         this.bornDate = bornDate;
     }
 
@@ -150,6 +174,14 @@ public class Person extends User {
      */
     public void setScore(Double score) {
         this.score = score;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     /**

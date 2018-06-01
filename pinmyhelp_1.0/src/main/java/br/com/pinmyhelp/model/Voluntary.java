@@ -5,6 +5,8 @@
  */
 package br.com.pinmyhelp.model;
 
+import java.sql.Date;
+
 /**
  *
  * @author rhau
@@ -25,5 +27,10 @@ public class Voluntary extends Person {
     public Voluntary(Integer id, String email, String password) {
         super(id, email, password);
     }
-    
+
+    //constructor for create controller
+    public Voluntary(Integer id, String type, String name, String cpf, String rg, Date bornDate, String firstPhone) {
+        super(id, TYPE_VOLUNTARY, name, cpf, rg, bornDate, firstPhone);
+    }
+      
 }

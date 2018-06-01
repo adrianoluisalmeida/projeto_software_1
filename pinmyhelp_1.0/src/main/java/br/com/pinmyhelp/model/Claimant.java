@@ -5,6 +5,8 @@
  */
 package br.com.pinmyhelp.model;
 
+import java.sql.Date;
+
 /**
  *
  * @author rhau
@@ -24,6 +26,11 @@ public class Claimant extends Person {
 
     public Claimant(Integer id, String email, String password) {
         super(id, email, password);
+    }
+
+    //constructor for create controller
+    public Claimant(Integer id, String type, String name, String cpf, String rg, Date bornDate, String firstPhone) {
+        super(id, TYPE_CLAIMANT, name, cpf, rg, bornDate, firstPhone);
     }
 
 }

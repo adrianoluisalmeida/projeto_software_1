@@ -1,0 +1,190 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.pinmyhelp.database;
+
+import br.com.pinmyhelp.util.ConnectionMySQL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author isabella
+ * @param <T>
+ */
+public abstract class AbstractDAO<T extends Record> {
+    private String createSql;
+    private String updateSql;
+    private String deleteSql;
+    private String findPrimaryKeySql;
+    private String findSql;
+    private String findAllSql;
+
+    public String getCreateSql() {
+        return createSql;
+    }
+
+    public void setCreateSql(String createSql) {
+        this.createSql = createSql;
+    }
+
+    public String getUpdateSql() {
+        return updateSql;
+    }
+
+    public void setUpdateSql(String updateSql) {
+        this.updateSql = updateSql;
+    }
+
+    public String getDeleteSql() {
+        return deleteSql;
+    }
+
+    public void setDeleteSql(String deleteSql) {
+        this.deleteSql = deleteSql;
+    }
+
+    public String getFindPrimaryKeySql() {
+        return findPrimaryKeySql;
+    }
+
+    public void setFindPrimaryKeySql(String findPrimaryKeySql) {
+        this.findPrimaryKeySql = findPrimaryKeySql;
+    }
+    
+    public String getFindSql() {
+        return findSql;
+    }
+
+    public void setFindSql(String findSql) {
+        this.findSql = findSql;
+    }
+
+    public String getFindAllSql() {
+        return findAllSql;
+    }
+
+    public void setFindAllSql(String findAllSql) {
+        this.findAllSql = findAllSql;
+    }
+    
+    public Integer create(T t) {
+        Connection c = ConnectionMySQL.getConnection();
+        Integer id = null;
+        try {
+            PreparedStatement ps = c.prepareStatement(getCreateSql(), PreparedStatement.RETURN_GENERATED_KEYS);
+            fillCreate(ps, t);
+            ps.execute();
+            
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next())
+                id = rs.getInt(1); // pk
+            rs.close();
+            ps.close();
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+    
+     public void update(T t) {
+        Connection c = ConnectionMySQL.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement(getUpdateSql());
+            fillUpdate(ps, t);
+            ps.execute();
+            ps.close();
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void delete(T t) {
+        Connection c = ConnectionMySQL.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement(getDeleteSql());
+            fillDelete(ps, t);
+            ps.execute();
+            ps.close();
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    //Find by PrimaryKey
+    public T findPrimaryKey(T t) {
+        Connection c = ConnectionMySQL.getConnection();
+        T record = null;
+        try {
+            PreparedStatement ps = c.prepareStatement(getFindPrimaryKeySql());
+            fillDelete(ps, t);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) 
+                record = fillRecord(rs);
+            rs.close();
+            ps.close();
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return record;
+    }
+    
+    //Find by any atribute
+    public Collection<T> find(T t) {
+        Connection c = ConnectionMySQL.getConnection();
+        Collection<T> records = null;
+        try {
+            PreparedStatement ps = c.prepareStatement(getFindSql());
+            fillFind(ps, t);
+            ResultSet rs = ps.executeQuery();
+            records = fillCollection(rs);
+            ps.close();
+            rs.close();
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return records;
+    }
+    
+    public Collection<T> findAll() {
+        Connection c = ConnectionMySQL.getConnection();
+        Collection<T> records = null;
+        try {
+            PreparedStatement ps = c.prepareStatement(getFindAllSql());
+            ResultSet rs = ps.executeQuery();
+            records = fillCollection(rs);
+            ps.close();
+            rs.close();
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return records;
+    }
+    
+    protected abstract void fillCreate(PreparedStatement ps, T t) throws SQLException;
+
+    protected abstract void fillUpdate(PreparedStatement ps, T t) throws SQLException;
+
+    protected abstract void fillDelete(PreparedStatement ps, T t) throws SQLException;
+
+    protected abstract void fillFind(PreparedStatement ps, T t) throws SQLException;
+
+    protected abstract T fillRecord(ResultSet rs) throws SQLException;
+
+    protected abstract Collection<T> fillCollection(ResultSet rs) throws SQLException;
+}
