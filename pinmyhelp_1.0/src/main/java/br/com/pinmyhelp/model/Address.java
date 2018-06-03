@@ -14,36 +14,14 @@ public class Address {
     private String postalCode;
     private String state;
     private String city;
-    private Integer neighborhood;
-    private String streetNumber;
+    private String neighborhood;
+    private String street;
+    private Integer number;
     private String complement;
     private Double latitude;
     private Double longitude;
 
     public Address() {
-    }
-
-    public Address(Double latitude, Double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public Address(String postalCode, Integer neighborhood, String streetNumber, String complement) {
-        this.postalCode = postalCode;
-        this.neighborhood = neighborhood;
-        this.streetNumber = streetNumber;
-        this.complement = complement;
-    }
-
-    public Address(String postalCode, String state, String city, Integer neighborhood, String streetNumber, String complement, Double latitude, Double longitude) {
-        this.postalCode = postalCode;
-        this.state = state;
-        this.city = city;
-        this.neighborhood = neighborhood;
-        this.streetNumber = streetNumber;
-        this.complement = complement;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 
     /**
@@ -91,29 +69,43 @@ public class Address {
     /**
      * @return the neighborhood
      */
-    public Integer getNeighborhood() {
+    public String getNeighborhood() {
         return neighborhood;
     }
 
     /**
      * @param neighborhood the neighborhood to set
      */
-    public void setNeighborhood(Integer neighborhood) {
+    public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
     }
 
     /**
-     * @return the streetNumber
+     * @return the street
      */
-    public String getStreetNumber() {
-        return streetNumber;
+    public String getStreet() {
+        return street;
     }
 
     /**
-     * @param streetNumber the streetNumber to set
+     * @param street the street to set
      */
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    /**
+     * @return the number
+     */
+    public Integer getNumber() {
+        return number;
+    }
+
+    /**
+     * @param number the number to set
+     */
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     /**
@@ -160,7 +152,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" + "postalCode=" + postalCode + ", state=" + state + ", city=" + city + ", neighborhood=" + neighborhood + ", streetNumber=" + streetNumber + ", complement=" + complement + ", latitude=" + latitude + ", longitude=" + longitude + '}';
+        return "Address{" + "postalCode=" + getPostalCode() + ", state=" + getState() + ", city=" + getCity() + ", neighborhood=" + getNeighborhood() + ", Street="+street+", Number=" + number + ", complement=" + getComplement() + ", latitude=" + getLatitude() + ", longitude=" + getLongitude() + '}';
     }
-
+    
 }

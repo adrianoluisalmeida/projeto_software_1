@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  * @param <T>
  */
 public abstract class AbstractDAO<T extends Record> {
+    
     private String createSql;
     private String updateSql;
     private String deleteSql;
@@ -164,6 +165,33 @@ public abstract class AbstractDAO<T extends Record> {
         Collection<T> records = null;
         try {
             PreparedStatement ps = c.prepareStatement(getFindAllSql());
+            ResultSet rs = ps.executeQuery();
+            records = fillCollection(rs);
+            ps.close();
+            rs.close();
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return records;
+    }
+    
+    /**
+     * Finds record(s) with any filter
+     * @param filter - sql with number of params equals the lenght of array
+     * @param params - array of params
+     * @return Collection with result
+     */
+    public Collection<T> find(String filter, Object[] params) {
+        Connection c = ConnectionMySQL.getConnection();
+        Collection<T> records = null;
+        try {
+            String sql = String.format("%s WHERE %s", getFindAllSql(), filter);
+            PreparedStatement ps = c.prepareStatement(sql);
+            for (int i = 0; i < params.length; i++) {
+                ps.setObject(i+1, params[i]);
+            }
             ResultSet rs = ps.executeQuery();
             records = fillCollection(rs);
             ps.close();

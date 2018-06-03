@@ -26,7 +26,7 @@ public class PersonDAO extends AbstractDAO<Person>{
         setUpdateSql("UPDATE person SET person_name = ?, cpf = ?, rg = ?, born_date = ?, "
                 + "person_first_phone = ?, person_second_phone = ?, profile_picture = ?, biography = ?, "
                 + "person_score = ?, person_notes = ?, p_postal_code = ?, p_neighborhood = ?, "
-                + "p_street_number = ?, p_complement = ?, p_latitude = ?, p_longitude = ? WHERE person_id = ?");
+                + "p_street = ?, p_number = ?, p_complement = ?, p_latitude = ?, p_longitude = ? WHERE person_id = ?");
         setDeleteSql("DELETE FROM person WHERE person_id = ?");
         setFindPrimaryKeySql("SELECT * FROM person WHERE person_id = ?");
         setFindSql("SELECT * FROM person WHERE person_type = ?");
@@ -66,12 +66,13 @@ public class PersonDAO extends AbstractDAO<Person>{
         ps.setDouble(9, p.getScore());
         ps.setString(10, p.getNotes());
         ps.setString(11, p.getAddress().getPostalCode());
-        ps.setInt(12, p.getAddress().getNeighborhood());
-        ps.setString(13, p.getAddress().getStreetNumber());
-        ps.setString(14, p.getAddress().getComplement());
-        ps.setDouble(15, p.getAddress().getLatitude());
-        ps.setDouble(16, p.getAddress().getLongitude());
-        ps.setInt(17, p.getId());
+        ps.setString(12, p.getAddress().getNeighborhood());
+        ps.setString(13, p.getAddress().getStreet());
+        ps.setInt(14, p.getAddress().getNumber());
+        ps.setString(15, p.getAddress().getComplement());
+        ps.setDouble(16, p.getAddress().getLatitude());
+        ps.setDouble(17, p.getAddress().getLongitude());
+        ps.setInt(18, p.getId());
     }
 
     @Override
@@ -102,8 +103,9 @@ public class PersonDAO extends AbstractDAO<Person>{
         p.setNotes(rs.getString("person_notes"));
         Address address = new Address();
         address.setPostalCode(rs.getString("p_postal_code"));
-        address.setNeighborhood(rs.getInt("p_neighborhood"));
-        address.setStreetNumber(rs.getString("p_street_number"));
+        address.setNeighborhood(rs.getString("p_neighborhood"));
+        address.setStreet(rs.getString("p_street"));
+        address.setNumber(rs.getInt("p_number"));
         address.setComplement(rs.getString("p_complement"));
         address.setLatitude(rs.getDouble("p_latitude"));
         address.setLongitude(rs.getDouble("p_longitude"));

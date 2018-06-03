@@ -5,6 +5,7 @@
  */
 package br.com.pinmyhelp.model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 /**
@@ -15,12 +16,13 @@ public class Entity extends User {
     
     private String name;
     private String cnpj;
-    private LocalDate foundationDate;
+    private Date foundationDate;
     private String firstPhone;
     private String secondPhone;
     private String description;
     private Double score;
     // atributo pra logo...
+    private String logo;
     private Address address;
     private String notes; // observacoes
 
@@ -70,14 +72,14 @@ public class Entity extends User {
     /**
      * @return the foundationDate
      */
-    public LocalDate getFoundationDate() {
+    public Date getFoundationDate() {
         return foundationDate;
     }
 
     /**
      * @param foundationDate the foundationDate to set
      */
-    public void setFoundationDate(LocalDate foundationDate) {
+    public void setFoundationDate(Date foundationDate) {
         this.foundationDate = foundationDate;
     }
 
@@ -168,6 +170,20 @@ public class Entity extends User {
     @Override
     public String toString() {
         return "Entity{" + "name=" + name + ", cnpj=" + cnpj + ", foundationDate=" + foundationDate + ", firstPhone=" + firstPhone + ", secondPhone=" + secondPhone + ", description=" + description + ", score=" + score + ", address=" + address + ", notes=" + notes + '}';
+    }
+
+    /**
+     * @return the logo
+     */
+    public String getLogo() {
+        return logo;
+    }
+
+    /**
+     * @param logo the logo to set
+     */
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
    
 }

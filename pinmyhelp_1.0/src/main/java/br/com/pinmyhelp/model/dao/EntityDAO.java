@@ -6,10 +6,12 @@
 package br.com.pinmyhelp.model.dao;
 
 import br.com.pinmyhelp.database.AbstractDAO;
+import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.Entity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -19,42 +21,107 @@ import java.util.Collection;
 public class EntityDAO extends AbstractDAO<Entity> {
     
     public EntityDAO() {
-        setCreateSql("");
-        setUpdateSql("");
-        setDeleteSql("");
-        setFindPrimaryKeySql("");
-        setFindSql("");
-        setFindAllSql("");
+        setCreateSql("INSERT INTO entity("
+                + " entity_id,entity_name,"
+                + " cnpj,foundation_date,"
+                + " entity_first_phone"
+                + ") VALUES (?,?,?,?,?) ");
+        setUpdateSql("UPDATE entity SET"
+                + " entity_name = ?,"
+                + " cnpj = ?,"
+                + " fundation_date = ?,"
+                + " entity_first_phone = ?,"
+                + " entity_second_phone = ?,"
+                + " logo = ?,"
+                + " description = ?,"
+                + " entity_score = ?,"
+                + " entity_notes = ?,"
+                + " e_postal_code = ?,"
+                + " e_neighborhood = ?,"
+                + " e_street = ?,"
+                + " e_number = ?,"
+                + " e_complement = ?,"
+                + " e_latitude = ?,"
+                + " e_longitude = ?"
+                + " WHERE entity_id = ?");
+        setDeleteSql("DELETE FROM entity WHERE entity_id = ?");
+        setFindPrimaryKeySql("SELECT * FROM entity WHERE entity_id = ?");
+        setFindSql("SELECT * FROM entity WHERE entity_name = ?");
+        setFindAllSql("SELECT * FROM entity");
     }
 
     @Override
-    protected void fillCreate(PreparedStatement ps, Entity t) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected void fillCreate(PreparedStatement ps, Entity e) throws SQLException {
+        ps.setInt(1, e.getId());
+        ps.setString(2, e.getName());
+        ps.setString(3, e.getCnpj());
+        ps.setDate(4, new java.sql.Date(e.getFoundationDate().getTime()));
+        ps.setString(5, e.getFirstPhone());
     }
 
     @Override
-    protected void fillUpdate(PreparedStatement ps, Entity t) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected void fillUpdate(PreparedStatement ps, Entity e) throws SQLException {
+        ps.setString(2, e.getName());
+        ps.setString(3, e.getCnpj());
+        ps.setDate(4, new java.sql.Date(e.getFoundationDate().getTime()));
+        ps.setString(5, e.getFirstPhone());
+        ps.setString(6, e.getSecondPhone());
+        ps.setString(7, e.getLogo());
+        ps.setString(8, e.getDescription());
+        ps.setDouble(9, e.getScore());
+        ps.setString(10, e.getNotes());
+        //Endereço
+        ps.setString(11, e.getAddress().getPostalCode());
+        ps.setString(12, e.getAddress().getNeighborhood());
+        ps.setString(13, e.getAddress().getStreet());
+        ps.setInt(14, e.getAddress().getNumber());
+        ps.setString(15, e.getAddress().getComplement());
+        ps.setDouble(16, e.getAddress().getLatitude());
+        ps.setDouble(17, e.getAddress().getLongitude());
+        ps.setInt(18, e.getId());
     }
 
     @Override
-    protected void fillDelete(PreparedStatement ps, Entity t) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected void fillDelete(PreparedStatement ps, Entity e) throws SQLException {
+        ps.setInt(1, e.getId());
     }
 
     @Override
-    protected void fillFind(PreparedStatement ps, Entity t) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected void fillFind(PreparedStatement ps, Entity e) throws SQLException {
+        ps.setString(1, e.getName());
     }
 
     @Override
     protected Entity fillRecord(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Entity p = new Entity();
+        p.setId(rs.getInt("entity_id"));
+        p.setName(rs.getString("entity_name"));
+        p.setCnpj(rs.getString("cnpj"));
+        p.setFoundationDate(rs.getDate("fundation_date"));
+        p.setFirstPhone(rs.getString("entity_first_phone"));
+        p.setSecondPhone(rs.getString("entity_second_phone"));
+        p.setLogo(rs.getString("logo"));
+        p.setDescription(rs.getString("biography"));
+        p.setScore(rs.getDouble("person_score"));
+        p.setNotes(rs.getString("person_notes"));
+        Address address = new Address();
+        address.setPostalCode(rs.getString("e_postal_code"));
+        address.setNeighborhood(rs.getString("e_neighborhood"));
+        address.setStreet(rs.getString("e_street"));
+        address.setNumber(rs.getInt("e_number"));
+        address.setComplement(rs.getString("e_complement"));
+        address.setLatitude(rs.getDouble("e_latitude"));
+        address.setLongitude(rs.getDouble("e_longitude"));
+        p.setAddress(address);  
+        return p;
     }
 
     @Override
     protected Collection<Entity> fillCollection(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Collection<Entity> entities = new ArrayList<>();
+        while(rs.next())
+            entities.add(fillRecord(rs));
+        return entities;
     }
     
 }

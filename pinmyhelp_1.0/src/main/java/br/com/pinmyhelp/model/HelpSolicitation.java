@@ -6,6 +6,8 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
+import br.com.pinmyhelp.model.types.HelpStatus;
+import br.com.pinmyhelp.model.types.HelpType;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,12 +20,12 @@ public class HelpSolicitation extends Record {
     
     private Claimant claimant;
     private Entity entity;
-    private String type;
+    private HelpType type;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Double lagitude;
+    private Double latitude;
     private Double longitude;
-    private Integer status;
+    private HelpStatus status;
     private Collection<HelpOffer> helpOffers = new ArrayList<>();
     private Feedback feedback; // feedback do Voluntario (ou Entidade) sobre a solicitacao
 
@@ -34,13 +36,13 @@ public class HelpSolicitation extends Record {
         super(id);
     }
 
-    public HelpSolicitation(Claimant claimant, Entity entity, String type, LocalDateTime startDate, LocalDateTime endDate, Double lagitude, Double longitude, Integer status) {
+    public HelpSolicitation(Claimant claimant, Entity entity, HelpType type, LocalDateTime startDate, LocalDateTime endDate, Double lagitude, Double longitude, HelpStatus status) {
         this.claimant = claimant;
         this.entity = entity;
         this.type = type;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.lagitude = lagitude;
+        this.latitude = lagitude;
         this.longitude = longitude;
         this.status = status;
     }
@@ -76,14 +78,14 @@ public class HelpSolicitation extends Record {
     /**
      * @return the type
      */
-    public String getType() {
+    public HelpType getType() {
         return type;
     }
 
     /**
      * @param type the type to set
      */
-    public void setType(String type) {
+    public void setType(HelpType type) {
         this.type = type;
     }
 
@@ -118,15 +120,15 @@ public class HelpSolicitation extends Record {
     /**
      * @return the lagitude
      */
-    public Double getLagitude() {
-        return lagitude;
+    public Double getLatitude() {
+        return latitude;
     }
 
     /**
      * @param lagitude the lagitude to set
      */
-    public void setLagitude(Double lagitude) {
-        this.lagitude = lagitude;
+    public void setLatitude(Double lagitude) {
+        this.latitude = lagitude;
     }
 
     /**
@@ -146,14 +148,14 @@ public class HelpSolicitation extends Record {
     /**
      * @return the status
      */
-    public Integer getStatus() {
+    public HelpStatus getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(Integer status) {
+    public void setStatus(HelpStatus status) {
         this.status = status;
     }
 
@@ -181,7 +183,7 @@ public class HelpSolicitation extends Record {
 
     @Override
     public String toString() {
-        return "HelpSolicitation{" + "claimant=" + claimant + ", entity=" + entity + ", type=" + type + ", startDate=" + startDate + ", endDate=" + endDate + ", lagitude=" + lagitude + ", longitude=" + longitude + ", status=" + status + ", helpOffers=" + helpOffers + ", feedback=" + feedback + '}';
+        return "HelpSolicitation{" + "claimant=" + claimant + ", entity=" + entity + ", type=" + type + ", startDate=" + startDate + ", endDate=" + endDate + ", lagitude=" + latitude + ", longitude=" + longitude + ", status=" + status + ", helpOffers=" + helpOffers + ", feedback=" + feedback + '}';
     }
     
 }

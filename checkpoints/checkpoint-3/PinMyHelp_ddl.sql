@@ -26,9 +26,10 @@ CREATE TABLE IF NOT EXISTS person (
     person_score        DECIMAL(8,2) NOT NULL DEFAULT 0.0,
     person_notes        TEXT         NULL,
     # INIT ADDRESS INFO - PREFIX: p_
-    p_postal_code       CHAR(8)      NOT NULL, # provides info about country, state and city
+    p_postal_code       CHAR(8)      NULL, # provides info about country, state and city
     p_neighborhood      VARCHAR(255) NULL,
-    p_street_number     INT          NULL,
+	p_street			VARCHAR(255) NULL,
+    p_number     		INT          NULL,
     p_complement        VARCHAR(255) NULL,
     p_latitude          DOUBLE       NULL,     # it helps in the use of google maps api 
     p_longitude         DOUBLE       NULL,     # it helps in the use of google maps api
