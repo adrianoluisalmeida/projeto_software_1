@@ -10,6 +10,7 @@ import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.Claimant;
 import br.com.pinmyhelp.model.Person;
 import br.com.pinmyhelp.model.Voluntary;
+import br.com.pinmyhelp.model.types.GeoLocation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +29,7 @@ public class PersonDAO extends AbstractDAO<Person>{
                 + "person_score = ?, person_notes = ?, p_postal_code = ?, p_neighborhood = ?, "
                 + "p_street = ?, p_number = ?, p_complement = ?, p_latitude = ?, p_longitude = ? WHERE person_id = ?");
         setDeleteSql("DELETE FROM person WHERE person_id = ?");
-        setFindPrimaryKeySql("SELECT * FROM person WHERE person_id = ?");
+        setFindOneSql("SELECT * FROM person WHERE person_id = ?");
         setFindSql("SELECT * FROM person WHERE person_type = ?");
         setFindAllSql("SELECT * FROM person");
     }
@@ -49,7 +50,7 @@ public class PersonDAO extends AbstractDAO<Person>{
         ps.setString(3, p.getName());
         ps.setString(4, p.getCpf());
         ps.setString(5, p.getRg());
-        ps.setDate(6, new java.sql.Date(p.getBornDate().getTime()));
+        ps.setDate(6, java.sql.Date.valueOf(p.getBornDate()));
         ps.setString(7, p.getFirstPhone());
     }
 
@@ -58,7 +59,7 @@ public class PersonDAO extends AbstractDAO<Person>{
         ps.setString(1, p.getName());
         ps.setString(2, p.getCpf());
         ps.setString(3, p.getRg());
-        ps.setDate(4, new java.sql.Date(p.getBornDate().getTime()));
+        ps.setDate(4, java.sql.Date.valueOf(p.getBornDate()));
         ps.setString(5, p.getFirstPhone());
         ps.setString(6, p.getSecondPhone());
         ps.setString(7, p.getProfilePicture());
@@ -70,8 +71,8 @@ public class PersonDAO extends AbstractDAO<Person>{
         ps.setString(13, p.getAddress().getStreet());
         ps.setInt(14, p.getAddress().getNumber());
         ps.setString(15, p.getAddress().getComplement());
-        ps.setDouble(16, p.getAddress().getLatitude());
-        ps.setDouble(17, p.getAddress().getLongitude());
+        ps.setDouble(16, p.getAddress().getLocation().getLatitude());
+        ps.setDouble(17, p.getAddress().getLocation().getLongitude());
         ps.setInt(18, p.getId());
     }
 
@@ -93,7 +94,7 @@ public class PersonDAO extends AbstractDAO<Person>{
         p.setName(rs.getString("person_name"));
         p.setCpf(rs.getString("cpf"));
         p.setRg(rs.getString("cpf"));
-        p.setBornDate(rs.getDate("born_date"));
+        p.setBornDate(rs.getDate("born_date").toLocalDate());
         p.setCpf(rs.getString("cpf"));
         p.setFirstPhone(rs.getString("person_first_phone"));
         p.setSecondPhone(rs.getString("person_second_phone"));
@@ -107,19 +108,11 @@ public class PersonDAO extends AbstractDAO<Person>{
         address.setStreet(rs.getString("p_street"));
         address.setNumber(rs.getInt("p_number"));
         address.setComplement(rs.getString("p_complement"));
-        address.setLatitude(rs.getDouble("p_latitude"));
-        address.setLongitude(rs.getDouble("p_longitude"));
+        address.setLocation(
+                new GeoLocation(rs.getDouble("p_latitude"), rs.getDouble("p_longitude"))
+        );
         p.setAddress(address);  
         return p;
     }
-
-    @Override
-    protected Collection<Person> fillCollection(ResultSet rs) throws SQLException {
-        Collection<Person> persons = new ArrayList<>();
-        while(rs.next())
-            persons.add(fillRecord(rs));
-        return persons;
-    }
-    
 
 }

@@ -5,6 +5,8 @@
  */
 package br.com.pinmyhelp.model;
 
+import br.com.pinmyhelp.model.types.GeoLocation;
+
 /**
  *
  * @author rhau
@@ -18,10 +20,10 @@ public class Address {
     private String street;
     private Integer number;
     private String complement;
-    private Double latitude;
-    private Double longitude;
+    private GeoLocation location;
 
     public Address() {
+        location = new GeoLocation();
     }
 
     /**
@@ -122,37 +124,25 @@ public class Address {
         this.complement = complement;
     }
 
+    
+
     /**
-     * @return the latitude
+     * @return the location
      */
-    public Double getLatitude() {
-        return latitude;
+    public GeoLocation getLocation() {
+        return location;
     }
 
     /**
-     * @param latitude the latitude to set
+     * @param location the location to set
      */
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+    public void setLocation(GeoLocation location) {
+        this.location = location;
     }
-
-    /**
-     * @return the longitude
-     */
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    /**
-     * @param longitude the longitude to set
-     */
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
+    
     @Override
     public String toString() {
-        return "Address{" + "postalCode=" + getPostalCode() + ", state=" + getState() + ", city=" + getCity() + ", neighborhood=" + getNeighborhood() + ", Street="+street+", Number=" + number + ", complement=" + getComplement() + ", latitude=" + getLatitude() + ", longitude=" + getLongitude() + '}';
+        return "Address{" + "postalCode=" + getPostalCode() + ", state=" + getState() + ", city=" + getCity() + ", neighborhood=" + getNeighborhood() + ", Street="+street+", Number=" + number + ", complement=" + getComplement() + ", latitude=" + location.getLatitude() + ", longitude=" + location.getLongitude() + '}';
     }
     
 }

@@ -11,13 +11,14 @@ import java.util.logging.Logger;
  *
  * @author aluno
  */
+@Deprecated
 public class ConnectionMySQL {
     
     public static Connection getConnection() {
         Connection conn = null;
         try {
             Class.forName(Database.JDBC_DRIVER);
-            conn = DriverManager.getConnection(Database.URL_CONEXAO, Database.USUARIO, Database.SENHA);
+            conn = DriverManager.getConnection(Database.URL, Database.USER, Database.PASSWORD);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectionMySQL.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Driver " + Database.JDBC_DRIVER + " não foi encontrado na memória.");

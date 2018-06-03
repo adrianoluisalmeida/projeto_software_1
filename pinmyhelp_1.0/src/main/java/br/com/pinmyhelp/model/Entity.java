@@ -16,7 +16,7 @@ public class Entity extends User {
     
     private String name;
     private String cnpj;
-    private Date foundationDate;
+    private LocalDate foundationDate;
     private String firstPhone;
     private String secondPhone;
     private String description;
@@ -72,14 +72,14 @@ public class Entity extends User {
     /**
      * @return the foundationDate
      */
-    public Date getFoundationDate() {
+    public LocalDate getFoundationDate() {
         return foundationDate;
     }
 
     /**
      * @param foundationDate the foundationDate to set
      */
-    public void setFoundationDate(Date foundationDate) {
+    public void setFoundationDate(LocalDate foundationDate) {
         this.foundationDate = foundationDate;
     }
 

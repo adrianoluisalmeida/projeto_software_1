@@ -5,7 +5,6 @@
  */
 package br.com.pinmyhelp.model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 /**
@@ -18,7 +17,7 @@ public class Person extends User {
     private String name;
     private String cpf;
     private String rg;
-    private Date bornDate;
+    private LocalDate bornDate;
     private String firstPhone;
     private String secondPhone;
     private String biography;
@@ -46,7 +45,7 @@ public class Person extends User {
     }
     
     //constructor for create controller
-    public Person(Integer id, String type, String name, String cpf, String rg, Date bornDate, String firstPhone) {
+    public Person(Integer id, String type, String name, String cpf, String rg, LocalDate bornDate, String firstPhone) {
         super(id);
         this.type = type;
         this.name = name;
@@ -109,14 +108,14 @@ public class Person extends User {
     /**
      * @return the bornDate
      */
-    public Date getBornDate() {
+    public LocalDate getBornDate() {
         return bornDate;
     }
 
     /**
      * @param bornDate the bornDate to set
      */
-    public void setBornDate(Date bornDate) {
+    public void setBornDate(LocalDate bornDate) {
         this.bornDate = bornDate;
     }
 

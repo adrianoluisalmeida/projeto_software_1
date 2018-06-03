@@ -6,6 +6,7 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
+import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.time.LocalDateTime;
@@ -23,28 +24,12 @@ public class HelpSolicitation extends Record {
     private HelpType type;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Double latitude;
-    private Double longitude;
+    private GeoLocation location;
     private HelpStatus status;
     private Collection<HelpOffer> helpOffers = new ArrayList<>();
     private Feedback feedback; // feedback do Voluntario (ou Entidade) sobre a solicitacao
 
     public HelpSolicitation() {
-    }
-
-    public HelpSolicitation(Integer id) {
-        super(id);
-    }
-
-    public HelpSolicitation(Claimant claimant, Entity entity, HelpType type, LocalDateTime startDate, LocalDateTime endDate, Double lagitude, Double longitude, HelpStatus status) {
-        this.claimant = claimant;
-        this.entity = entity;
-        this.type = type;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.latitude = lagitude;
-        this.longitude = longitude;
-        this.status = status;
     }
 
     /**
@@ -117,33 +102,6 @@ public class HelpSolicitation extends Record {
         this.endDate = endDate;
     }
 
-    /**
-     * @return the lagitude
-     */
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * @param lagitude the lagitude to set
-     */
-    public void setLatitude(Double lagitude) {
-        this.latitude = lagitude;
-    }
-
-    /**
-     * @return the longitude
-     */
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    /**
-     * @param longitude the longitude to set
-     */
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
 
     /**
      * @return the status
@@ -183,7 +141,21 @@ public class HelpSolicitation extends Record {
 
     @Override
     public String toString() {
-        return "HelpSolicitation{" + "claimant=" + claimant + ", entity=" + entity + ", type=" + type + ", startDate=" + startDate + ", endDate=" + endDate + ", lagitude=" + latitude + ", longitude=" + longitude + ", status=" + status + ", helpOffers=" + helpOffers + ", feedback=" + feedback + '}';
+        return "HelpSolicitation{" + "claimant=" + claimant + ", entity=" + entity + ", type=" + type + ", startDate=" + startDate + ", endDate=" + endDate + ", lagitude=" + location.getLatitude() + ", longitude=" + location.getLongitude() + ", status=" + status + ", helpOffers=" + helpOffers + ", feedback=" + feedback + '}';
+    }
+
+    /**
+     * @return the location
+     */
+    public GeoLocation getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(GeoLocation location) {
+        this.location = location;
     }
     
 }

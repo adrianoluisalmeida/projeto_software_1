@@ -6,6 +6,7 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
+import br.com.pinmyhelp.model.types.OfferStatus;
 
 /**
  *
@@ -15,7 +16,7 @@ public class HelpOffer extends Record {
     
     private Voluntary voluntary;
     private Entity entity;
-    private Integer status;
+    private OfferStatus status;
     private HelpSolicitation helpSolicitation;
     private Feedback feedback; // feedback do Requerente (ou Entidade) sobre a oferta
     
@@ -26,7 +27,7 @@ public class HelpOffer extends Record {
         super(id);
     }
 
-    public HelpOffer(Voluntary voluntary, Entity entity, Integer status, HelpSolicitation helpSolicitation) {
+    public HelpOffer(Voluntary voluntary, Entity entity, OfferStatus status, HelpSolicitation helpSolicitation) {
         this.voluntary = voluntary;
         this.entity = entity;
         this.status = status;
@@ -64,14 +65,14 @@ public class HelpOffer extends Record {
     /**
      * @return the status
      */
-    public Integer getStatus() {
+    public OfferStatus getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(Integer status) {
+    public void setStatus(OfferStatus status) {
         this.status = status;
     }
 

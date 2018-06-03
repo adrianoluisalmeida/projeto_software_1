@@ -22,7 +22,7 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         setCreateSql("");
         setUpdateSql("");
         setDeleteSql("");
-        setFindPrimaryKeySql("");
+        setFindOneSql("");
         setFindSql("");
         setFindAllSql("");
     }
@@ -52,8 +52,4 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    protected Collection<Feedback> fillCollection(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

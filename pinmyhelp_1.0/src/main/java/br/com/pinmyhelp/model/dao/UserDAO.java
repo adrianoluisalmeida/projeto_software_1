@@ -10,8 +10,6 @@ import br.com.pinmyhelp.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  *
@@ -23,7 +21,7 @@ public class UserDAO extends AbstractDAO<User> {
         setCreateSql("INSERT INTO user (email, password, is_admin) VALUES (?, ?, ?)");
         setUpdateSql("UPDATE user SET email = ?, password = ?, is_admin = ? WHERE user_id = ?");
         setDeleteSql("DELETE FROM user WHERE user_id = ?");
-        setFindPrimaryKeySql("SELECT * FROM user WHERE user_id = ?");
+        setFindOneSql("SELECT * FROM user WHERE user_id = ?");
         setFindSql("SELECT * FROM user WHERE email = ? AND password = ?");
         setFindAllSql("SELECT * FROM user");
     }
@@ -65,11 +63,9 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     @Override
-    protected Collection<User> fillCollection(ResultSet rs) throws SQLException {
-        Collection<User> users = new ArrayList<>();
-        while(rs.next())
-            users.add(fillRecord(rs));
-        return users;
+    public Integer create(User u) {
+        Integer id = super.create(u);
+        u.setId(id);
+        return id;
     }
-    
 }

@@ -1,0 +1,73 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.pinmyhelp.util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Connection factory singleton
+ * @author roger
+ */
+public class ConnectionFactory {
+    
+    //Print every change on console
+    public static final boolean PRINT_CONN = true;
+    //Number of connections
+    public static int connections = 0;
+    //Connection
+    public static Connection connection = null;
+    
+    /**
+     * Create a new connection
+     * @return Connection created
+     */
+    private static Connection createConnection(){
+        try {
+            Class.forName(Database.JDBC_DRIVER);
+            return DriverManager.getConnection(Database.URL, Database.USER, Database.PASSWORD);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConnectionMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Driver " + Database.JDBC_DRIVER + " não foi encontrado na memória.");
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionMySQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    /**
+     * Create a new connection or get the current connection
+     * @return database connection 
+     */
+    public static Connection openConnection(){
+        connections++;
+        if (PRINT_CONN)
+            System.out.println(String.format("Connection open!(%d)",connections));
+        if (connection == null)
+            connection = createConnection();
+        return connection;
+    }
+    
+    /**
+     * Close the connection (only if numbers of connection equals zero)
+     */
+    public static void closeConnection(){
+        connections--;
+        if (PRINT_CONN)
+            System.out.println(String.format("Connection close!(%d)",connections));
+        try {
+            if (connections == 0){
+                connection.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+}

@@ -12,8 +12,13 @@ package br.com.pinmyhelp.util;
 public class Database {
     
     public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String USUARIO = "root";
-    static final String SENHA = "968574";
-    static final String URL_CONEXAO = "jdbc:mysql://localhost:5432/pinmyhelp";
+    
+    static final String USER = "root";
+    
+    //static final String PASSWORD = "968574";
+    static final String PASSWORD = "admin";
+    
+    //static final String URL = "jdbc:mysql://localhost:5432/pinmyhelp";
+    static final String URL = "jdbc:mysql://localhost:3306/pinmyhelp";
  
 }

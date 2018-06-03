@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS entity (
     entity_score        DECIMAL(8,2) NOT NULL DEFAULT 0.0,
     entity_notes        TEXT         NULL,
     # INIT ADDRESS INFO - PREFIX: e_
-    e_postal_code       CHAR(8)      NOT NULL, # provides info about country, state and city
+    e_postal_code       CHAR(8)      NULL, # provides info about country, state and city
     e_neighborhood      VARCHAR(255) NULL,
     e_street_number     INT          NULL,
     e_complement        VARCHAR(255) NULL,

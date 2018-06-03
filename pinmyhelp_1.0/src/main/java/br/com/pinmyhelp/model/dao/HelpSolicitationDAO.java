@@ -7,6 +7,7 @@ package br.com.pinmyhelp.model.dao;
 
 import br.com.pinmyhelp.database.AbstractDAO;
 import br.com.pinmyhelp.model.HelpSolicitation;
+import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.sql.PreparedStatement;
@@ -42,7 +43,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
                 + " claimant_id = ? "
                 + "WHERE solicitation_id = ?");
         setDeleteSql("DELETE FROM help_solicitation WHERE solicitation_id = ?");
-        setFindPrimaryKeySql("SELECT * FROM help_solicitation WHERE solicitation_id = ?" );
+        setFindOneSql("SELECT * FROM help_solicitation WHERE solicitation_id = ?" );
         setFindSql("");
         setFindAllSql("SELECT * FROM help_solicitation");
     }
@@ -53,8 +54,8 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         ps.setInt(2, h.getType().getId());
         ps.setTimestamp(3, java.sql.Timestamp.valueOf(h.getStartDate()));
         ps.setTimestamp(4, java.sql.Timestamp.valueOf(h.getEndDate()));
-        ps.setDouble(5, h.getLatitude());
-        ps.setDouble(6, h.getLongitude());
+        ps.setDouble(5, h.getLocation().getLatitude());
+        ps.setDouble(6, h.getLocation().getLongitude());
         ps.setInt(7, h.getClaimant().getId());
     }
 
@@ -64,8 +65,8 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         ps.setInt(2, h.getType().getId());
         ps.setTimestamp(3, java.sql.Timestamp.valueOf(h.getStartDate()));
         ps.setTimestamp(4, java.sql.Timestamp.valueOf(h.getEndDate()));
-        ps.setDouble(5, h.getLatitude());
-        ps.setDouble(6, h.getLongitude());
+        ps.setDouble(5, h.getLocation().getLatitude());
+        ps.setDouble(6, h.getLocation().getLongitude());
         ps.setInt(7, h.getClaimant().getId());
         ps.setInt(1, h.getId());
     }
@@ -88,16 +89,10 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         h.setType(HelpType.get(rs.getInt("solicitation_type")));
         h.setStartDate(rs.getTimestamp("start_date").toLocalDateTime());
         h.setEndDate(rs.getTimestamp("end_date").toLocalDateTime());
-        h.setLatitude(rs.getDouble("s_latitude"));
-        h.setLongitude(rs.getDouble("s_longitude"));
+        h.setLocation(
+                new GeoLocation(rs.getDouble("s_latitude"), rs.getDouble("s_longitude"))
+        );
         return h;
     }
 
-    @Override
-    protected Collection<HelpSolicitation> fillCollection(ResultSet rs) throws SQLException {
-        Collection<HelpSolicitation> solicitations = new ArrayList<>();
-        while(rs.next())
-            solicitations.add(fillRecord(rs));
-        return solicitations;
-    }
 }
