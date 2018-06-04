@@ -11,7 +11,7 @@
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <!-- define o pacote onde o Spring ira buscar as classes (@Controller, etc)  -->
-    <context:component-scan base-package="br.csi" />
+    <context:component-scan base-package="br.com.pinmyhelp" />
     
     <!-- define que o Spring deve usar a configuração das annotations -->
     <mvc:annotation-driven />
@@ -27,10 +27,11 @@
     <!--
     <mvc:interceptors>
         <bean class="br.csi.interceptor.AutorizadorInterceptor" />
-    </mvc:interceptors -->
-    
+    </mvc:interceptors
     <context:component-scan base-package="br.com.pinmyhelp.controller" />
     <mvc:annotation-driven />
+    -->
+    
     <!--
         <bean id="mysqlDataSource" class="org.apache.commons">
         <property name="driverClassName" value="org.postgresql.Driver"/>

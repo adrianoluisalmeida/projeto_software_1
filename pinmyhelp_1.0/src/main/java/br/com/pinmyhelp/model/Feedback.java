@@ -16,6 +16,7 @@ public class Feedback extends Record {
     private User sender;
     private Integer rating;
     private String comments;
+    private HelpSolicitation solicitation;
 
     public Feedback() {
     }
@@ -72,6 +73,21 @@ public class Feedback extends Record {
         this.comments = comments;
     }
 
+
+    /**
+     * @return the solicitation
+     */
+    public HelpSolicitation getSolicitation() {
+        return solicitation;
+    }
+
+    /**
+     * @param solicitation the solicitation to set
+     */
+    public void setSolicitation(HelpSolicitation solicitation) {
+        this.solicitation = solicitation;
+    }
+    
     @Override
     public String toString() {
         return "Feedback{" + "sender=" + sender + ", rating=" + rating + ", comments=" + comments + '}';

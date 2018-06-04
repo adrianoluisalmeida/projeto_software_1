@@ -10,11 +10,13 @@ import br.com.pinmyhelp.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author isabella
  */
+@Component
 public class UserDAO extends AbstractDAO<User> {
     
     public UserDAO(){

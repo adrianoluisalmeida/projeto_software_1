@@ -12,13 +12,13 @@ import br.com.pinmyhelp.model.types.GeoLocation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author isabella
  */
+@Component
 public class EntityDAO extends AbstractDAO<Entity> {
     
     public EntityDAO() {
@@ -49,7 +49,7 @@ public class EntityDAO extends AbstractDAO<Entity> {
                 + " WHERE entity_id = ?");
         setDeleteSql("DELETE FROM entity WHERE entity_id = ?");
         setFindOneSql("SELECT * FROM entity WHERE entity_id = ?");
-        setFindSql("SELECT * FROM entity WHERE entity_name = ?");
+        setFindSql("SELECT * FROM entity WHERE cnpj = ?");
         setFindAllSql("SELECT * FROM entity");
     }
 
@@ -92,7 +92,7 @@ public class EntityDAO extends AbstractDAO<Entity> {
 
     @Override
     protected void fillFind(PreparedStatement ps, Entity e) throws SQLException {
-        ps.setString(1, e.getName());
+        ps.setString(1, e.getCnpj());
     }
 
     @Override

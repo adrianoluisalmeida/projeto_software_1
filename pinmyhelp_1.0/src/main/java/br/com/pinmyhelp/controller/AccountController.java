@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  * @author Adriano
  */
+
 @Controller
 public class AccountController {
     @Autowired

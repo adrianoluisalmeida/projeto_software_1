@@ -33,10 +33,10 @@ public class ConnectionFactory {
             Class.forName(Database.JDBC_DRIVER);
             return DriverManager.getConnection(Database.URL, Database.USER, Database.PASSWORD);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConnectionMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Driver " + Database.JDBC_DRIVER + " não foi encontrado na memória.");
         } catch (SQLException ex) {
-            Logger.getLogger(ConnectionMySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

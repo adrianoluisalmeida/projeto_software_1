@@ -14,12 +14,12 @@ import br.com.pinmyhelp.model.types.GeoLocation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
+import org.springframework.stereotype.Component;
 /**
  *
  * @author rhau
  */
+@Component
 public class PersonDAO extends AbstractDAO<Person>{
     
     public PersonDAO(){

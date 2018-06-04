@@ -6,7 +6,6 @@
 package br.com.pinmyhelp.model.dao;
 
 import br.com.pinmyhelp.database.AbstractDAO;
-import br.com.pinmyhelp.model.Entity;
 import br.com.pinmyhelp.model.HelpOffer;
 import br.com.pinmyhelp.model.HelpSolicitation;
 import br.com.pinmyhelp.model.Voluntary;
@@ -14,13 +13,13 @@ import br.com.pinmyhelp.model.types.OfferStatus;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author isabella
  */
+@Component
 public class HelpOfferDAO extends AbstractDAO<HelpOffer> {
     
     public HelpOfferDAO() {
@@ -28,17 +27,10 @@ public class HelpOfferDAO extends AbstractDAO<HelpOffer> {
         setUpdateSql("UPDATE help_offer SET offer_status = ? WHERE offer_id =  ?");
         setDeleteSql("DELETE FROM help_offer WHERE offer_id =  ?");
         setFindOneSql("SELECT * FROM help_offer WHERE offer_id =  ?");
-        setFindSql("SELECT * FROM help_offer WHERE voluntary_id = ?");
+        setFindSql("SELECT * FROM help_offer WHERE solicitation_id = ?");
         setFindAllSql("SELECT * FROM help_offer");
     }
 
-    /*
-    offer_id            INT               AUTO_INCREMENT,
-    offer_status        INT               NOT NULL, # TODO: change type to ENUM 
-    solicitation_id     INT               NOT NULL,
-    voluntary_id        INT 
-    */
-    
     @Override
     protected void fillCreate(PreparedStatement ps, HelpOffer ho) throws SQLException {
         ps.setInt(1, ho.getStatus().getId());

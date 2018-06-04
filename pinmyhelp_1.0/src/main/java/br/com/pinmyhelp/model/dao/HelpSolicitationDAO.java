@@ -13,13 +13,13 @@ import br.com.pinmyhelp.model.types.HelpType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author isabella
  */
+@Component
 public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
     
     public HelpSolicitationDAO() {
@@ -44,7 +44,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
                 + "WHERE solicitation_id = ?");
         setDeleteSql("DELETE FROM help_solicitation WHERE solicitation_id = ?");
         setFindOneSql("SELECT * FROM help_solicitation WHERE solicitation_id = ?" );
-        setFindSql("");
+        setFindSql("SELECT * FROM help_solicitation WHERE claimant_id = ?");
         setFindAllSql("SELECT * FROM help_solicitation");
     }
     
@@ -78,7 +78,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
 
     @Override
     protected void fillFind(PreparedStatement ps, HelpSolicitation h) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ps.setInt(1, h.getClaimant().getId());
     }
 
     @Override
