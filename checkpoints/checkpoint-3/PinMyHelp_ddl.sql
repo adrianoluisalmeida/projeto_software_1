@@ -1,4 +1,4 @@
-# DROP DATABASE IF EXISTS pinmyhelp;
+DROP DATABASE IF EXISTS pinmyhelp;
 CREATE DATABASE IF NOT EXISTS pinmyhelp;
 USE pinmyhelp;
 
@@ -53,7 +53,8 @@ CREATE TABLE IF NOT EXISTS entity (
     # INIT ADDRESS INFO - PREFIX: e_
     e_postal_code       CHAR(8)      NULL, # provides info about country, state and city
     e_neighborhood      VARCHAR(255) NULL,
-    e_street_number     INT          NULL,
+    e_street     		VARCHAR(255) NULL,
+    e_number     		INT          NULL,
     e_complement        VARCHAR(255) NULL,
     e_latitude          DOUBLE       NULL,     # it helps in the use of google maps api 
     e_longitude         DOUBLE       NULL,     # it helps in the use of google maps api
