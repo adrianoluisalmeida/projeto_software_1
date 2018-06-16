@@ -31,12 +31,12 @@
                         </h3>
                     </div>
                     <div class="md-form">
-                        <input type="text" id="Form-email2" class="form-control" name="email">
-                        <label for="Form-email2">Seu e-mail</label>
+                        <input type="email" id="Form-email" class="form-control" name="email" required>
+                        <label for="Form-email">Seu e-mail</label>
                     </div>
                     <div class="md-form pb-3">
-                        <input type="password" id="Form-pass2" class="form-control" name="password">
-                        <label for="Form-pass2">Senha</label>
+                        <input type="password" id="Form-pass" class="form-control" name="password" required>
+                        <label for="Form-pass">Senha</label>
                         <div class="form-check"></div>
                         <p class="font-small grey-text d-flex justify-content-end">
                             <a href="#" class="font-weight-light ml-1">
@@ -66,7 +66,17 @@
         </section> <!-- ./form-elegant -->
     </div> <!-- ./col -->
     </div> <!-- ./container -->
-                                                                                       
+    
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/mdb.js"></script>
+    <!-- Mask JQuery -->                                              
    
 </body>
 </html>

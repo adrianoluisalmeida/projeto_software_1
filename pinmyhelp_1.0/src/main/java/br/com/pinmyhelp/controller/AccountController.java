@@ -9,6 +9,7 @@ import br.com.pinmyhelp.util.ConnectionFactory;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -37,7 +38,7 @@ public class AccountController {
     }
     
     @RequestMapping(value = "/account/create/person",  method = POST)
-    public String createPerson(@Valid Person person, BindingResult result) {
+    public String createPerson(@Valid Person person, BindingResult result, Model model) {
         if ( result.hasErrors() ) {
             return "register";
         }
@@ -47,12 +48,12 @@ public class AccountController {
         person.setId(userDAO.create(u));        
         personDAO.create(person);
         ConnectionFactory.closeConnection();
-        return "login";
+        return redirectDashboard(model);
     }
     
 
-    @RequestMapping("/account/create/entity")
-    public String createEntity(@Valid Entity entity, BindingResult result) {
+    @RequestMapping(value = "/account/create/entity", method = POST)
+    public String createEntity(@Valid Entity entity, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "register";
         }
@@ -61,7 +62,13 @@ public class AccountController {
         entity.setId(userDAO.create(u));        
         entityDAO.create(entity);
         ConnectionFactory.closeConnection();
-        return "login";
+        return redirectDashboard(model);
+    }
+
+    private String redirectDashboard(Model model) {
+        model.addAttribute("title", "Dashboard");
+        model.addAttribute("page", "dashboard");
+        return "app";
     }
     
 }
