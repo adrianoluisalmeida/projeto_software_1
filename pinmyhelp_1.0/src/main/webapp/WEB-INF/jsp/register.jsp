@@ -54,7 +54,7 @@
                                     <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
                                         <div class="col-md-12" style="padding: 0">
 
-                                            <form action="${pageContext.request.contextPath}/account/create/person" method="POST" enctype="multipart/form-data">        
+                                            <form method="POST" action="${pageContext.request.contextPath}/account/create/person">        
 
                                                 <div class="form-group mb-0 mt-4">
                                                     <select name="type" class="mdb-select form-control">
@@ -84,8 +84,8 @@
 
                                                 <!--Body-->
                                                 <div class="md-form">
-                                                    <input name="bornDate" id="Form-birth" type="text" class="form-control">
                                                     <label for="Form-birth">Data Nascimento</label>
+                                                    <input name="bornDate" id="Form-birth" type="text" class="form-control">
                                                 </div>
 
 
@@ -109,7 +109,7 @@
 
                                                 <div class="row d-flex align-items-center mb-4">
                                                     <div class="col-md-3 col-md-12 text-center">
-                                                        <button type="button"
+                                                        <button type="submit"
                                                                 class="btn btn-pink btn-block btn-rounded z-depth-1 waves-effect waves-light">
                                                             Cadastrar
                                                         </button>
@@ -122,7 +122,7 @@
 
                                     <div class="tab-pane fade" id="panel2" role="tabpanel">
 
-                                        <form action="${pageContext.request.contextPath}/account/create/entity" method="POST"  enctype="multipart/form-data">
+                                        <form action="${pageContext.request.contextPath}/account/create/entity" method="POST">
                                             <!--Body-->
                                             <div class="md-form">
                                                 <input type="text" name="name" id="Form-social-name" class="form-control">
@@ -138,13 +138,13 @@
 
                                             <!--Body-->
                                             <div class="md-form">
-                                                <input name="date_foundation" id="Form-foundation" type="text" class="form-control">
+                                                <input name="foundationDate" id="Form-foundation" type="text" class="form-control">
                                                 <label for="Form-foundation">Data Fundação</label>
                                             </div>
 
 
                                             <div class="md-form">
-                                                <input name="phone" id="Form-phone-entity" type="tel" class="form-control">
+                                                <input name="firstPhone" id="Form-phone-entity" type="tel" class="form-control">
                                                 <label for="Form-phone-entity">Telefone</label>
                                             </div>
 
@@ -205,7 +205,7 @@
 
                                             <div class="row d-flex align-items-center mb-4">
                                                 <div class="col-md-3 col-md-12 text-center">
-                                                    <button type="button"
+                                                    <button type="submit"
                                                             class="btn btn-pink btn-block btn-rounded z-depth-1 waves-effect waves-light">
                                                         Cadastrar
                                                     </button>

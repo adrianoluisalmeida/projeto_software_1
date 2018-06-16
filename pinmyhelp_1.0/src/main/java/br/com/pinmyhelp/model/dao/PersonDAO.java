@@ -7,10 +7,9 @@ package br.com.pinmyhelp.model.dao;
 
 import br.com.pinmyhelp.database.AbstractDAO;
 import br.com.pinmyhelp.model.Address;
-import br.com.pinmyhelp.model.Claimant;
 import br.com.pinmyhelp.model.Person;
-import br.com.pinmyhelp.model.Voluntary;
 import br.com.pinmyhelp.model.types.GeoLocation;
+import br.com.pinmyhelp.util.FormatUtils;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,26 +35,31 @@ public class PersonDAO extends AbstractDAO<Person>{
 
     @Override
     protected void fillCreate(PreparedStatement ps, Person p) throws SQLException {
+        p.removeMasks();
         ps.setInt(1, p.getId());
         
         //Definir tipo descobrindo qual classe está instanciando
+        /*
         if(p instanceof Voluntary){
             ps.setString(2, "Voluntary");
         } else if (p instanceof Claimant){
             ps.setString(2, "Claimant");
-        }        
+        } 
+        */
         //OU fazer com o tipo definido nas classes voluntary ou claimant
-        //ps.setString(2, p.getType());
+        ps.setString(2, p.getType());
         
         ps.setString(3, p.getName());
-        ps.setString(4, p.getCpf());
+        //Removendo mascara de entrada antes de inserir
+        ps.setString(4, FormatUtils.unmaskNumber(p.getCpf()));
         ps.setString(5, p.getRg());
         ps.setDate(6, java.sql.Date.valueOf(p.getBornDate()));
-        ps.setString(7, p.getFirstPhone());
+        ps.setString(7, FormatUtils.unmaskNumber(p.getFirstPhone()));
     }
 
     @Override
     protected void fillUpdate(PreparedStatement ps, Person p) throws SQLException {
+        p.removeMasks();
         ps.setString(1, p.getName());
         ps.setString(2, p.getCpf());
         ps.setString(3, p.getRg());
