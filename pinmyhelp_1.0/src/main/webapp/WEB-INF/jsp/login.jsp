@@ -46,7 +46,7 @@
                     </div>
                     <div class="row d-flex align-items-center mb-4">
                         <div class="col-md-3 col-md-12 text-center">
-                            <a href="${pageContext.request.contextPath}/dashboard" type="button"
+                            <a href="${pageContext.request.contextPath}/dashboard" type=submit"
                                     class="btn btn-pink btn-block btn-rounded z-depth-1 waves-effect waves-light">
                                 Entrar
                             </a>
