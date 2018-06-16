@@ -30,9 +30,6 @@ public class AccountController {
     
     @Autowired
     EntityDAO entityDAO;
-   
-    @Autowired
-    PersonDAO EntityDAO;
         
     @RequestMapping(value = "/account/register", method = GET)
     public String register() {
@@ -41,7 +38,7 @@ public class AccountController {
     
     @RequestMapping(value = "/account/create/person",  method = POST)
     public String createPerson(@Valid Person person, BindingResult result) {
-        if (result.hasErrors()) {
+        if ( result.hasErrors() ) {
             return "register";
         }
         User u = new User(person.getEmail(), person.getPassword());

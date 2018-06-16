@@ -28,13 +28,4 @@ public class ConnectionMySQL {
         return conn;
     }
     
-    
-     
-    
-    
-    
-    
-    
-   
-    
 }

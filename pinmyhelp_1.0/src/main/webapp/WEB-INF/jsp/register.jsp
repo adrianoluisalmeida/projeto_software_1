@@ -57,7 +57,7 @@
                                             <form method="POST" action="${pageContext.request.contextPath}/account/create/person">        
 
                                                 <div class="form-group mb-0 mt-4">
-                                                    <select name="type" class="mdb-select form-control">
+                                                    <select name="type" class="mdb-select form-control" required>
                                                         <option value="" disabled selected>Seu objetivo no Pin My Help</option>
                                                         <option value="Voluntary">Quero Ajudar</option>
                                                         <option value="Entity">Preciso de Ajuda</option>
@@ -246,7 +246,7 @@
             // put mask into form fields
             $(function() {
                 $("#Form-cpf").mask("000.000.000-00", {clearIfNotMatch: true});
-                $("#Form-rg").mask("00000000000000"); // could change between states
+                $("#Form-rg").mask("0000000000"); // could change between states
                 $("#Form-phone").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function(phone, e, field, options){
                     var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
                       mask = (phone.length > 14) ? masks[1] : masks[0];
