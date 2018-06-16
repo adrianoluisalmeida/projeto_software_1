@@ -70,4 +70,9 @@ public class UserDAO extends AbstractDAO<User> {
         u.setId(id);
         return id;
     }
+    
+    public Boolean autenticate(User u) {
+        return find(u) != null;
+    }
+    
 }
