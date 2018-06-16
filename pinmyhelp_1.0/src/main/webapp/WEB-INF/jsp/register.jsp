@@ -18,7 +18,7 @@
     </head>
     <body>
         <div class="container">
-            <div class="col-md-6 center-block" style="margin: 0 auto; margin-top: 100px">
+            <div class="col-md-6 center-block" style="margin: 0 auto; margin-top: 10px">
 
 
                 <section class="form-elegant">
@@ -66,42 +66,42 @@
 
                                                 <!--Body-->
                                                 <div class="md-form">
-                                                    <input type="text" name="name" id="Form-name" class="form-control">
+                                                    <input type="text" name="name" id="Form-name" class="form-control" required>
                                                     <label for="Form-name">Nome</label>
                                                 </div>
 
                                                 <!--Body-->
                                                 <div class="md-form">
-                                                    <input name="cpf" type="text" id="Form-cpf" class="form-control">
+                                                    <input name="cpf" type="text" id="Form-cpf" class="form-control" required>
                                                     <label for="Form-cpf">CPF</label>
                                                 </div>
 
                                                 <!--Body-->
                                                 <div class="md-form">
-                                                    <input name="rg" type="text" id="Form-rg" class="form-control">
+                                                    <input name="rg" type="text" id="Form-rg" class="form-control" required>
                                                     <label for="Form-rg">RG</label>
                                                 </div>
 
                                                 <!--Body-->
                                                 <div class="md-form">
-                                                    <input name="bornDate" id="Form-birth" type="text" class="form-control">
+                                                    <input name="bornDate" id="Form-birth" type="text" class="form-control" required>
                                                     <label for="Form-birth">Data Nascimento</label>
                                                 </div>
 
 
                                                 <div class="md-form">
-                                                    <input name="firstPhone" id="Form-phone" type="tel" class="form-control">
+                                                    <input name="firstPhone" id="Form-phone" type="tel" class="form-control" required>
                                                     <label for="Form-phone">Telefone</label>
                                                 </div>
 
 
                                                 <div class="md-form">
-                                                    <input type="text" name="email" id="Form-email" class="form-control">
+                                                    <input type="email" name="email" id="Form-email" class="form-control" required>
                                                     <label for="Form-email">Seu e-mail</label>
                                                 </div>
 
                                                 <div class="md-form pb-3">
-                                                    <input type="password" id="Form-pass" name="password" class="form-control">
+                                                    <input type="password" id="Form-pass" name="password" class="form-control" required>
                                                     <label for="Form-pass">Senha</label>
                                                     <div class="form-check">
                                                     </div>
@@ -109,7 +109,7 @@
 
                                                 <div class="row d-flex align-items-center mb-4">
                                                     <div class="col-md-3 col-md-12 text-center">
-                                                        <button type="button"
+                                                        <button type="submit"
                                                                 class="btn btn-pink btn-block btn-rounded z-depth-1 waves-effect waves-light">
                                                             Cadastrar
                                                         </button>
@@ -125,37 +125,37 @@
                                         <form action="${pageContext.request.contextPath}/account/create/entity" method="POST"  enctype="multipart/form-data">
                                             <!--Body-->
                                             <div class="md-form">
-                                                <input type="text" name="name" id="Form-social-name" class="form-control">
+                                                <input type="text" name="name" id="Form-social-name" class="form-control" required>
                                                 <label for="Form-social-name">Razão Social</label>
                                             </div>
 
                                             <!--Body-->
                                             <div class="md-form">
-                                                <input name="cnpj" type="text" id="Form-cnpj" class="form-control">
+                                                <input name="cnpj" type="text" id="Form-cnpj" class="form-control" required>
                                                 <label for="Form-cnpj">CNPJ</label>
                                             </div>
 
 
                                             <!--Body-->
                                             <div class="md-form">
-                                                <input name="date_foundation" id="Form-foundation" type="text" class="form-control">
+                                                <input name="date_foundation" id="Form-foundation" type="text" class="form-control" required>
                                                 <label for="Form-foundation">Data Fundação</label>
                                             </div>
 
 
                                             <div class="md-form">
-                                                <input name="phone" id="Form-phone-entity" type="tel" class="form-control">
+                                                <input name="phone" id="Form-phone-entity" type="tel" class="form-control" required>
                                                 <label for="Form-phone-entity">Telefone</label>
                                             </div>
 
 
                                             <div class="md-form">
-                                                <input type="text" name="email" id="Form-email-entity" class="form-control">
-                                                <label for="Form-email-entity">Seu e-mail</label>
+                                                <input type="email" name="email" id="Form-email-entity" class="form-control" required>
+                                                <label for="Form-email-entity">E-mail para contato</label>
                                             </div>
 
                                             <div class="md-form">
-                                                <input type="password" id="Form-pass-entity" name="password" class="form-control">
+                                                <input type="password" id="Form-pass-entity" name="password" class="form-control" required>
                                                 <label for="Form-pass-entity">Senha</label>
                                                 <div class="form-check">
                                                 </div>
@@ -164,14 +164,14 @@
                                             <div class="row height-60">
                                                 <div class="col-8">
                                                     <div class="md-form">
-                                                        <input type="text" name="cep" id="Form-cep" class="form-control">
+                                                        <input type="text" name="cep" id="Form-cep" class="form-control" required>
                                                         <label for="Form-cep">CEP</label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-4">
                                                     <div class="md-form">
-                                                        <input type="text" name="uf" id="Form-uf" class="form-control">
+                                                        <input type="text" name="uf" id="Form-uf" class="form-control" required>
                                                         <label for="Form-uf">UF</label>
                                                     </div>
                                                 </div>
@@ -179,14 +179,14 @@
                                             <div class="row height-60">
                                                 <div class="col-6">
                                                     <div class="md-form">
-                                                        <input type="text" name="distric" id="Form-distric" class="form-control">
+                                                        <input type="text" name="distric" id="Form-distric" class="form-control" required>
                                                         <label for="Form-distric">Bairro</label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-6">
                                                     <div class="md-form">
-                                                        <input type="text" name="city" id="Form-city" class="form-control">
+                                                        <input type="text" name="city" id="Form-city" class="form-control" required>
                                                         <label for="Form-city">Cidade</label>
                                                     </div>
                                                 </div>
@@ -205,7 +205,7 @@
 
                                             <div class="row d-flex align-items-center mb-4">
                                                 <div class="col-md-3 col-md-12 text-center">
-                                                    <button type="button"
+                                                    <button type="submit"
                                                             class="btn btn-pink btn-block btn-rounded z-depth-1 waves-effect waves-light">
                                                         Cadastrar
                                                     </button>
@@ -237,6 +237,32 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/mdb.js"></script>
+        <!-- Mask JQuery -->
+        <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.mask.min.js"></script>
+
+        <script>
+            // put mask into form fields
+            $(function() {
+                $("#Form-cpf").mask("000.000.000-00", {clearIfNotMatch: true});
+                $("#Form-rg").mask("00000000000000"); // could change between states
+                $("#Form-phone").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function(phone, e, field, options){
+                    var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
+                      mask = (phone.length > 14) ? masks[1] : masks[0];
+                      console.log(phone.length);
+                    $("#Form-phone").mask(mask, options);
+                }});                
+                $("#Form-birth").mask("00/00/0000", {clearIfNotMatch: true});
+                $("#Form-cnpj").mask("00.000.000/0000-00", {clearIfNotMatch: true});
+                $("#Form-foundation").mask("00/00/0000", {clearIfNotMatch: true});
+                $("#Form-phone-entity").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function(phone, e, field, options){
+                    var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
+                      mask = (phone.length > 14) ? masks[1] : masks[0];
+                      console.log(phone.length);
+                    $("#Form-phone-entity").mask(mask, options);
+                }});
+                $("#Form-cep").mask("00.000-000", {clearIfNotMatch: true});
+            });
+        </script>
 
     </body>
 </html>

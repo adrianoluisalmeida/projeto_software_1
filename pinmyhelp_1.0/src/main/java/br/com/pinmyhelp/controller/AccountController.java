@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  *
@@ -22,12 +24,15 @@ public class AccountController {
     @Autowired
     PersonDAO personDAO;
    
-    @RequestMapping("/account/register")
+    @Autowired
+    PersonDAO EntityDAO;
+        
+    @RequestMapping(value = "/account/register", method = GET)
     public String register() {
         return "register";
     }
     
-    @RequestMapping("/account/create/person")
+    @RequestMapping(value = "/account/create/person",  method = POST)
     public String createPerson(@Valid Person person, BindingResult result) {
         if (result.hasErrors()) {
             return "register";
@@ -38,7 +43,7 @@ public class AccountController {
         return "login";
     }
     
-    @RequestMapping("/account/create/entity")
+    @RequestMapping(value = "/account/create/entity", method = POST)
     public String createEntity() {
         return "";
     }

@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author rhau
  */
-public class DateUtils {
+public class FormatUtils {
    
     public static Date toDate(String dataString, String mask) {
         SimpleDateFormat formatter = new SimpleDateFormat(mask);
@@ -24,7 +24,7 @@ public class DateUtils {
         try {
             data = formatter.parse(dataString);
         } catch (ParseException ex) {
-            Logger.getLogger(DateUtils.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormatUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
         return data;
     }
