@@ -55,6 +55,7 @@ public class EntityDAO extends AbstractDAO<Entity> {
 
     @Override
     protected void fillCreate(PreparedStatement ps, Entity e) throws SQLException {
+        e.removeMasks();
         ps.setInt(1, e.getId());
         ps.setString(2, e.getName());
         ps.setString(3, e.getCnpj());
@@ -64,6 +65,7 @@ public class EntityDAO extends AbstractDAO<Entity> {
 
     @Override
     protected void fillUpdate(PreparedStatement ps, Entity e) throws SQLException {
+        e.removeMasks();
         ps.setString(2, e.getName());
         ps.setString(3, e.getCnpj());
         ps.setDate(4, java.sql.Date.valueOf(e.getFoundationDate()));

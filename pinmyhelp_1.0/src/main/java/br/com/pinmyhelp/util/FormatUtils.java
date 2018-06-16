@@ -34,4 +34,19 @@ public class FormatUtils {
         return formatter.format(data);
     }
 
+    /**
+     * Remove the input mask from string and return numbers only
+     * @param maskedString - Strign to remove mask
+     * @return String - unmaskedString
+     */
+    public static String unmaskNumber(String maskedString){
+        StringBuilder builder = new StringBuilder();
+        char array[] = maskedString.toCharArray();
+        for (char c : array) {
+            if (Character.isDigit(c))
+                builder.append(c);
+        }
+        return builder.toString();
+    }
+    
 }

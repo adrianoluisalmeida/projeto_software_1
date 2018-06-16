@@ -5,7 +5,9 @@
  */
 package br.com.pinmyhelp.model;
 
+import br.com.pinmyhelp.util.FormatUtils;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -17,6 +19,7 @@ public class Person extends User {
     private String name;
     private String cpf;
     private String rg;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate bornDate;
     private String firstPhone;
     private String secondPhone;
@@ -214,6 +217,20 @@ public class Person extends User {
     @Override
     public String toString() {
         return "Person{" + "name=" + name + ", cpf=" + cpf + ", rg=" + rg + ", bornDate=" + bornDate + ", firstPhone=" + firstPhone + ", secondPhone=" + secondPhone + ", biography=" + biography + ", score=" + score + ", address=" + address + ", notes=" + notes + '}';
+    }
+    
+    /**
+     * Remove mascaras de entrada
+     */
+    public void removeMasks(){
+        if (cpf != null)
+            cpf = FormatUtils.unmaskNumber(cpf);
+        if (firstPhone != null)
+            firstPhone = FormatUtils.unmaskNumber(firstPhone);
+        if (secondPhone != null)
+            firstPhone = FormatUtils.unmaskNumber(firstPhone);
+        if (address != null && address.getPostalCode() != null)
+            address.setPostalCode(FormatUtils.unmaskNumber(address.getPostalCode()));
     }
    
 }

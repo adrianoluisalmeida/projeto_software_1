@@ -64,6 +64,7 @@ public class ConnectionFactory {
         try {
             if (connections == 0){
                 connection.close();
+                connection = null;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);

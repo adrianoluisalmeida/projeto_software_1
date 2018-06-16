@@ -5,8 +5,9 @@
  */
 package br.com.pinmyhelp.model;
 
-import java.sql.Date;
+import br.com.pinmyhelp.util.FormatUtils;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Entity extends User {
     
     private String name;
     private String cnpj;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate foundationDate;
     private String firstPhone;
     private String secondPhone;
@@ -184,6 +186,20 @@ public class Entity extends User {
      */
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+    
+    /**
+     * Remove mascaras de entrada
+     */
+    public void removeMasks(){
+        if (cnpj != null)
+            cnpj = FormatUtils.unmaskNumber(cnpj);
+        if (firstPhone != null)
+            firstPhone = FormatUtils.unmaskNumber(firstPhone);
+        if (secondPhone != null)
+            firstPhone = FormatUtils.unmaskNumber(firstPhone);
+        if (address != null && address.getPostalCode() != null)
+            address.setPostalCode(FormatUtils.unmaskNumber(address.getPostalCode()));
     }
    
 }

@@ -15,7 +15,7 @@ public class User extends Record {
     
     protected String email;
     protected String password;
-    protected Boolean isAdmin;
+    protected boolean isAdmin = false;
 
     public User() {
     }
@@ -66,14 +66,14 @@ public class User extends Record {
     /**
      * @return true if the user is an admin
      */
-    public Boolean isAdmin() {
+    public boolean isAdmin() {
         return isAdmin;
     }
 
     /**
      * @param isAdmin the boolean to set if the user is admin or not
      */
-    public void setAdmin(Boolean isAdmin) {
+    public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
