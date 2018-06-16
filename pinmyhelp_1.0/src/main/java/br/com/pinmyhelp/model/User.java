@@ -6,20 +6,26 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author rhau
  */
 public class User extends Record {
-    
+
+    @NotNull(message = "O campo e-mail deve ser preenchido")
+    @Size(min = 4, message = "E-mail deve ter pelo menos 4 carateres")
     protected String email;
+    @NotNull(message = "O campo senha deve ser preenchido")
+    @Size(min = 4, message = "Senha deve ter pelo menos 4 carateres")
     protected String password;
     protected boolean isAdmin = false;
 
     public User() {
     }
-    
+
     public User(Integer id) {
         super(id);
     }
@@ -81,5 +87,5 @@ public class User extends Record {
     public String toString() {
         return "User{" + "email=" + email + ", password=" + password + ", isAdmin=" + isAdmin + '}';
     }
-    
+
 }
