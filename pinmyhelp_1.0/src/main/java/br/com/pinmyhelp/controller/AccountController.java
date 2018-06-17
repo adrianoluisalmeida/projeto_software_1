@@ -6,6 +6,7 @@ import br.com.pinmyhelp.model.dao.EntityDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
 import br.com.pinmyhelp.util.ConnectionFactory;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,15 @@ public class AccountController {
     @Autowired
     EntityDAO entityDAO;
         
+    @RequestMapping(value = "/account/login", method = POST)
+    public String index(@Valid User user, BindingResult result, Model model, HttpSession session) {
+        if ( result.hasErrors() || !userDAO.autenticate(user) )
+                return "login";
+        System.out.println("going to redirect");
+        session.setAttribute("user", user);
+        return "redirect:dashboard";
+    }
+    
     @RequestMapping(value = "/account/register", method = GET)
     public String register() {
         return "register";

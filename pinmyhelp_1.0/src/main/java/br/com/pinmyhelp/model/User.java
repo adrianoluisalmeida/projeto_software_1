@@ -6,12 +6,13 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
+import java.io.Serializable;
 
 /**
  *
  * @author rhau
  */
-public class User extends Record {
+public class User extends Record implements Serializable {
     
     protected String email;
     protected String password;
