@@ -42,7 +42,6 @@ public class AccountController {
         if (result.hasErrors()) {
             return "register";
         }
-        System.out.println(person);
         User u = new User(person.getEmail(), person.getPassword());
         // create one single connection for two inserts
         ConnectionFactory.openConnection();
