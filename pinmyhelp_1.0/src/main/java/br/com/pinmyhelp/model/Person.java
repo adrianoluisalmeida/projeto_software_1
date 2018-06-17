@@ -22,11 +22,11 @@ public class Person extends User {
     @NotNull(message = "O nome deve ser preenchido")
     @Size(min = 5, message = "Nome deve ter pelo menos 5 carateres")
     private String name;
-     @NotNull(message = "O CPF deve ser preenchido")
+    @NotNull(message = "O CPF deve ser preenchido")
     private String cpf;
     private String rg;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @NotNull(message = "A Data de Nascimento deve ser preenchido")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate bornDate;
     @NotNull(message = "O Primeiro telefone deve ser preenchido")
     private String firstPhone;

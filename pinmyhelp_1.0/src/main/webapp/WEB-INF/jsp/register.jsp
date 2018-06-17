@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -57,54 +59,59 @@
                                             <form method="POST" action="${pageContext.request.contextPath}/account/create/person">        
 
                                                 <div class="form-group mb-0 mt-4">
-                                                    <select name="type" class="mdb-select form-control" required>
+                                                    <select name="type" value="Entity" class="mdb-select form-control" required>
                                                         <option value="" disabled selected>Seu objetivo no Pin My Help</option>
-                                                        <option value="Voluntary">Quero Ajudar</option>
-                                                        <option value="Entity">Preciso de Ajuda</option>
+
+                                                        <option value="Voluntary" selected="${person.type == 'Voluntary' ? 'selected' : ''}">Quero Ajudar</option>
+                                                        <option value="Entity" selected="${person.type == 'Entity' ? 'selected' : ''}">Preciso de Ajuda</option>
                                                     </select>
                                                 </div>
 
                                                 <!--Body-->
                                                 <div class="md-form">
-                                                    <input type="text" name="name" id="Form-name" class="form-control" required>
+                                                    <input type="text" name="name" id="Form-name" value="${person.name}"  class="form-control">
                                                     <label for="Form-name">Nome</label>
+                                                    <form:errors path="person.name" cssStyle="color:red"/>
                                                 </div>
 
                                                 <!--Body-->
                                                 <div class="md-form">
-                                                    <input name="cpf" type="text" id="Form-cpf" class="form-control" required>
+                                                    <input name="cpf" type="text" id="Form-cpf" value="${person.cpf}" class="form-control">
                                                     <label for="Form-cpf">CPF</label>
+                                                    <form:errors path="person.cpf" cssStyle="color:red"/>
                                                 </div>
 
                                                 <!--Body-->
                                                 <div class="md-form">
-                                                    <input name="rg" type="text" id="Form-rg" class="form-control" required>
+                                                    <input name="rg" type="text" id="Form-rg" value="${person.rg}" class="form-control">
                                                     <label for="Form-rg">RG</label>
                                                 </div>
 
+
                                                 <!--Body-->
                                                 <div class="md-form">
-                                                    <input name="bornDate" id="Form-birth" type="text" class="form-control" required>
+                                                    <input name="bornDate" id="Form-birth"  value="${person.bornDate}" type="text" class="form-control" required>
                                                     <label for="Form-birth">Data Nascimento</label>
                                                 </div>
 
 
                                                 <div class="md-form">
-                                                    <input name="firstPhone" id="Form-phone" type="tel" class="form-control" required>
+                                                    <input name="firstPhone" id="Form-phone" type="tel" value="${person.firstPhone}" class="form-control">
                                                     <label for="Form-phone">Telefone</label>
+                                                    <form:errors path="person.firstPhone" cssStyle="color:red"/>
                                                 </div>
 
 
                                                 <div class="md-form">
-                                                    <input type="email" name="email" id="Form-email" class="form-control" required>
+                                                    <input type="email" name="email" id="Form-email" value="${person.email}" class="form-control">
                                                     <label for="Form-email">Seu e-mail</label>
+                                                    <form:errors path="person.email" cssStyle="color:red"/>
                                                 </div>
 
                                                 <div class="md-form pb-3">
-                                                    <input type="password" id="Form-pass" name="password" class="form-control" required>
+                                                    <input type="password" id="Form-pass" name="password"  class="form-control">
                                                     <label for="Form-pass">Senha</label>
-                                                    <div class="form-check">
-                                                    </div>
+                                                    <form:errors path="person.password" cssStyle="color:red"/>
                                                 </div>
 
                                                 <div class="row d-flex align-items-center mb-4">
@@ -125,55 +132,58 @@
                                         <form action="${pageContext.request.contextPath}/account/create/entity" method="POST">
                                             <!--Body-->
                                             <div class="md-form">
-                                                <input type="text" name="name" id="Form-social-name" class="form-control" required>
+                                                <input type="text" name="name" id="Form-social-name" value="${entity.name}" class="form-control">
                                                 <label for="Form-social-name">Razão Social</label>
+                                                <form:errors path="entity.name" cssStyle="color:red"/>
                                             </div>
 
                                             <!--Body-->
                                             <div class="md-form">
-                                                <input name="cnpj" type="text" id="Form-cnpj" class="form-control" required>
+                                                <input name="cnpj" type="text" id="Form-cnpj" value="${entity.cnpj}"  class="form-control">
                                                 <label for="Form-cnpj">CNPJ</label>
+                                                <form:errors path="entity.cnpj" cssStyle="color:red"/>
                                             </div>
 
 
                                             <!--Body-->
                                             <div class="md-form">
 
-                                                <input name="foundationDate" id="Form-foundation" type="text" class="form-control" required>
+                                                <input name="foundationDate" id="Form-foundation" value="${entity.foundationDate}" type="text" class="form-control" required>
                                                 <label for="Form-foundation">Data Fundação</label>
                                             </div>
 
 
                                             <div class="md-form">
 
-                                                <input name="firstPhone" id="Form-phone-entity" type="tel" class="form-control" required>
+                                                <input name="firstPhone" id="Form-phone-entity" value="${entity.firstPhone}"  type="tel" class="form-control">
                                                 <label for="Form-phone-entity">Telefone</label>
+                                                <form:errors path="entity.firstPhone" cssStyle="color:red"/>
                                             </div>
 
 
                                             <div class="md-form">
-                                                <input type="email" name="email" id="Form-email-entity" class="form-control" required>
-                                                <label for="Form-email-entity">E-mail para contato</label>
+                                                <input type="email" name="email" id="Form-email-entity" value="${entity.email}"  class="form-control">
+                                                <label for="Form-email-entity">E-mail para contato e login</label>
+                                                <form:errors path="entity.email" cssStyle="color:red"/>
                                             </div>
 
                                             <div class="md-form">
-                                                <input type="password" id="Form-pass-entity" name="password" class="form-control" required>
+                                                <input type="password" id="Form-pass-entity" name="password" class="form-control">
                                                 <label for="Form-pass-entity">Senha</label>
-                                                <div class="form-check">
-                                                </div>
+                                                <form:errors path="entity.password" cssStyle="color:red"/>
                                             </div>
                                             <h4>Endereço</h4>
                                             <div class="row height-60">
                                                 <div class="col-8">
                                                     <div class="md-form">
-                                                        <input type="text" name="cep" id="Form-cep" class="form-control" required>
+                                                        <input type="text" name="cep" value="${entity.address.cep}" id="Form-cep" class="form-control" >
                                                         <label for="Form-cep">CEP</label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-4">
                                                     <div class="md-form">
-                                                        <input type="text" name="uf" id="Form-uf" class="form-control" required>
+                                                        <input type="text" name="uf" value="${entity.address.uf}" id="Form-uf" class="form-control" >
                                                         <label for="Form-uf">UF</label>
                                                     </div>
                                                 </div>
@@ -181,25 +191,25 @@
                                             <div class="row height-60">
                                                 <div class="col-6">
                                                     <div class="md-form">
-                                                        <input type="text" name="distric" id="Form-distric" class="form-control" required>
+                                                        <input type="text" name="distric" value="${entity.address.distric}" id="Form-distric" class="form-control" >
                                                         <label for="Form-distric">Bairro</label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-6">
                                                     <div class="md-form">
-                                                        <input type="text" name="city" id="Form-city" class="form-control" required>
+                                                        <input type="text" name="city" value="${entity.address.city}" id="Form-city" class="form-control" >
                                                         <label for="Form-city">Cidade</label>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="md-form">
-                                                <input type="text" name="complement" id="Form-complement" class="form-control">
+                                                <input type="text" name="complement" value="${entity.address.complement}" id="Form-complement" class="form-control">
                                                 <label for="Form-complement">Complemento</label>
                                             </div>
-                                            <div class="md-form">
-                                                <textarea name="description" id="Form-description" class="form-control"></textarea>
+                                            <div class="md-form"> 
+                                                <textarea name="description" id="Form-description"   value="${entity.description}" class="form-control"></textarea>
                                                 <!--<input type="text" name="description" >-->
                                                 <label for="Form-description">Descrição da entidade</label>
                                             </div>
@@ -244,24 +254,24 @@
 
         <script>
             // put mask into form fields
-            $(function() {
+            $(function () {
                 $("#Form-cpf").mask("000.000.000-00", {clearIfNotMatch: true});
                 $("#Form-rg").mask("0000000000"); // could change between states
-                $("#Form-phone").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function(phone, e, field, options){
-                    var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
-                      mask = (phone.length > 14) ? masks[1] : masks[0];
-                      console.log(phone.length);
-                    $("#Form-phone").mask(mask, options);
-                }});                
+                $("#Form-phone").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function (phone, e, field, options) {
+                        var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
+                        mask = (phone.length > 14) ? masks[1] : masks[0];
+                        console.log(phone.length);
+                        $("#Form-phone").mask(mask, options);
+                    }});
                 $("#Form-birth").mask("00/00/0000", {clearIfNotMatch: true});
                 $("#Form-cnpj").mask("00.000.000/0000-00", {clearIfNotMatch: true});
                 $("#Form-foundation").mask("00/00/0000", {clearIfNotMatch: true});
-                $("#Form-phone-entity").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function(phone, e, field, options){
-                    var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
-                      mask = (phone.length > 14) ? masks[1] : masks[0];
-                      console.log(phone.length);
-                    $("#Form-phone-entity").mask(mask, options);
-                }});
+                $("#Form-phone-entity").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function (phone, e, field, options) {
+                        var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
+                        mask = (phone.length > 14) ? masks[1] : masks[0];
+                        console.log(phone.length);
+                        $("#Form-phone-entity").mask(mask, options);
+                    }});
                 $("#Form-cep").mask("00.000-000", {clearIfNotMatch: true});
             });
         </script>
