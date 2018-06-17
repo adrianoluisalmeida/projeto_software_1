@@ -42,8 +42,9 @@ public class AccountController {
         if ( result.hasErrors() ) {
             return "register";
         }
+        System.out.println(person);
         User u = new User(person.getEmail(), person.getPassword());
-        //Criar apenas uma conexão para as 2 insersões
+        // create one single connection for two inserts
         ConnectionFactory.openConnection();
         person.setId(userDAO.create(u));        
         personDAO.create(person);
@@ -58,6 +59,7 @@ public class AccountController {
             return "register";
         }
         User u = new User(entity.getEmail(), entity.getPassword());
+        // create one single connection for two inserts
         ConnectionFactory.openConnection();
         entity.setId(userDAO.create(u));        
         entityDAO.create(entity);

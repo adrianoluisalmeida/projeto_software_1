@@ -17,13 +17,14 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class Person extends User {
     
-    
+    @NotNull(message = "Selecione uma opção")
     private String type;
     @NotNull(message = "O nome deve ser preenchido")
     @Size(min = 5, message = "Nome deve ter pelo menos 5 carateres")
     private String name;
     @NotNull(message = "O CPF deve ser preenchido")
     private String cpf;
+    @NotNull(message = "O RG deve ser preenchido")
     private String rg;
     @NotNull(message = "A Data de Nascimento deve ser preenchido")
     @DateTimeFormat(pattern = "dd/MM/yyyy")

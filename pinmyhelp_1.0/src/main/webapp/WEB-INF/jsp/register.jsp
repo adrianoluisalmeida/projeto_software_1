@@ -56,15 +56,16 @@
                                     <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
                                         <div class="col-md-12" style="padding: 0">
 
-                                            <form method="POST" action="${pageContext.request.contextPath}/account/create/person">        
+                                            <form method="POST" action="${pageContext.request.contextPath}/account/store/person">        
 
                                                 <div class="form-group mb-0 mt-4">
                                                     <select name="type" value="Entity" class="mdb-select form-control" required>
                                                         <option value="" disabled selected>Seu objetivo no Pin My Help</option>
 
-                                                        <option value="Voluntary" selected="${person.type == 'Voluntary' ? 'selected' : ''}">Quero Ajudar</option>
-                                                        <option value="Entity" selected="${person.type == 'Entity' ? 'selected' : ''}">Preciso de Ajuda</option>
+                                                        <option value="Voluntary" ${person.type == 'Voluntary' ? 'selected' : ''}">Quero Ajudar</option>
+                                                        <option value="Claimant" ${person.type == 'Claimant' ? 'selected' : ''}">Preciso de Ajuda</option>
                                                     </select>
+                                                    <form:errors path="person.type" cssStyle="color:red"/>
                                                 </div>
 
                                                 <!--Body-->
@@ -85,6 +86,7 @@
                                                 <div class="md-form">
                                                     <input name="rg" type="text" id="Form-rg" value="${person.rg}" class="form-control">
                                                     <label for="Form-rg">RG</label>
+                                                    <form:errors path="person.rg" cssStyle="color:red"/>
                                                 </div>
 
 
@@ -129,7 +131,7 @@
 
                                     <div class="tab-pane fade" id="panel2" role="tabpanel">
 
-                                        <form action="${pageContext.request.contextPath}/account/create/entity" method="POST">
+                                        <form action="${pageContext.request.contextPath}/account/store/entity" method="POST">
                                             <!--Body-->
                                             <div class="md-form">
                                                 <input type="text" name="name" id="Form-social-name" value="${entity.name}" class="form-control">

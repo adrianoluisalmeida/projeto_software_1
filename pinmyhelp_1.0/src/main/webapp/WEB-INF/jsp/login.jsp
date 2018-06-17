@@ -55,7 +55,7 @@
                         <br/>
                         <div class="col-md-12 mt-4">
                             <p class="font-small grey-text d-flex justify-content-center">Ainda não tem conta?
-                                <a href="${pageContext.request.contextPath}/account/register" class="font-weight-light ml-1"> Fazer Cadastro</a>
+                                <a href="${pageContext.request.contextPath}/account/create" class="font-weight-light ml-1"> Fazer Cadastro</a>
                             </p>
                         </div>
                     </div>
