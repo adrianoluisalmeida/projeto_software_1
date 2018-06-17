@@ -12,6 +12,8 @@ import br.com.pinmyhelp.model.types.HelpType;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -21,10 +23,12 @@ public class HelpSolicitation extends Record {
     
     private Claimant claimant;
     private Entity entity;
+      @NotNull(message = "O tipo deve ser preenchido")
     private HelpType type;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private GeoLocation location;
+    @Pattern(regexp="[\\d]{6}", message = "Tipo de dado inválido no campo status.")
     private HelpStatus status;
     private Collection<HelpOffer> helpOffers = new ArrayList<>();
     private Feedback feedback; // feedback do Voluntario (ou Entidade) sobre a solicitacao

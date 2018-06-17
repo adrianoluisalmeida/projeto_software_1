@@ -6,6 +6,7 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.model.types.GeoLocation;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Address {
     private String city;
     private String neighborhood;
     private String street;
+    @Pattern(regexp="[\\d]{6}", message = "Tipo de dado inválido no campo número.")
     private Integer number;
     private String complement;
     private GeoLocation location;

@@ -6,14 +6,18 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  *
  * @author rhau
  */
 public class Feedback extends Record {
-    
+
     private User sender;
+    @NotNull(message = "Você deve dar uma nota de avaliação")
+    @Pattern(regexp = "[\\d]{6}", message = "Tipo de dado inválido no campo avaliação.")
     private Integer rating;
     private String comments;
     private HelpSolicitation solicitation;
@@ -73,7 +77,6 @@ public class Feedback extends Record {
         this.comments = comments;
     }
 
-
     /**
      * @return the solicitation
      */
@@ -87,10 +90,10 @@ public class Feedback extends Record {
     public void setSolicitation(HelpSolicitation solicitation) {
         this.solicitation = solicitation;
     }
-    
+
     @Override
     public String toString() {
         return "Feedback{" + "sender=" + sender + ", rating=" + rating + ", comments=" + comments + '}';
     }
-    
+
 }
