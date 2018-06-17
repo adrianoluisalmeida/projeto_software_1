@@ -5,7 +5,6 @@
  */
 package br.com.pinmyhelp.database;
 
-import br.com.pinmyhelp.util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

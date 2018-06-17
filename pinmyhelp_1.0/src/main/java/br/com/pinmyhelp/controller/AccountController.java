@@ -5,7 +5,7 @@ import br.com.pinmyhelp.model.User;
 import br.com.pinmyhelp.model.dao.EntityDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
-import br.com.pinmyhelp.util.ConnectionFactory;
+import br.com.pinmyhelp.database.ConnectionFactory;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

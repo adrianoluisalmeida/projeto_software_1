@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.pinmyhelp.util;
+package br.com.pinmyhelp.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

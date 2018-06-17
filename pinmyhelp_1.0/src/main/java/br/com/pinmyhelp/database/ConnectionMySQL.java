@@ -1,4 +1,4 @@
-package br.com.pinmyhelp.util;
+package br.com.pinmyhelp.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
