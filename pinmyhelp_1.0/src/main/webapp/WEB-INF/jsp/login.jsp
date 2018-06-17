@@ -24,7 +24,7 @@
         <section class="form-light">
             <div class="card">
             <div class="card-body mx-4">
-                <form method="POST" action="${pageContext.request.contextPath}/account/login" name="send_login">
+                <form method="POST" action="${pageContext.request.contextPath}/sign-in" name="send_login">
                     <div class="text-center">
                         <h3 class="pink-text mb-5">
                             <strong>Pin My Help</strong>

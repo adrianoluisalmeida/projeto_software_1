@@ -90,7 +90,7 @@ public class AccountController {
         return "";
     }
     
-    @RequestMapping(value = "/account/delete/entity{idEntity}", method = GET)
+    @RequestMapping(value = "/account/delete/entity{/idEntity}", method = GET)
     public String deleteEntity() {
         return "";
     }
