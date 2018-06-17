@@ -32,12 +32,12 @@ public class AccountController {
     @Autowired
     EntityDAO entityDAO;
         
-    @RequestMapping(value = "/account/register", method = GET)
+    @RequestMapping(value = "/account/create", method = GET)
     public String register() {
         return "register";
     }
     
-    @RequestMapping(value = "/account/create/person",  method = POST)
+    @RequestMapping(value = "/account/store/person",  method = POST)
     public String createPerson(@Valid Person person, BindingResult result, Model model) {
         if ( result.hasErrors() ) {
             return "register";
@@ -52,7 +52,7 @@ public class AccountController {
     }
     
 
-    @RequestMapping(value = "/account/create/entity", method = POST)
+    @RequestMapping(value = "/account/store/entity", method = POST)
     public String createEntity(@Valid Entity entity, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "register";
@@ -64,7 +64,37 @@ public class AccountController {
         ConnectionFactory.closeConnection();
         return redirectDashboard(model);
     }
-
+    
+    @RequestMapping(value = "/account/edit/person/{idPerson}", method = GET)
+    public String editPerson() {
+        return "";
+    }
+    
+    @RequestMapping(value = "/account/edit/entity/{idEntity}", method = GET)
+    public String editEntity() {
+        return "";
+    }
+    
+    @RequestMapping(value = "/account/update/person", method = POST)
+    public String updatePerson() {
+        return "";
+    }
+    
+    @RequestMapping(value = "/account/update/entity", method = POST)
+    public String updateEntity() {
+        return "";
+    }
+         
+    @RequestMapping(value = "/account/delete/person/{idPerson}", method = GET)
+    public String deletePerson() {
+        return "";
+    }
+    
+    @RequestMapping(value = "/account/delete/entity{idEntity}", method = GET)
+    public String deleteEntity() {
+        return "";
+    }
+       
     private String redirectDashboard(Model model) {
         model.addAttribute("title", "Dashboard");
         model.addAttribute("page", "dashboard");
