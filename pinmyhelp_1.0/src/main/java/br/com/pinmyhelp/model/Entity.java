@@ -7,6 +7,8 @@ package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.util.FormatUtils;
 import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -15,10 +17,14 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class Entity extends User {
     
+    @NotNull(message = "O nome deve ser preenchido")
+    @Size(min = 5, message = "Nome deve ter pelo menos 5 carateres")
     private String name;
+    @NotNull(message = "O CNPJ deve ser preenchido")
     private String cnpj;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate foundationDate;
+    @NotNull(message = "O primeiro telefone deve ser preenchido")
     private String firstPhone;
     private String secondPhone;
     private String description;

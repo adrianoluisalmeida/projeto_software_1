@@ -24,7 +24,7 @@
         <section class="form-light">
             <div class="card">
             <div class="card-body mx-4">
-                <form action="#" name="send_login">
+                <form method="POST" action="${pageContext.request.contextPath}/account/login" name="send_login">
                     <div class="text-center">
                         <h3 class="pink-text mb-5">
                             <strong>Pin My Help</strong>
@@ -46,10 +46,10 @@
                     </div>
                     <div class="row d-flex align-items-center mb-4">
                         <div class="col-md-3 col-md-12 text-center">
-                            <a href="${pageContext.request.contextPath}/dashboard" type="button"
+                            <button type=submit"
                                     class="btn btn-pink btn-block btn-rounded z-depth-1 waves-effect waves-light">
                                 Entrar
-                            </a>
+                            </button>
                         </div>
                         <div class="clearfix"></div>
                         <br/>
