@@ -38,7 +38,7 @@ public class LoginController {
     @RequestMapping(value = "sign-out", method = GET)
     public String index(HttpSession session) {
         session.invalidate();
-        return "index";
+        return "login";
     }
     
 }

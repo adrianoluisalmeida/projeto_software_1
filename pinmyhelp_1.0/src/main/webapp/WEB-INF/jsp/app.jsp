@@ -56,20 +56,30 @@
                 <!-- Icons -->
                 <ul class="navbar-nav ml-auto nav-flex-icons justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link waves-effect waves-light">1
+                        <a class="nav-link waves-effect waves-light"> <c:if test="${not empty messages}">messages.quantity</c:if>
                             <i class="fa fa-envelope"></i>
                         </a>
                     </li>
                     <li class="nav-item avatar dropdown">
                         <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" width="30px"
-                                 class="rounded-circle z-depth-0" alt="avatar image">
+                        <c:choose>
+                            <c:when test="${not empty profile.imageUrl}">
+                               <img src="${profile.imageUrl}" width="30px"
+                               class="rounded-circle z-depth-0" alt="avatar image">
+                            </c:when>
+                            <c:otherwise>
+                                <i class="fa fa-user-circle" style="font-size: 20pt;"></i>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:if test="${not empty profile.image}">
+                            
+                        </c:if>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-secondary"
                              aria-labelledby="navbarDropdownMenuLink-5">
                             <a class="dropdown-item waves-effect waves-light" href="#">Meu Perfil</a>
-                            <a class="dropdown-item waves-effect waves-light" href="#">Sair</a>
+                            <a class="dropdown-item waves-effect waves-light" href="${pageContext.request.contextPath}/sign-out">Sair</a>
                         </div>
                     </li>
                 </ul>
