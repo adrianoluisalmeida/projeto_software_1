@@ -21,8 +21,8 @@ public class User extends Record implements Serializable {
     @NotNull(message = "O campo e-mail deve ser preenchido")
     @Size(min = 4, message = "E-mail deve ter pelo menos 4 carateres")
     protected String email;
-    @NotNull(message = "O campo senha deve ser preenchido")
-    @Size(min = 4, message = "Senha deve ter pelo menos 4 carateres")
+    //@NotNull(message = "O campo senha deve ser preenchido")
+    //@Size(min = 4, message = "Senha deve ter pelo menos 4 carateres")
     protected String password;
     protected boolean isAdmin = false;
 

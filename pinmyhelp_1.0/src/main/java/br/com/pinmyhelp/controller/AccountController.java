@@ -54,7 +54,8 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account/store/entity", method = POST)
-    public String createEntity(@Valid Entity entity, BindingResult result, Model model) {
+    public String createEntity(@Valid Entity entity, Address address, BindingResult result, Model model) {
+        entity.setAddress(address);
         if (result.hasErrors()) {
             return "register";
         }

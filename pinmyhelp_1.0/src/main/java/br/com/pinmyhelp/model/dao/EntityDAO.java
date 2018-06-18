@@ -8,7 +8,6 @@ package br.com.pinmyhelp.model.dao;
 import br.com.pinmyhelp.database.AbstractDAO;
 import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.Entity;
-import br.com.pinmyhelp.model.User;
 import br.com.pinmyhelp.model.types.GeoLocation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,8 +27,13 @@ public class EntityDAO extends AbstractDAO<Entity> {
                 + " entity_name,"
                 + " cnpj,"
                 + " foundation_date,"
-                + " entity_first_phone"
-                + ") VALUES (?,?,?,?,?) ");
+                + " entity_first_phone,"
+                + " e_postal_code,"
+                + " e_neighborhood,"
+                + " e_street,"
+                + " e_number,"
+                + " e_complement"
+                + ") VALUES (?,?,?,?,?,?,?,?,?,?) ");
         setUpdateSql("UPDATE entity SET"
                 + " entity_name = ?,"
                 + " cnpj = ?,"
@@ -62,6 +66,11 @@ public class EntityDAO extends AbstractDAO<Entity> {
         ps.setString(3, e.getCnpj());
         ps.setDate(4, java.sql.Date.valueOf(e.getFoundationDate()));
         ps.setString(5, e.getFirstPhone());
+        ps.setString(6, e.getAddress().getPostalCode());
+        ps.setString(7, e.getAddress().getNeighborhood());
+        ps.setString(8, e.getAddress().getStreet());
+        ps.setObject(9, e.getAddress().getNumber());
+        ps.setString(10, e.getAddress().getComplement());
     }
 
     @Override

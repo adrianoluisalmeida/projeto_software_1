@@ -41,7 +41,11 @@
 </div>
 
 <div class="md-form">
-    <input type="password" id="Form-pass-entity" name="password" value="${entity.password}" class="form-control">
+    <input type="password" id="Form-pass-entity" name="password" 
+           <c:if test="${empty entity.id}">
+               required 
+           </c:if>
+           value="${entity.password}" class="form-control">
     <label for="Form-pass-entity">Senha</label>
     <form:errors path="entity.password" cssStyle="color:red"/>
 </div>

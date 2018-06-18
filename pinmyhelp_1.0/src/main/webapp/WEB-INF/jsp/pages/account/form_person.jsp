@@ -47,60 +47,64 @@
 </div>
 
 <div class="md-form pb-3">
-    <input type="password" id="Form-pass" name="password" value="${person.password}" class="form-control">
+    <input type="password" id="Form-pass" name="password" 
+           <c:if test="${empty person.id}">
+                required 
+           </c:if>
+           value="${person.password}" class="form-control">
     <label for="Form-pass">Senha</label>
     <form:errors path="person.password" cssStyle="color:red"/>
 </div>
+<c:if test="${not empty person.id}">
+    <h4>Endereço</h4>
+    <div class="row height-60">
+        <div class="col-8">
+            <div class="md-form">
+                <input type="text" name="postalCode" value="${person.address.postalCode}" id="Form-cep" class="form-control" >
+                <label for="Form-cep">CEP</label>
+            </div>
+        </div>
 
-<h4>Endereço</h4>
-<div class="row height-60">
-    <div class="col-8">
-        <div class="md-form">
-            <input type="text" name="postalCode" value="${person.address.postalCode}" id="Form-cep" class="form-control" >
-            <label for="Form-cep">CEP</label>
+        <div class="col-4">
+            <div class="md-form">
+                <input disabled="trye" type="text" name="state" value="${person.address.state}" id="Form-uf" class="form-control" >
+                <label for="Form-uf">UF</label>
+            </div>
         </div>
     </div>
 
-    <div class="col-4">
-        <div class="md-form">
-            <input disabled="trye" type="text" name="state" value="${person.address.state}" id="Form-uf" class="form-control" >
-            <label for="Form-uf">UF</label>
-        </div>
-    </div>
-</div>
-
-<div class="md-form">
-    <input disabled="true" type="text" name="city" value="${person.address.city}" id="Form-city" class="form-control" >
-    <label for="Form-city">Cidade</label>
-</div>
-    
-<div class="row height-60">
-    <div class="col-8">
-        <div class="md-form">
-            <input type="text" name="street" value="${person.address.street}" id="Form-street" class="form-control" >
-            <label for="Form-street">Rua</label>
-        </div>
+    <div class="md-form">
+        <input disabled="true" type="text" name="city" value="${person.address.city}" id="Form-city" class="form-control" >
+        <label for="Form-city">Cidade</label>
     </div>
 
-    <div class="col-4">
-        <div class="md-form">
-            <input type="text" name="number" value="${person.address.number}" id="Form-number" class="form-control" >
-            <label for="Form-number">Nº</label>
+    <div class="row height-60">
+        <div class="col-8">
+            <div class="md-form">
+                <input type="text" name="street" value="${person.address.street}" id="Form-street" class="form-control" >
+                <label for="Form-street">Rua</label>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="md-form">
+                <input type="text" name="number" value="${person.address.number}" id="Form-number" class="form-control" >
+                <label for="Form-number">Nº</label>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="md-form">
-    <input type="text" name="neighborhood" value="${person.address.neighborhood}" id="Form-distric" class="form-control" >
-    <label for="Form-distric">Bairro</label>
-</div>
+    <div class="md-form">
+        <input type="text" name="neighborhood" value="${person.address.neighborhood}" id="Form-distric" class="form-control" >
+        <label for="Form-distric">Bairro</label>
+    </div>
 
 
-<div class="md-form">
-    <input type="text" name="complement" value="${person.address.complement}" id="Form-complement" class="form-control">
-    <label for="Form-complement">Complemento</label>
-</div>
-
+    <div class="md-form">
+        <input type="text" name="complement" value="${person.address.complement}" id="Form-complement" class="form-control">
+        <label for="Form-complement">Complemento</label>
+    </div>
+</c:if>
 <div class="row d-flex align-items-center mb-4">
     <div class="col-md-3 col-md-12 text-center">
         <button type="submit"
