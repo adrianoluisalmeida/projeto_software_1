@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PersonDAO extends AbstractDAO<Person>{
-    
+   
     public PersonDAO(){
         setCreateSql("INSERT INTO person (person_id, person_type, person_name, cpf, rg, born_date, person_first_phone) VALUES (?, ?, ?, ?, ?, ?, ?)");
         setUpdateSql("UPDATE person SET person_name = ?, cpf = ?, rg = ?, born_date = ?, "
@@ -28,9 +28,9 @@ public class PersonDAO extends AbstractDAO<Person>{
                 + "person_score = ?, person_notes = ?, p_postal_code = ?, p_neighborhood = ?, "
                 + "p_street = ?, p_number = ?, p_complement = ?, p_latitude = ?, p_longitude = ? WHERE person_id = ?");
         setDeleteSql("DELETE FROM person WHERE person_id = ?");
-        setFindOneSql("SELECT * FROM person WHERE person_id = ?");
-        setFindSql("SELECT * FROM person WHERE person_type = ?");
-        setFindAllSql("SELECT * FROM person");
+        setFindOneSql("SELECT * FROM person JOIN user ON person.person_id = user.user_id WHERE person_id = ?");
+        setFindSql("SELECT * FROM person JOIN user ON person.person_id = user.user_id WHERE person_type = ?");
+        setFindAllSql("SELECT * FROM person JOIN user ON person.person_id = user.user_id ");
     }
 
     @Override
@@ -73,7 +73,7 @@ public class PersonDAO extends AbstractDAO<Person>{
         ps.setString(11, p.getAddress().getPostalCode());
         ps.setString(12, p.getAddress().getNeighborhood());
         ps.setString(13, p.getAddress().getStreet());
-        ps.setInt(14, p.getAddress().getNumber());
+        ps.setObject(14, p.getAddress().getNumber());
         ps.setString(15, p.getAddress().getComplement());
         ps.setDouble(16, p.getAddress().getLocation().getLatitude());
         ps.setDouble(17, p.getAddress().getLocation().getLongitude());
@@ -97,7 +97,7 @@ public class PersonDAO extends AbstractDAO<Person>{
         p.setType(rs.getString("person_type"));
         p.setName(rs.getString("person_name"));
         p.setCpf(rs.getString("cpf"));
-        p.setRg(rs.getString("cpf"));
+        p.setRg(rs.getString("rg"));
         p.setBornDate(rs.getDate("born_date").toLocalDate());
         p.setCpf(rs.getString("cpf"));
         p.setFirstPhone(rs.getString("person_first_phone"));
@@ -106,11 +106,13 @@ public class PersonDAO extends AbstractDAO<Person>{
         p.setBiography(rs.getString("biography"));
         p.setScore(rs.getDouble("person_score"));
         p.setNotes(rs.getString("person_notes"));
+        p.setEmail(rs.getString("email"));
         Address address = new Address();
         address.setPostalCode(rs.getString("p_postal_code"));
         address.setNeighborhood(rs.getString("p_neighborhood"));
         address.setStreet(rs.getString("p_street"));
-        address.setNumber(rs.getInt("p_number"));
+        if (rs.getObject("p_number") != null)
+            address.setNumber(rs.getInt("p_number"));
         address.setComplement(rs.getString("p_complement"));
         address.setLocation(
                 new GeoLocation(rs.getDouble("p_latitude"), rs.getDouble("p_longitude"))

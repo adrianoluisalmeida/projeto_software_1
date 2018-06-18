@@ -33,7 +33,7 @@ public class Person extends User {
     private String firstPhone;
     private String secondPhone;
     private String biography;
-    private Double score;
+    private double score;
     private String profilePicture;
     private Address address;
     private String notes; // observacoes
@@ -176,14 +176,14 @@ public class Person extends User {
     /**
      * @return the score
      */
-    public Double getScore() {
+    public double getScore() {
         return score;
     }
 
     /**
      * @param score the score to set
      */
-    public void setScore(Double score) {
+    public void setScore(double score) {
         this.score = score;
     }
 

@@ -28,7 +28,7 @@ public class Entity extends User {
     private String firstPhone;
     private String secondPhone;
     private String description;
-    private Double score;
+    private double score;
     // atributo pra logo...
     private String logo;
     private Address address;
@@ -136,14 +136,14 @@ public class Entity extends User {
     /**
      * @return the score
      */
-    public Double getScore() {
+    public double getScore() {
         return score;
     }
 
     /**
      * @param score the score to set
      */
-    public void setScore(Double score) {
+    public void setScore(double score) {
         this.score = score;
     }
 

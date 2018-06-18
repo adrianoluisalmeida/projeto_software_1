@@ -1,7 +1,13 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib tagdir="/WEB-INF/tags" prefix="custom" %>
+<input type="hidden" name="id" value="${entity.id}"/>
 <!--Body-->
 <div class="md-form">
     <input type="text" name="name" id="Form-social-name" value="${entity.name}" class="form-control">
-    <label for="Form-social-name">Razão Social</label>
+    <label for="Form-social-name">RazÃ£o Social</label>
     <form:errors path="entity.name" cssStyle="color:red"/>
 </div>
 
@@ -15,9 +21,8 @@
 
 <!--Body-->
 <div class="md-form">
-
-    <input name="foundationDate" id="Form-foundation" value="${entity.foundationDate}" type="text" class="form-control" required>
-    <label for="Form-foundation">Data Fundação</label>
+    <input name="foundationDate" id="Form-foundation" value="<custom:localDateFormat localDate="${entity.foundationDate}" />" type="text" class="form-control" required>
+    <label for="Form-foundation">Data FundaÃ§Ã£o</label>
 </div>
 
 
@@ -36,50 +41,64 @@
 </div>
 
 <div class="md-form">
-    <input type="password" id="Form-pass-entity" name="password" class="form-control">
+    <input type="password" id="Form-pass-entity" name="password" value="${entity.password}" class="form-control">
     <label for="Form-pass-entity">Senha</label>
     <form:errors path="entity.password" cssStyle="color:red"/>
 </div>
-<h4>Endereço</h4>
+
+<h4>EndereÃ§o</h4>
 <div class="row height-60">
     <div class="col-8">
         <div class="md-form">
-            <input type="text" name="cep" value="${entity.address.cep}" id="Form-cep" class="form-control" >
+            <input type="text" name="postalCode" value="${entity.address.postalCode}" id="Form-cep" class="form-control" >
             <label for="Form-cep">CEP</label>
         </div>
     </div>
 
     <div class="col-4">
         <div class="md-form">
-            <input type="text" name="uf" value="${entity.address.uf}" id="Form-uf" class="form-control" >
+            <input disabled="trye" type="text" name="state" value="${entity.address.state}" id="Form-uf" class="form-control" >
             <label for="Form-uf">UF</label>
-        </div>
-    </div>
-</div>
-<div class="row height-60">
-    <div class="col-6">
-        <div class="md-form">
-            <input type="text" name="distric" value="${entity.address.distric}" id="Form-distric" class="form-control" >
-            <label for="Form-distric">Bairro</label>
-        </div>
-    </div>
-
-    <div class="col-6">
-        <div class="md-form">
-            <input type="text" name="city" value="${entity.address.city}" id="Form-city" class="form-control" >
-            <label for="Form-city">Cidade</label>
         </div>
     </div>
 </div>
 
 <div class="md-form">
+    <input disabled="true" type="text" name="city" value="${entity.address.city}" id="Form-city" class="form-control" >
+    <label for="Form-city">Cidade</label>
+</div>
+    
+<div class="row height-60">
+    <div class="col-8">
+        <div class="md-form">
+            <input type="text" name="street" value="${entity.address.street}" id="Form-street" class="form-control" >
+            <label for="Form-street">Rua</label>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="md-form">
+            <input type="text" name="number" value="${entity.address.number}" id="Form-number" class="form-control" >
+            <label for="Form-number">NÂº</label>
+        </div>
+    </div>
+</div>
+
+<div class="md-form">
+    <input type="text" name="neighborhood" value="${entity.address.neighborhood}" id="Form-distric" class="form-control" >
+    <label for="Form-distric">Bairro</label>
+</div>
+
+
+<div class="md-form">
     <input type="text" name="complement" value="${entity.address.complement}" id="Form-complement" class="form-control">
     <label for="Form-complement">Complemento</label>
 </div>
+    
 <div class="md-form"> 
     <textarea name="description" id="Form-description"   value="${entity.description}" class="form-control"></textarea>
     <!--<input type="text" name="description" >-->
-    <label for="Form-description">Descrição da entidade</label>
+    <label for="Form-description">DescriÃ§Ã£o da entidade</label>
 </div>
 
 

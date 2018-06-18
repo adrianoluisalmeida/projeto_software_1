@@ -14,7 +14,7 @@
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="${pageContext.request.contextPath}/assets/css/mdb.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="${pageContext.request.contextPath}/assets/css/custom.css" rel="stylesheet">
 </head>

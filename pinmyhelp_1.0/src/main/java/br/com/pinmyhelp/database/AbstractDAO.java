@@ -56,8 +56,8 @@ public abstract class AbstractDAO<T extends Record> {
         return findOneSql;
     }
 
-    public void setFindOneSql(String findPrimaryKeySql) {
-        this.findOneSql = findPrimaryKeySql;
+    public void setFindOneSql(String findOneSql) {
+        this.findOneSql = findOneSql;
     }
     
     public String getFindSql() {

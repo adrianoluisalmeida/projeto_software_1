@@ -144,7 +144,7 @@ public class Address {
     
     @Override
     public String toString() {
-        return "Address{" + "postalCode=" + getPostalCode() + ", state=" + getState() + ", city=" + getCity() + ", neighborhood=" + getNeighborhood() + ", Street="+street+", Number=" + number + ", complement=" + getComplement() + ", latitude=" + location.getLatitude() + ", longitude=" + location.getLongitude() + '}';
+        return "Address{" + "postalCode=" + getPostalCode() + ", state=" + getState() + ", city=" + getCity() + ", neighborhood=" + getNeighborhood() + ", street="+street+", number=" + number + ", complement=" + getComplement() + ", latitude=" + location.getLatitude() + ", longitude=" + location.getLongitude() + '}';
     }
     
 }
