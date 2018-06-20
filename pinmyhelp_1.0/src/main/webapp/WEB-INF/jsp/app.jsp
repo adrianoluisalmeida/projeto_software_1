@@ -17,6 +17,8 @@
     <link href="${pageContext.request.contextPath}/assets/css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="${pageContext.request.contextPath}/assets/css/custom.css" rel="stylesheet">
+     <!-- JQuery -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 
@@ -99,8 +101,6 @@
     </div>
 
     <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
