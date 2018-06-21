@@ -2,12 +2,20 @@
     <div class="col-md-8 mt-3">
         <h3>Descrição da Solicitação</h3>
         <div class="md-form">
-            <textarea type="text" id="form7" class="md-textarea form-control" rows="3"></textarea>
-            <label for="form7">Descreve a sua necessidade ?</label>
+            <textarea type="text" id="Form-requirement" class="md-textarea form-control" rows="3"></textarea>
+            <label for="Form-requirement">Descreve a sua necessidade ?</label>
         </div>
 
-        <h3>Meu endereço</h3>
-        <p>RST 287, Camobi, Santa Maria RS, 2180, apto 300</p>
+        <h3>Meu endereço <button id="btn-get-address" class="btn btn-pink float-right waves-effect waves-light">Usar endereço atual</button></h3> 
+        <div class="row">
+            <div class="col">  
+                <div class="md-form">
+                    <input type="text" id="Form-address" name="Form-address" class="form-control" value="RST 287, Camobi, Santa Maria RS, 2180, apto 300"/>
+                                    <!-- aqui no lugar do value vai ir o \${user.address}, ta assim so pra exemplo -->
+                    <label for="Form-address">Endereço</label>
+                </div>
+            </div>
+        </div>   
         <hr>
         <h3>Data/Hora</h3>
         <div class="row">
@@ -60,3 +68,40 @@
     </div>
 
 </div>
+
+<script>
+    $(function() {
+        var $buttonAddress = $('#btn-get-address');
+        $( $buttonAddress ).on('click', function() {
+            $buttonAddress.prop("disabled", true); // disable button
+            if ("geolocation" in navigator) { //check if geolocation is available 
+                navigator.geolocation.getCurrentPosition(function(position) { 
+                    getPositionInfo(position);
+               });
+            } else
+                alert("Geocalização não suportada pelo navegador atual.");
+        });        
+    
+        function getPositionInfo(position) {
+            var GEOCODING = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' 
+                    + position.coords.latitude  + '%2C' 
+                    + position.coords.longitude + '&language=en';
+            $.getJSON(GEOCODING).done(function(location) {
+                showLocation(location);
+            });
+        }
+        
+        function showLocation(location) {
+            if ( location !== null ) { // ok
+                var $input = $('#Form-address');
+                $( $input ).val( location.results[0].formatted_address );
+                $( $input ).keyup(function(event) { // if user edit his address then active the button again
+                    $( $buttonAddress).prop("disabled", false);  
+                });
+            } else {
+                alert("Não foi possível recuperar a localização atual. Verifique sua conexão com a internet.");
+                $( $buttonAddress).prop("disabled", false); // let's user try again...
+            }
+        }
+    });
+</script>
