@@ -72,6 +72,7 @@ public class Person extends User {
     }
 
     public void setType(String type) {
+        System.out.println("?: "+type);
         this.type = type;
     }
     

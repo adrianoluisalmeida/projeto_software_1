@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -80,7 +80,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-secondary"
                              aria-labelledby="navbarDropdownMenuLink-5">
-                            <a class="dropdown-item waves-effect waves-light" href="#">Meu Perfil</a>
+                            <a class="dropdown-item waves-effect waves-light" href="${pageContext.request.contextPath}/account/edit/profile/${sessionScope.user.id}">Meu Perfil</a>
+                            <a class="dropdown-item waves-effect waves-light" href="${pageContext.request.contextPath}/account/edit/${sessionScope.type == "Entity" ? "entity" : "person"}/${sessionScope.user.id}">Cadastro</a>
                             <a class="dropdown-item waves-effect waves-light" href="${pageContext.request.contextPath}/sign-out">Sair</a>
                         </div>
                     </li>

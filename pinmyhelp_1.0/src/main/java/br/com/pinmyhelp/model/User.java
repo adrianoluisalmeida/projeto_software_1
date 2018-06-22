@@ -88,7 +88,7 @@ public class User extends Record implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "email=" + email + ", password=" + password + ", isAdmin=" + isAdmin + '}';
+        return "User{ id = "+id+", email=" + email + ", password=" + password + ", isAdmin=" + isAdmin + '}';
     }
 
 }

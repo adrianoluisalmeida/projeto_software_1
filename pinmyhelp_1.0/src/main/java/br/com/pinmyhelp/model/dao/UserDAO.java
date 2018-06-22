@@ -10,6 +10,7 @@ import br.com.pinmyhelp.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -73,6 +74,14 @@ public class UserDAO extends AbstractDAO<User> {
     
     public Boolean autenticate(User u) {
         return !find(u).isEmpty();
+    }
+    
+    public User findOne(String email, String password){
+        List<User> list = find("email = ? AND password = ?", new String[]{email, password});
+        if (list.size() > 0){
+            return list.get(0);
+        }
+        return null;
     }
     
 }

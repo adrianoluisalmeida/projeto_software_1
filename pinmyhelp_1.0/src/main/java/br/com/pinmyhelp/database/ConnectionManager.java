@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * Connection factory singleton
  * @author roger
  */
-public class ConnectionFactory {
+public class ConnectionManager {
     
     //Print every change on console
     public static final boolean PRINT_CONN = true;
@@ -33,10 +33,10 @@ public class ConnectionFactory {
             Class.forName(Database.JDBC_DRIVER);
             return DriverManager.getConnection(Database.URL, Database.USER, Database.PASSWORD);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Driver " + Database.JDBC_DRIVER + " não foi encontrado na memória.");
         } catch (SQLException ex) {
-            Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -54,6 +54,21 @@ public class ConnectionFactory {
         return connection;
     }
     
+    public static void beginTransaction(){
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void commitTransaction(){
+        try {
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * Close the connection (only if numbers of connection equals zero)
      */
@@ -67,7 +82,7 @@ public class ConnectionFactory {
                 connection = null;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

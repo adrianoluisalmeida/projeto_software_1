@@ -77,7 +77,7 @@ public abstract class AbstractDAO<T extends Record> {
     }
     
     public Integer create(T t) {
-        Connection c = ConnectionFactory.openConnection();
+        Connection c = ConnectionManager.openConnection();
         Integer id = null;
         try {
             PreparedStatement ps = c.prepareStatement(getCreateSql(), PreparedStatement.RETURN_GENERATED_KEYS);
@@ -91,12 +91,12 @@ public abstract class AbstractDAO<T extends Record> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ConnectionFactory.closeConnection();
+        ConnectionManager.closeConnection();
         return id;
     }
     
      public void update(T t) {
-        Connection c = ConnectionFactory.openConnection();
+        Connection c = ConnectionManager.openConnection();
         try {
             PreparedStatement ps = c.prepareStatement(getUpdateSql());
             fillUpdate(ps, t);
@@ -105,11 +105,11 @@ public abstract class AbstractDAO<T extends Record> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ConnectionFactory.closeConnection();;
+        ConnectionManager.closeConnection();;
     }
 
     public void delete(T t) {
-        Connection c = ConnectionFactory.openConnection();
+        Connection c = ConnectionManager.openConnection();
         try {
             PreparedStatement ps = c.prepareStatement(getDeleteSql());
             fillDelete(ps, t);
@@ -118,13 +118,13 @@ public abstract class AbstractDAO<T extends Record> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ConnectionFactory.closeConnection();
+        ConnectionManager.closeConnection();
     }
     
     //Find by PrimaryKey
     @Deprecated
     public T findPrimaryKey(T t) {
-        Connection c = ConnectionFactory.openConnection();
+        Connection c = ConnectionManager.openConnection();
         T record = null;
         try {
             PreparedStatement ps = c.prepareStatement(getFindOneSql());
@@ -137,7 +137,7 @@ public abstract class AbstractDAO<T extends Record> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ConnectionFactory.closeConnection();
+        ConnectionManager.closeConnection();
         return record;
     }
     
@@ -147,7 +147,7 @@ public abstract class AbstractDAO<T extends Record> {
      * @return Record
      */
     public T findOne(Object id) {
-        Connection c = ConnectionFactory.openConnection();
+        Connection c = ConnectionManager.openConnection();
         T record = null;
         try {
             PreparedStatement ps = c.prepareStatement(getFindOneSql());
@@ -160,13 +160,13 @@ public abstract class AbstractDAO<T extends Record> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ConnectionFactory.closeConnection();
+        ConnectionManager.closeConnection();
         return record;
     }
     
     //Find by any atribute
     public List<T> find(T t) {
-        Connection c = ConnectionFactory.openConnection();
+        Connection c = ConnectionManager.openConnection();
         List<T> records = null;
         try {
             PreparedStatement ps = c.prepareStatement(getFindSql());
@@ -178,12 +178,12 @@ public abstract class AbstractDAO<T extends Record> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ConnectionFactory.closeConnection();
+        ConnectionManager.closeConnection();
         return records;
     }
     
     public List<T> findAll() {
-        Connection c = ConnectionFactory.openConnection();
+        Connection c = ConnectionManager.openConnection();
         List<T> records = null;
         try {
             PreparedStatement ps = c.prepareStatement(getFindAllSql());
@@ -194,7 +194,7 @@ public abstract class AbstractDAO<T extends Record> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ConnectionFactory.closeConnection();
+        ConnectionManager.closeConnection();
         return records;
     }
     
@@ -205,7 +205,7 @@ public abstract class AbstractDAO<T extends Record> {
      * @return List with result
      */
     public List<T> find(String filter, Object[] params) {
-        Connection c = ConnectionFactory.openConnection();
+        Connection c = ConnectionManager.openConnection();
         List<T> records = null;
         try {
             String sql = String.format("%s WHERE %s", getFindAllSql(), filter);
@@ -220,7 +220,7 @@ public abstract class AbstractDAO<T extends Record> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ConnectionFactory.closeConnection();
+        ConnectionManager.closeConnection();
         return records;
     }
     

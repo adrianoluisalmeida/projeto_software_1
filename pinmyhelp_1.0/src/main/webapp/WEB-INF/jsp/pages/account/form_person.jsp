@@ -3,9 +3,21 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="custom" %>
-<input type="hidden" name="id" value="${person.id}"/>
-<input type="hidden" name="type" value="${person.type}" />
-<!--Body-->
+<c:if test="${not empty person}">
+    <input type="hidden" name="id" value="${person.id}"/>
+    <input type="hidden" name="type" value="${person.type}" />
+</c:if>
+<!-- Type -->
+<c:if test="${empty person.name}">
+    <div class="form-group mb-0 mt-4">
+        <select name="type" class="mdb-select form-control" required>
+            <option value="" disabled selected>Seu objetivo no Pin My Help</option>
+            <option value="Voluntary" ${person.type == 'Voluntary' ? 'selected' : ''}>Quero Ajudar</option>
+            <option value="Claimant" ${person.type == 'Claimant' ? 'selected' : ''}>Preciso de Ajuda</option>
+        </select>
+        <form:errors path="person.type" cssStyle="color:red"/>
+    </div>    
+</c:if>
 <div class="md-form">
     <input type="text" name="name" id="Form-name" <c:if test="${not empty person.name}">value="${person.name}"</c:if>  class="form-control">
     <label for="Form-name">Nome</label>
@@ -109,7 +121,7 @@
     <div class="col-md-3 col-md-12 text-center">
         <button type="submit"
                 class="btn btn-pink btn-block btn-rounded z-depth-1 waves-effect waves-light">
-            Cadastrar
+            ${empty person.id ? "Cadastrar" : "Atualizar" }
         </button>
     </div>
 </div>
