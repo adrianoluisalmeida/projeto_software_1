@@ -1,3 +1,4 @@
+<!--Dashboard voluntário -->
 <div class="col mt-5">
     
     <div class="col-md-12 mt-3">
@@ -54,7 +55,7 @@
                 </p>
                 <!-- Button -->
                 <div class="row justify-content-center">
-                    <a href="${pageContext.request.contextPath}/requests/help" class="btn btn-pink float-left">Ajudar</a>
+                    <a href="${pageContext.request.contextPath}/offers/create" class="btn btn-pink float-left">Ajudar</a>
                 </div>
             </div>
         </div>

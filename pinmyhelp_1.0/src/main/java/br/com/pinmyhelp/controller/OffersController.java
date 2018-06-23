@@ -31,7 +31,7 @@ public class OffersController {
     @RequestMapping(value = "/offers/create", method = GET)
     public String create(Model model){
         model.addAttribute("title", "Oferecer Ajuda");
-        model.addAttribute("page", "requests/help");
+        model.addAttribute("page", "offers/help");
         return "app";
     }
     

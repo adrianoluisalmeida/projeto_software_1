@@ -1,5 +1,5 @@
+<!--Index do voluntário -->
 <div class="col mt-5">
-
 
     <div class="col-md-12 mt-3">
         <h3>Solicitações de Ajuda</h3>
@@ -32,7 +32,7 @@
                 <!-- Button -->
                 <div class="row justify-content-md-center">
                     <!--<a href="#" class="btn btn-blue-grey float-left">Ver mais</a>-->
-                    <a  href="${pageContext.request.contextPath}/requests/help" class="btn btn-pink float-left">Ajudar</a>
+                    <a  href="${pageContext.request.contextPath}/offers/help" class="btn btn-pink float-left">Ajudar</a>
                 </div>
             </div>
 
@@ -65,7 +65,7 @@
                 <!-- Button -->
                 <div class="row justify-content-md-center">
                     <!--<a href="#" class="btn btn-blue-grey float-left">Ver mais</a>-->
-                    <a  href="${pageContext.request.contextPath}/requests/help" class="btn btn-pink float-left">Ajudar</a>
+                    <a  href="${pageContext.request.contextPath}/offers/help" class="btn btn-pink float-left">Ajudar</a>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
                 <!-- Button -->
                 <div class="row justify-content-md-center">
                     <!--<a href="#" class="btn btn-blue-grey float-left">Ver mais</a>-->
-                    <a href="offer.html" class="btn btn-pink float-left">Ajudar</a>
+                    <a href="${pageContext.request.contextPath}/offers/help" class="btn btn-pink float-left">Ajudar</a>
                 </div>
             </div>
 

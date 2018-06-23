@@ -3,7 +3,7 @@
         <h3>Descrição da Solicitação</h3>
         <div class="md-form">
             <textarea type="text" id="Form-requirement" class="md-textarea form-control" rows="3"></textarea>
-            <label for="Form-requirement">Descreve a sua necessidade ?</label>
+            <label for="Form-requirement">Descreva a sua necessidade</label>
         </div>
 
         <h3>Meu endereço <button id="btn-get-address" class="btn btn-pink float-right waves-effect waves-light">Usar endereço atual</button></h3> 
