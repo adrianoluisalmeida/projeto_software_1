@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -37,9 +38,9 @@ public class LoginController {
     EntityDAO entityDAO;
     
     @RequestMapping(value = "sign-in", method = POST)
-    public String index(@Valid User user, BindingResult result, HttpSession session) {
+    public ModelAndView index(@Valid User user, BindingResult result, HttpSession session) {
         if ( result.hasErrors() || !userDAO.autenticate(user) )
-            return "login";
+            return redirectLogin();
         User loggedUser = userDAO.findOne(user.getEmail(), user.getPassword());
         session.setAttribute("user", loggedUser);
         Person person = personDAO.findOne(loggedUser.getId());
@@ -53,7 +54,11 @@ public class LoginController {
                 session.setAttribute("picture", entity.getLogo());
             }
         }
-        return "redirect:/dashboard";
+        return new DashboardController().redirectDashboard(session);
+    }
+    
+    public ModelAndView redirectLogin(){
+        return new ModelAndView("redirect:/login");
     }
     
     @RequestMapping(value = "sign-out", method = GET)

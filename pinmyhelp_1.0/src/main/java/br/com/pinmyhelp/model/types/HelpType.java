@@ -12,8 +12,11 @@ package br.com.pinmyhelp.model.types;
 public enum HelpType {
     
     //HelpTypes - change
-    T1(1,"Type 1"),
-    T2(2,"Type 2");
+    T1(1,"Compras"),
+    T2(2,"Limpeza"),
+    T3(3,"Animais de estimação"),
+    T4(4, "Manutenção doméstica"),
+    T5(5, "Culinária");
     
     private final int id; //number to save on DB
     private final String type; //description to show

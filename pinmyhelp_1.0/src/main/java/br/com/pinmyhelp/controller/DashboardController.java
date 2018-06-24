@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -19,14 +20,24 @@ public class DashboardController {
     UserDAO userDAO;
 
     @RequestMapping("/dashboard")
-    public String index(Model model, HttpSession session) {
+    public ModelAndView index(HttpSession session) {
         System.out.println("redirect");
         User user = (User)session.getAttribute("user");
         if ( user == null ) // TODO: validation with interceptor
-            return "login";
-        model.addAttribute("title", "Dashboard");
-        model.addAttribute("page", "dashboard");
-        return "app";
+            return new ModelAndView("redirect:/login");
+        return redirectDashboard(session);
     }
+    
+    public ModelAndView redirectDashboard(HttpSession session){
+        ModelAndView mav = new ModelAndView("app");
+        String pageDashboard = "voluntary/dashboard";
+        if(session.getAttribute("type").equals("Claimant"))
+            pageDashboard = "claimant/dashboard";
+        mav.addObject("title","Dashboard");
+        mav.addObject("page", pageDashboard);
+        return mav;
+    }
+    
+
     
 }

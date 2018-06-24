@@ -24,7 +24,6 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
     
     public HelpSolicitationDAO() {
         setCreateSql("INSERT INTO help_solicitation("
-                + " solicitation_status,"
                 + " solicitation_type, "
                 + " start_date,"
                 + " end_date,"
@@ -32,7 +31,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
                 + " s_longitude,"
                 + " claimant_id"
                 + ") VALUES "
-                + "(?, ?, ?, ?, ?, ?, ?)");
+                + "(?, ?, ?, ?, ?, ?)");
         setUpdateSql("UPDATE help_solicitation SET"
                 + " solicitation_status = ?,"
                 + " solicitation_type = ?,"
@@ -50,13 +49,13 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
     
     @Override
     protected void fillCreate(PreparedStatement ps, HelpSolicitation h) throws SQLException {
-        ps.setInt(1, h.getStatus().getId());
-        ps.setInt(2, h.getType().getId());
-        ps.setTimestamp(3, java.sql.Timestamp.valueOf(h.getStartDate()));
-        ps.setTimestamp(4, java.sql.Timestamp.valueOf(h.getEndDate()));
-        ps.setDouble(5, h.getLocation().getLatitude());
-        ps.setDouble(6, h.getLocation().getLongitude());
-        ps.setInt(7, h.getClaimant().getId());
+        //ps.setInt(1, h.getStatus().getId());
+        ps.setInt(1, h.getType().getId());
+        ps.setTimestamp(2, java.sql.Timestamp.valueOf(h.getStartDate()));
+        ps.setTimestamp(3, java.sql.Timestamp.valueOf(h.getEndDate()));
+        ps.setDouble(4, h.getLocation().getLatitude());
+        ps.setDouble(5, h.getLocation().getLongitude());
+        ps.setInt(6, h.getClaimant().getId());
     }
 
     @Override

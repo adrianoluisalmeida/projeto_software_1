@@ -51,10 +51,11 @@ public class AccountController {
         return "register";
     }
 
-    @RequestMapping(value = "/account/store/person", method = POST)
+    @RequestMapping("/account/store/person")
     public ModelAndView createPerson(@Valid Person person, BindingResult result, HttpSession session) {
-        if (session.getAttribute("user")==null)
-            redirectLogin();
+        if (session.getAttribute("user") == null) {
+            return new LoginController().redirectLogin();
+        }
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
             mav.setViewName("register");
@@ -70,28 +71,36 @@ public class AccountController {
         ConnectionManager.closeConnection();
         session.setAttribute("user", user);
         session.setAttribute("type", person.getType());
-        return redirectDashboard();
+        return new DashboardController().redirectDashboard(session);
     }
 
-    @RequestMapping(value = "/account/store/entity", method = POST)
+    @RequestMapping("/account/store/entity")
     public ModelAndView createEntity(@Valid Entity entity, Address address, BindingResult result, HttpSession session) {
-        if (session.getAttribute("user")==null)
-            redirectLogin();
+        if (session.getAttribute("user") == null) {
+            return new LoginController().redirectLogin();
+        }
         entity.setAddress(address);
-        if (result.hasErrors()) 
+        if (result.hasErrors()) {
             return new ModelAndView("register");
+        }
         User u = new User(entity.getEmail(), entity.getPassword());
         // create one single connection for two inserts
+        ConnectionManager.openConnection();
+        ConnectionManager.beginTransaction();
         entity.setId(userDAO.create(u));
         entityDAO.create(entity);
+        ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();
-        return redirectDashboard();
+        session.setAttribute("user", u);
+        session.setAttribute("type", "Entity");
+        return new DashboardController().redirectDashboard(session);
     }
 
     @RequestMapping(value = "/account/edit/person/{idPerson}", method = GET)
-    public ModelAndView editPerson(@PathVariable(value = "idPerson")int id, HttpSession session) {
-        if (!checkUser(id, session))
+    public ModelAndView editPerson(@PathVariable(value = "idPerson") int id, HttpSession session) {
+        if (!checkUser(id, session)) {
             return new ModelAndView("redirect:/login");
+        }
         Person person = personDAO.findOne(id);
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("page", "account/edit");
@@ -101,9 +110,10 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account/edit/entity/{idEntity}", method = GET)
-    public ModelAndView editEntity(@PathVariable(value = "idEntity")int id, HttpSession session) {
-        if (!checkUser(id, session))
+    public ModelAndView editEntity(@PathVariable(value = "idEntity") int id, HttpSession session) {
+        if (!checkUser(id, session)) {
             return new ModelAndView("redirect:/login");
+        }
         Entity entity = entityDAO.findOne(id);
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("page", "account/edit");
@@ -114,8 +124,9 @@ public class AccountController {
 
     @RequestMapping(value = "/account/update/person", method = POST)
     public ModelAndView updatePerson(@Valid Person person, Address address, BindingResult result, HttpSession session) {
-        if (session.getAttribute("user")==null)
-            redirectLogin();
+        if (session.getAttribute("user") == null) {
+            return new LoginController().redirectLogin();
+        }
         person.setAddress(address);
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView("app");
@@ -126,22 +137,23 @@ public class AccountController {
         }
         // create one single connection for two inserts
         ConnectionManager.openConnection();
-        if (person.getPassword() != null){
+        if (person.getPassword() != null) {
             User user = userDAO.findOne(person.getId());
             user.setPassword(person.getPassword());
             userDAO.update(user);
         }
         personDAO.update(person);
         ConnectionManager.closeConnection();
-        return redirectDashboard();
+        return new DashboardController().redirectDashboard(session);
     }
 
     @RequestMapping(value = "/account/update/entity", method = POST)
     public ModelAndView updateEntity(@Valid Entity entity, Address address, BindingResult result, HttpSession session) {
-        if (session.getAttribute("user")==null)
-            redirectLogin();
+        if (session.getAttribute("user") == null) {
+            return new LoginController().redirectLogin();
+        }
         entity.setAddress(address);
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView("app");
             mav.addObject("page", "acount/edit");
             mav.addObject("editPage", "entity");
@@ -150,20 +162,21 @@ public class AccountController {
         }
         // single connection for all operations
         ConnectionManager.openConnection();
-        if (entity.getPassword() != null){
+        if (entity.getPassword() != null) {
             User user = userDAO.findOne(entity.getId());
             user.setPassword(entity.getPassword());
             userDAO.update(user);
         }
         entityDAO.update(entity);
         ConnectionManager.closeConnection();
-        return redirectDashboard();
+        return new DashboardController().redirectDashboard(session);
     }
 
     @RequestMapping(value = "/account/delete/person/{idPerson}", method = GET)
-    public ModelAndView deletePerson(@PathVariable(value = "idPerson")int id, HttpSession session) {
-        if (!checkUser(id, session))
-            return redirectLogin();
+    public ModelAndView deletePerson(@PathVariable(value = "idPerson") int id, HttpSession session) {
+        if (!checkUser(id, session)) {
+            return new LoginController().redirectLogin();
+        }
         ConnectionManager.openConnection();
         Person person = personDAO.findOne(id);
         User user = userDAO.findOne(id);
@@ -171,13 +184,14 @@ public class AccountController {
         personDAO.delete(person);
         userDAO.delete(user);
         ConnectionManager.closeConnection();
-        return redirectLogin();
+        return new LoginController().redirectLogin();
     }
 
     @RequestMapping(value = "/account/delete/entity/{idEntity}", method = GET)
-    public ModelAndView deleteEntity(@PathVariable(value = "idEntity")int id, HttpSession session) {
-        if (!checkUser(id, session))
-            return redirectLogin();
+    public ModelAndView deleteEntity(@PathVariable(value = "idEntity") int id, HttpSession session) {
+        if (!checkUser(id, session)) {
+            return new LoginController().redirectLogin();
+        }
         ConnectionManager.openConnection();
         Entity entity = entityDAO.findOne(id);
         User user = userDAO.findOne(id);
@@ -185,99 +199,96 @@ public class AccountController {
         entityDAO.delete(entity);
         userDAO.delete(user);
         ConnectionManager.closeConnection();
-        return redirectLogin();
+        return new LoginController().redirectLogin();
     }
 
     @RequestMapping(value = "/account/edit/profile/{id}", method = GET)
-    public ModelAndView editProfile(@PathVariable(value="id") int id, HttpSession session){
-        if (!checkUser(id, session))
-            return redirectLogin();
+    public ModelAndView editProfile(@PathVariable(value = "id") int id, HttpSession session) {
+        if (!checkUser(id, session)) {
+            return new LoginController().redirectLogin();
+        }
         ModelAndView mov = new ModelAndView("app");
         mov.addObject("page", "account/profile");
         Person person = personDAO.findOne(id);
         mov.addObject("person", person);
         return mov;
     }
-    
+
     /**
      * http://www.pablocantero.com/blog/2010/09/29/upload-com-spring-mvc/
-     * 
+     *
      * @param request
      * @param session
-     * @return 
+     * @return
      */
     @RequestMapping(value = "/account/update/profile", method = POST)
-    public ModelAndView updateProfile(HttpServletRequest request, HttpSession session){
-        if (session.getAttribute("user")==null)
-            return redirectLogin();
+    public ModelAndView updateProfile(HttpServletRequest request, HttpSession session) {
+        if (session.getAttribute("user") == null) {
+            return new LoginController().redirectLogin();
+        }
         try {
             int id = Integer.valueOf(request.getParameter("id"));
             String fileName = null;
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multipartFile = multipartRequest.getFile("picture");
-            if(multipartFile.getSize() > 0){
+            if (multipartFile.getSize() > 0) {
                 String fileDir = request.getServletContext().getRealPath("/upload");
                 File dir = new File(fileDir);
                 String[] sn = multipartFile.getOriginalFilename().split("[.]");
-                fileName = String.format("%d.%s",new Date().getTime(),sn[sn.length-1]);
-                File file = new File(String.format("%s/%s",dir.getAbsolutePath(),fileName));
+                fileName = String.format("%d.%s", new Date().getTime(), sn[sn.length - 1]);
+                File file = new File(String.format("%s/%s", dir.getAbsolutePath(), fileName));
                 multipartFile.transferTo(file);
-                
+
             }
             ConnectionManager.openConnection();
             Person person = personDAO.findOne(id);
-            if (fileName != null){
-                if (person.getProfilePicture() != null){
-                    String oldFileName = String.format("%s/%s",request.getServletContext().getRealPath("/upload"),person.getProfilePicture());
+            if (fileName != null) {
+                if (person.getProfilePicture() != null) {
+                    String oldFileName = String.format("%s/%s", request.getServletContext().getRealPath("/upload"), person.getProfilePicture());
                     File file = new File(oldFileName);
                     System.out.println(file.getAbsolutePath());
-                    if (file.exists())
+                    if (file.exists()) {
                         file.delete();
+                    }
                 }
                 person.setProfilePicture(fileName);
             }
             String bio = request.getParameter("bio").trim();
-            if (bio.length() > 0)
+            if (bio.length() > 0) {
                 person.setBiography(bio);
-            else
+            } else {
                 person.setBiography(null);
+            }
             personDAO.update(person);
             ConnectionManager.closeConnection();
         } catch (IOException | IllegalStateException ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return redirectDashboard();
+        return new DashboardController().redirectDashboard(session);
     }
-    
-    public ModelAndView redirectDashboard(){
-        ModelAndView mav = new ModelAndView("app");
-        mav.addObject("title","Dashboard");
-        mav.addObject("page", "dashboard");
-        return mav;
-    }
-    
-    public ModelAndView redirectLogin(){
-        return new ModelAndView("redirect:/login");
-    }
-    
+
     /**
-     * Verifica se o usuário passado como parâmetro é o mesmo que está logado no sistema
+     * Verifica se o usuário passado como parâmetro é o mesmo que está logado no
+     * sistema
+     *
      * @param id
      * @param session
      * @return boolean - resultado da verificação
      */
-    public boolean checkUser(int id, HttpSession session){
-        if (session.getAttribute("user") != null){
-            User user = (User)session.getAttribute("user");
-            System.out.println("Checando usuário - id: "+user.getId());
-            if (user.isAdmin())
+    public boolean checkUser(int id, HttpSession session) {
+        if (session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            System.out.println("Checando usuário - id: " + user.getId());
+            if (user.isAdmin()) {
                 return true;
-            if (user.getId() != null && user.getId().compareTo(id) == 0)
+            }
+            if (user.getId() != null && user.getId().compareTo(id) == 0) {
                 return true;
+            }
         }
         System.err.println("Usuario não pode fazer essa operação!");
         session.invalidate();
         return false;
     }
-    
+
 }

@@ -12,15 +12,15 @@ package br.com.pinmyhelp.model.types;
 public enum HelpStatus {
     
     //HelpTypes - change
-    S1(1,"Status 1"),
+    S1(1,"Solicitada"),
     S2(2,"Status 2");
     
     private final int id; //number to save on DB
-    private final String type; //description to show
+    private final String status; //description to show
     
-    HelpStatus(int id, String type){
+    HelpStatus(int id, String status){
         this.id = id;
-        this.type = type;
+        this.status = status;
     }
 
     /**
@@ -31,10 +31,10 @@ public enum HelpStatus {
     }
 
     /**
-     * @return the type
+     * @return the status
      */
-    public String getType() {
-        return type;
+    public String getStatus() {
+        return status;
     }
     
     public static HelpStatus get(int id){
