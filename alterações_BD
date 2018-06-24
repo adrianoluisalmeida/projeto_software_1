@@ -6,3 +6,7 @@ ALTER TABLE help_solicitation ADD COLUMN solicitation_description TEXT NOT NULL 
 
 ALTER TABLE help_solicitation MODIFY COLUMN solicitation_type INT(11) NOT NULL;
 
+- Valor default para status de solicitação:
+
+ALTER TABLE help_solicitation MODIFY COLUMN solicitation_status INT(11) NOT NULL DEFAULT 1;
+
