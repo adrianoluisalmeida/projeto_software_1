@@ -11,9 +11,9 @@ Prof. Daniel Welfer.
 ## Schedule
 1. [~~March 22, 2018 - Initial Checkpoint~~](checkpoints/initial-checkpoint)
 2. [~~April 12, 2018 - 1st Checkpoint~~](checkpoints/checkpoint-1)
-3. [May 3, 2018 - 2nd Checkpoint](checkpoints/checkpoint-2)
-4. [June 7, 2018 - 3th Checkpoint](checkpoints/checkpoint-3)
-5. [June 28, 2018 - 4th Checkpoint](checkpoints/checkpoint-4)
+3. [~~May 3, 2018 - 2nd Checkpoint~~](checkpoints/checkpoint-2)
+4. [~~June 7, 2018 - 3th Checkpoint~~](checkpoints/checkpoint-3)
+5. [July 5, 2018 - 4th Checkpoint](checkpoints/checkpoint-4)
 
 ### Artifacts
 
@@ -25,13 +25,13 @@ Prof. Daniel Welfer.
     + [Project schedule/Gantt chart](checkpoints/checkpoint-1/PinMyHelp-Gantt.pod)
     + [Software Requirements Specification (SRS)](checkpoints/checkpoint-1/PinMyHelp-SRS.pdf)
     
-- [ ] **2nd Checkpoint**
+- [X] **2nd Checkpoint**
     + [Use case diagram (.asta)](checkpoints/checkpoint-2/PinMyHelp-UseCaseDiagram.asta)
     + [Use case diagram (.png)](checkpoints/checkpoint-2/PinMyHelp-UseCaseDiagram.png)
     + [Class diagram (.asta)](checkpoints/checkpoint-2/PinMyHelp-ClassDiagram.asta)
     + [Class diagram (.png) ](checkpoints/checkpoint-2/PinMyHelp-ClassDiagram.png)
     
-- [ ] **3th Checkpoint**
+- [X] **3th Checkpoint**
 
     
 - [ ] **4th Checkpoint**
