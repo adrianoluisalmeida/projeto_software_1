@@ -31,7 +31,7 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/requests/my">Meus Pedidos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/offers">Ofertas</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/offers">Todas ofertas</a>
                     </li>
                 </c:if>
                 <c:if test="${type != 'Claimant'}"> 

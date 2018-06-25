@@ -3,17 +3,18 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="custom" %>
+
 <c:if test="${not empty person}">
-    <input type="hidden" name="id" value="${person.id}"/>
-    <input type="hidden" name="type" value="${person.type}" />
+    <input type="hidden" name="id" value="${person.id}"/> 
+    <!-- NAO colocar input com name = type aqui -->
 </c:if>
 <!-- Type -->
 <c:if test="${empty person.name}">
     <div class="form-group mb-0 mt-4">
-        <select name="type" class="mdb-select form-control" required>
-            <option value="" disabled selected>Seu objetivo no Pin My Help</option>
-            <option value="Voluntary" ${person.type == 'Voluntary' ? 'selected' : ''}>Quero Ajudar</option>
-            <option value="Claimant" ${person.type == 'Claimant' ? 'selected' : ''}>Preciso de Ajuda</option>
+        <select name="type" class="mdb-select form-control">
+            <option value="" disabled <c:if test="${(person.type != 'Voluntary') && (person.type != 'Claimant')}">selected</c:if>>Seu objetivo no Pin My Help</option>
+            <option value="Voluntary" <c:if test="${person.type == 'Voluntary'}">selected</c:if>>Quero Ajudar</option>
+            <option value="Claimant" <c:if test="${person.type == 'Claimant'}">selected</c:if>>Preciso de Ajuda</option>
         </select>
         <form:errors path="person.type" cssStyle="color:red"/>
     </div>    
@@ -41,8 +42,9 @@
 
 <!--Body-->
 <div class="md-form">
-    <input name="bornDate" id="Form-birth"  value="<custom:localDateFormat localDate="${person.bornDate}" />" type="text" class="form-control" required>
-    <label for="Form-birth">Data Nascimento</label>
+    <input name="bornDate" id="Form-birth" value="<custom:localDateFormat localDate="${person.bornDate}"/>" type="text" class="form-control">
+    <label for="Form-birth">Data de Nascimento</label>
+    <c:if test="${not empty errorBornDate}"><span class="error">${errorBornDate}</span></c:if>
 </div>
 
 
@@ -56,14 +58,11 @@
     <input type="email" name="email" id="Form-email" value="${person.email}" class="form-control">
     <label for="Form-email">Seu e-mail</label>
     <form:errors path="person.email" cssStyle="color:red"/>
+    <c:if test="${not empty email_error_person}"><span class="error">${email_error_person}</span></c:if>
 </div>
 
 <div class="md-form pb-3">
-    <input type="password" id="Form-pass" name="password" 
-           <c:if test="${empty person.id}">
-                required 
-           </c:if>
-           value="${person.password}" class="form-control">
+    <input type="password" id="Form-pass" name="password" class="form-control">
     <label for="Form-pass">Senha</label>
     <form:errors path="person.password" cssStyle="color:red"/>
 </div>

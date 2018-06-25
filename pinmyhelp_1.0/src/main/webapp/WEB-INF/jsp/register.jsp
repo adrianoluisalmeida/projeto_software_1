@@ -21,18 +21,12 @@
     <body>
         <div class="container">
             <div class="col-md-6 center-block" style="margin: 0 auto; margin-top: 10px">
-
-
                 <section class="form-elegant">
-
                     <!--Section: Live preview-->
                     <section class="form-light">
-
                         <!--Form without header-->
                         <div class="card">
-
                             <div class="card-body mx-4" style="padding: 0; padding-top: 20px; padding-bottom: 20px">
-
                                 <!--Header-->
                                 <div class="text-center">
                                     <h3 class="pink-text mb-5">
@@ -42,44 +36,33 @@
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs nav-justified">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">Voluntário ou
+                                        <a class="nav-link active" id="tab-person" data-toggle="tab" href="#panel1" role="tab">Voluntário ou
                                             Requerente</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">Entidade</a>
+                                        <a class="nav-link" id="tab-entity" data-toggle="tab" href="#panel2" role="tab">Entidade</a>
                                     </li>
-
                                 </ul>
                                 <!-- Tab panels -->
                                 <div class="tab-content">
                                     <!--Panel 1-->
                                     <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
                                         <div class="col-md-12" style="padding: 0">
-
                                             <form method="POST" action="${pageContext.request.contextPath}/account/store/person">        
                                                 <jsp:include page="pages/account/form_person.jsp" flush="true" />
                                             </form>
                                         </div>
-
                                     </div>
-
                                     <div class="tab-pane fade" id="panel2" role="tabpanel">
-
                                         <form action="${pageContext.request.contextPath}/account/store/entity" method="POST">
                                             <jsp:include page="pages/account/form_entity.jsp" flush="true" />
                                         </form>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
-
-
                     </section>
-
                 </section>
-
             </div>
         </div>
 
@@ -95,9 +78,20 @@
         <!-- Mask JQuery -->
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.mask.min.js"></script>
 
+    <c:if test="${not empty tab}">
+        <c:choose>
+            <c:when test="${tab == 'tab-entity'}">
+                <script>
+                    $(function() {
+                        $("#${tab}").tab("show");
+                    });
+                </script>
+            </c:when>
+        </c:choose>        
+    </c:if>
         <script>
             // put mask into form fields
-            $(function () {
+            $(function() {
                 $("#Form-cpf").mask("000.000.000-00", {clearIfNotMatch: true});
                 $("#Form-rg").mask("0000000000"); // could change between states
                 $("#Form-phone").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function (phone, e, field, options) {

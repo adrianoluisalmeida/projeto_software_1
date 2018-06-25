@@ -30,8 +30,9 @@
                             <strong>Pin My Help</strong>
                         </h3>
                     </div>
+                    <c:if test="${not empty login_error}"><span class="error">${login_error}</span></c:if>                            
                     <div class="md-form">
-                        <input type="email" id="Form-email" class="form-control" name="email" required>
+                        <input type="email" id="Form-email" class="form-control" name="email" <c:if test="${not empty user_email}">value="${user_email}"</c:if> required>
                         <label for="Form-email">Seu e-mail</label>
                     </div>
                     <div class="md-form pb-3">
