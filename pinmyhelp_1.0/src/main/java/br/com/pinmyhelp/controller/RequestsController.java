@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -90,8 +89,9 @@ public class RequestsController {
         } else {
            person = personDAO.findOne(user.getId());
            mav.addObject("claimant", person);
+           if (person.getAddress() == null)
+               mav.addObject("situation", "addressNedded"); 
         }
-        ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();
         Collection<HelpType> HelpTypes = new ArrayList<>();
         HelpTypes.addAll(Arrays.asList(HelpType.values()));

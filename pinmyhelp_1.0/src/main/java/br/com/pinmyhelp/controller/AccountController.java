@@ -10,9 +10,6 @@ import br.com.pinmyhelp.database.ConnectionManager;
 import br.com.pinmyhelp.model.Address;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.attribute.FileAttribute;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,13 +50,16 @@ public class AccountController {
 
     @RequestMapping("/account/store/person")
     public ModelAndView createPerson(@Valid Person person, BindingResult result, HttpSession session) {
-        if (session.getAttribute("user") == null) {
-            return new LoginController().redirectLogin();
-        }
         if (result.hasErrors()) {
-            ModelAndView mav = new ModelAndView();
-            mav.setViewName("register");
-            return mav;
+            ModelAndView mv = new ModelAndView("register");
+            if ( person.getBornDate() == null || result.hasFieldErrors("bornDate") )
+                mv.addObject("errorBornDate", "Informe uma data válida");
+            return mv;
+        }
+        if ( userDAO.emailAlreadyExists(person.getEmail()) ) {
+            ModelAndView mv = new ModelAndView("register");
+            mv.addObject("email_error_person", "E-mail já cadastrado");
+            return mv;
         }
         User user = new User(person.getEmail(), person.getPassword());
         // create one single connection for two inserts
@@ -75,13 +75,20 @@ public class AccountController {
     }
 
     @RequestMapping("/account/store/entity")
-    public ModelAndView createEntity(@Valid Entity entity, Address address, BindingResult result, HttpSession session) {
-        if (session.getAttribute("user") == null) {
-            return new LoginController().redirectLogin();
-        }
-        entity.setAddress(address);
+    public ModelAndView createEntity(@Valid Entity entity, BindingResult result, HttpSession session) {
         if (result.hasErrors()) {
-            return new ModelAndView("register");
+            ModelAndView mv = new ModelAndView("register");
+            if ( entity.getFoundationDate() == null || result.hasFieldErrors("foundationDate") )
+                mv.addObject("errorFoundationDate", "Informe uma data válida");
+            mv.addObject("tab", "tab-entity");
+            return mv;
+        }
+        if (userDAO.emailAlreadyExists(entity.getEmail())) {
+            ModelAndView mv = new ModelAndView("register");
+            mv.addObject("tab", "tab-entity");
+            mv.addObject("email_error_entity", "E-mail já cadastrado");
+            mv.addObject("tab", "entity");
+            return mv;
         }
         User u = new User(entity.getEmail(), entity.getPassword());
         // create one single connection for two inserts

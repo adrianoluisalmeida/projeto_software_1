@@ -40,7 +40,7 @@ public class LoginController {
     @RequestMapping(value = "sign-in", method = POST)
     public ModelAndView index(@Valid User user, BindingResult result, HttpSession session) {
         if ( result.hasErrors() || !userDAO.autenticate(user) )
-            return redirectLogin();
+            return redirectLogin(user);
         User loggedUser = userDAO.findOne(user.getEmail(), user.getPassword());
         session.setAttribute("user", loggedUser);
         Person person = personDAO.findOne(loggedUser.getId());
@@ -57,10 +57,17 @@ public class LoginController {
         return new DashboardController().redirectDashboard(session);
     }
     
+    public ModelAndView redirectLogin(User user){
+        ModelAndView mv = new ModelAndView("login");
+        mv.addObject("login_error", "E-mail ou senha incorretos.");
+        mv.addObject("user_email", user.getEmail());
+        return mv;
+    }
+    
     public ModelAndView redirectLogin(){
         return new ModelAndView("redirect:/login");
     }
-    
+        
     @RequestMapping(value = "sign-out", method = GET)
     public String index(HttpSession session) {
         session.invalidate();

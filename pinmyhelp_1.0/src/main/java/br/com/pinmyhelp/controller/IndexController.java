@@ -19,21 +19,4 @@ public class IndexController {
         return "login";
     }
     
-//
-//    @RequestMapping("cadastrar")
-//    public String cadatrar() {
-//        return "cadastrar";
-//    }
-
-//    @RequestMapping(value = {"/about"})
-//    public String about() {
-//        return "about";
-//    }
-
-//    @RequestMapping(value = "/logout")
-//    public String logout(HttpSession session) {
-//        session.invalidate();
-//        return "redirect:login";
-//    }
-
 }
