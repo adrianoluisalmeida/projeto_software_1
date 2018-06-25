@@ -5,11 +5,13 @@
  */
 package br.com.pinmyhelp.model.types;
 
+import java.io.Serializable;
+
 /**
  *
  * @author roger
  */
-public class GeoLocation {
+public class GeoLocation implements Serializable{
     
     private double latitude = 0;
     private double longitude = 0;

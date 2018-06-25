@@ -7,12 +7,13 @@ package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
 import br.com.pinmyhelp.model.types.OfferStatus;
+import java.io.Serializable;
 
 /**
  *
  * @author rhau
  */
-public class HelpOffer extends Record {
+public class HelpOffer extends Record implements Serializable {
     
     private Voluntary voluntary;
     private Entity entity;

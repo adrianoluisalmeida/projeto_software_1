@@ -12,6 +12,8 @@ import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpType;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,9 +23,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -51,10 +55,26 @@ public class RequestsController {
    
     
     @RequestMapping("/requests/my")
-    public String my(Model model){
-        model.addAttribute("title", "Meus Pedidos");
-        model.addAttribute("page", "requests/my");
-        return "app";
+    public ModelAndView my(HttpSession session){
+        ModelAndView mav = new ModelAndView("app");
+        mav.addObject("title", "Meus Pedidos");
+        mav.addObject("page", "requests/my");
+        
+        ConnectionManager.openConnection();
+        ConnectionManager.beginTransaction();
+        User u = (User) session.getAttribute("user");
+        HelpSolicitation h = new HelpSolicitation();
+        Collection<HelpSolicitation> myRequests = new ArrayList<>();
+        if(session.getAttribute("type").equals("Claimant")) 
+            h.setClaimant((Person) personDAO.findOne(u.getId()));
+        //Ainda não testei usando a entidade como requerente
+        else if(session.getAttribute("type").equals("Entity"))
+            h.setEntity((Entity) entityDAO.findOne(u.getId())); 
+        myRequests = helpSolicitationDAO.find(h);
+        mav.addObject("myRequests", myRequests);
+        ConnectionManager.commitTransaction();
+        ConnectionManager.closeConnection();        
+        return mav;
     }
     
     @RequestMapping(value = "/requests/create", method = GET)
@@ -71,6 +91,8 @@ public class RequestsController {
            person = personDAO.findOne(user.getId());
            mav.addObject("claimant", person);
         }
+        ConnectionManager.commitTransaction();
+        ConnectionManager.closeConnection();
         Collection<HelpType> HelpTypes = new ArrayList<>();
         HelpTypes.addAll(Arrays.asList(HelpType.values()));
         mav.addObject("HelpTypes", HelpTypes);
@@ -81,18 +103,25 @@ public class RequestsController {
     
         
     @RequestMapping(value = "/requests/store", method = POST)
-    public ModelAndView store(@Valid HelpSolicitation help, GeoLocation location, HelpType helpType, Claimant claimant, Entity entity, BindingResult result, HttpSession session){  
+    public ModelAndView store(@Valid HelpSolicitation help, GeoLocation location, @RequestParam("idType") int idType, @RequestParam("start-date") String startDate, @RequestParam("end-date") String endDate, BindingResult result, HttpSession session){  
         if (result.hasErrors()) {
            return create(session);
         }
-        if(claimant != null)
-            help.setClaimant(claimant);
-        if(entity != null)
-            help.setEntity(entity);
-        help.setLocation(location);
-        help.setType(helpType);
         ConnectionManager.openConnection();
         ConnectionManager.beginTransaction();
+        User u = (User) session.getAttribute("user");
+        if(session.getAttribute("type").equals("Claimant"))
+            help.setClaimant((Person) personDAO.findOne(u.getId()));
+        //Ainda não testei usando a entidade como requerente (no BD só tem um campo claimant_id)
+        //Então no HelpSolicitationDAO só insere em claimant_id o id que pega de claimant
+        //Tem que mudar em HelpSolicitationDAO para que insira o id de entidade quando o tipo é entity
+        else if(session.getAttribute("type").equals("Entity"))
+            help.setEntity((Entity) entityDAO.findOne(u.getId()));
+        help.setLocation(location);
+        help.setType(HelpType.get(idType));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        help.setStartDate(LocalDate.parse(startDate, formatter));
+        help.setEndDate(LocalDate.parse(endDate, formatter));
         helpSolicitationDAO.create(help);
         ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();

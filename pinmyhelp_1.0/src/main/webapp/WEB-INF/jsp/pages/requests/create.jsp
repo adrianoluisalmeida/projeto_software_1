@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib tagdir="/WEB-INF/tags" prefix="custom" %>
+
 <form action="${pageContext.request.contextPath}/requests/store" enctype="multipart/form-data" accept-charset="iso-8859-1,utf-8" method="POST">
     <div class="row mt-5">
         <div class="col-md-8 mt-3">
@@ -12,7 +14,7 @@
             <div class="row">
                 <div class="col">
                     <div class="md-form">
-                        <select name="HelpType" class="mdb-select form-control">
+                        <select name="idType" class="mdb-select form-control">
                             <option value="" disabled selected>Tipo de ajuda</option>
                             <c:forEach var="helpType" items="${HelpTypes}">
                                 <option value="${helpType.id}">${helpType.type}</option>
@@ -34,17 +36,17 @@
                 </div>
             </div>   
             <hr>
-            <h3>Data</h3>
+           <h3>Data</h3>
             <div class="row">
                 <div class="col">
                     <div class="md-form">
-                        <input type="text" name="startDate" id="Form-startDate" class="form-control">
+                        <input type="text" name="start-date" id="Form-start-date" class="form-control">
                         <label for="Form-date">Data inicial</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="md-form">
-                        <input type="text" name="endDate" id="Form-endDate" class="form-control">
+                        <input type="text" name="end-date" id="Form-end-date" class="form-control">
                         <label for="Form-time">Data final</label>
                     </div>
                 </div>
@@ -135,5 +137,9 @@
                 $($buttonAddress).prop("disabled", false); // let's user try again...
             }
         }
+        
+        
+        $("#Form-start-date").mask("00/00/0000", {clearIfNotMatch: true});
+        $("#Form-end-date").mask("00/00/0000", {clearIfNotMatch: true});
     });
 </script>

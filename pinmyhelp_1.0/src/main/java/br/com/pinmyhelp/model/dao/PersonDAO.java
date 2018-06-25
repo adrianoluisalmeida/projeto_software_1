@@ -37,18 +37,7 @@ public class PersonDAO extends AbstractDAO<Person>{
     protected void fillCreate(PreparedStatement ps, Person p) throws SQLException {
         p.removeMasks();
         ps.setInt(1, p.getId());
-        
-        //Definir tipo descobrindo qual classe está instanciando
-        /*
-        if(p instanceof Voluntary){
-            ps.setString(2, "Voluntary");
-        } else if (p instanceof Claimant){
-            ps.setString(2, "Claimant");
-        } 
-        */
-        //OU fazer com o tipo definido nas classes voluntary ou claimant
         ps.setString(2, p.getType());
-        
         ps.setString(3, p.getName());
         //Removendo mascara de entrada antes de inserir
         ps.setString(4, FormatUtils.unmaskNumber(p.getCpf()));

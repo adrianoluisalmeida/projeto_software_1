@@ -9,6 +9,8 @@ import br.com.pinmyhelp.database.Record;
 import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,17 +22,17 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author rhau
  */
-public class HelpSolicitation extends Record {
+public class HelpSolicitation extends Record implements Serializable {
     
-    private Claimant claimant;
+    private Person claimant;
     private Entity entity;
-      @NotNull(message = "O tipo deve ser preenchido")
+      //@NotNull(message = "O tipo deve ser preenchido")
     private HelpType type;
     private String requirementDescription;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDateTime startDate;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDateTime endDate;
+   // @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate startDate;
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate endDate;
     private GeoLocation location;
     private HelpStatus status;
     private Collection<HelpOffer> helpOffers = new ArrayList<>();
@@ -42,14 +44,14 @@ public class HelpSolicitation extends Record {
     /**
      * @return the claimant
      */
-    public Claimant getClaimant() {
+    public Person getClaimant() {
         return claimant;
     }
 
     /**
      * @param claimant the claimant to set
      */
-    public void setClaimant(Claimant claimant) {
+    public void setClaimant(Person claimant) {
         this.claimant = claimant;
     }
 
@@ -94,28 +96,28 @@ public class HelpSolicitation extends Record {
     /**
      * @return the startDate
      */
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
     /**
      * @param startDate the startDate to set
      */
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
     /**
      * @return the endDate
      */
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
     /**
      * @param endDate the endDate to set
      */
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

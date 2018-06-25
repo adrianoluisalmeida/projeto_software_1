@@ -18,11 +18,11 @@ public enum HelpType {
     T4(4, "Manutenção doméstica"),
     T5(5, "Culinária");
     
-    private final int id; //number to save on DB
+    private final int idType; //number to save on DB
     private final String type; //description to show
     
-    HelpType(int id, String type){
-        this.id = id;
+    HelpType(int idType, String type){
+        this.idType = idType;
         this.type = type;
     }
 
@@ -30,7 +30,7 @@ public enum HelpType {
      * @return the id
      */
     public int getId() {
-        return id;
+        return idType;
     }
 
     /**
@@ -40,9 +40,9 @@ public enum HelpType {
         return type;
     }
     
-    public static HelpType get(int id){
+    public static HelpType get(int idType){
         for(HelpType t : HelpType.values()){
-            if (t.getId() == id)
+            if (t.getId() == idType)
                 return t;
         }
         return null;

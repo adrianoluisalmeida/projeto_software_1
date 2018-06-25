@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="col mt-5">
 
 
@@ -6,9 +8,9 @@
 
     </div>
     <div class="clearfix"></div>
-
-    <!-- Card -->
-    <div class=" col-md-4 float-left">
+        <c:forEach var="request" items="${myRequests}">
+            
+               <div class=" col-md-4 float-left">
         <div class="card">
 
             <!-- Card image -->
@@ -19,19 +21,19 @@
             <div class="card-body">
 
                 <!-- Title -->
-                <h4 class="card-title"><a>Ir ao supermercado</a></h4>
+                <h4 class="card-title"><a>${request.requirementDescription}</a></h4>
                 <!-- Text -->
                 <p class="card-text">
                     <b>Requerente</b><br>
-                    Dona Maria
+                    ${request.claimant.name}
                 </p>
                 <p class="card-text">
-                    <b>Data e Hora necessário</b><br>
-                    00/00/0000
+                    <b>Data</b><br>
+                    ${request.startDate}
                 </p>
                 <p class="card-text">
                     <b>Situação</b><br>
-                    Em aberto
+                    ${request.status.status}
                 </p>
 
                 <!-- Button -->
@@ -44,47 +46,7 @@
         </div>
     </div>
     <!-- Card -->
-
-    <!-- Card -->
-    <div class=" col-md-4 float-left">
-        <div class="card">
-
-            <!-- Card image -->
-            <!--<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg"-->
-            <!--alt="Card image cap">-->
-
-            <!-- Card content -->
-            <div class="card-body">
-
-                <!-- Title -->
-                <h4 class="card-title"><a>Ir ao supermercado 2</a></h4>
-                <!-- Text -->
-                <p class="card-text">
-                    <b>Requerente</b><br>
-                    Dona Maria
-                </p>
-                <p class="card-text">
-                    <b>Data e Hora necessário</b><br>
-                    00/00/0000
-                </p>
-                <p class="card-text">
-                    <b>Situação</b><br>
-                    Oferta recebida
-                </p>
-
-                <!-- Button -->
-                <div class="row justify-content-md-center">
-                    <!--<a href="#" class="btn btn-blue-grey float-left">Editar</a>-->
-                    <a href="#" class="btn btn-danger float-left">Excluir</a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- Card -->
-
-</div>
-<!-- Card -->
+        </c:forEach>
 <div class="clearfix"></div>
 
 

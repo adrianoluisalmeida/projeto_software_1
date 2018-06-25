@@ -6,6 +6,7 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.Pattern;
  *
  * @author rhau
  */
-public class Feedback extends Record {
+public class Feedback extends Record implements Serializable {
 
     private User sender;
     @NotNull(message = "Você deve dar uma nota de avaliação")
