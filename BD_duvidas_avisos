@@ -1,0 +1,28 @@
+------------- ALTERAÇÕES BD
+
+- Coluna nova em help_solicitation:
+
+ALTER TABLE help_solicitation ADD COLUMN solicitation_description TEXT NOT NULL AFTER solicitation_type; 
+
+- Tipo de solicitação int:
+
+ALTER TABLE help_solicitation MODIFY COLUMN solicitation_type INT(11) NOT NULL;
+
+- Valor default para status de solicitação:
+
+ALTER TABLE help_solicitation MODIFY COLUMN solicitation_status INT(11) NOT NULL DEFAULT 1;
+
+
+------------- AVISOS/PROBLEMAS/DÚVIDAS
+
+- O controle de dashboard e navbar de cada usuário foi realizado
+
+- Para inserir uma solicitação de ajuda peguei as datas manualmente
+
+- Para inserir localização está pegando a lat e long quando usa a localização atual e quando usa o endereço de cadastro pega 0 pois ainda não está implementada a parte de gerar lat e long a partir de endereço ----> FALTA fazer isso;
+
+- Ainda não testei usando a entidade como requerente. No BD só tem um campo claimant_id, Então no HelpSolicitationDAO só insere em claimant_id o id que pega de claimant. Tem que mudar em HelpSolicitationDAO para que insira o id de entidade quando o tipo é entity
+
+- Pegar as solicitações de ajuda do requerente -> Está funcionando na página My (meus pedidos de ajuda) mas não imprime o nome do claimant. 
+NÃO está funcionando na página inicial, no dashboard de claimant, que é carregado em dashboard controller, pois não está funcionando o método PersonDAO.findOne() somente lá, sem motivos.
+
