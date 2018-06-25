@@ -19,17 +19,15 @@ public class Person extends User {
     
     @NotNull(message = "Selecione uma opção")
     private String type;
-    @NotNull(message = "O nome deve ser preenchido")
-    @Size(min = 5, message = "Nome deve ter pelo menos 5 carateres")
+    @Size(min = 1, message = "O nome deve ser preenchido")
     private String name;
-    @NotNull(message = "O CPF deve ser preenchido")
+    @Size(min = 1, message = "Informe um CPF válido")
     private String cpf;
-    @NotNull(message = "O RG deve ser preenchido")
+    @Size(min = 1, message = "Informe um RG válido")
     private String rg;
-    @NotNull(message = "A Data de Nascimento deve ser preenchido")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate bornDate;
-    @NotNull(message = "O Primeiro telefone deve ser preenchido")
+    @Size(min = 1, message = "o telefone deve ser preenchido")
     private String firstPhone;
     private String secondPhone;
     private String biography;
@@ -56,7 +54,7 @@ public class Person extends User {
         super(id, email, password);
     }
     
-    //constructor for create controller
+    //constructor to create controller
     public Person(Integer id, String type, String name, String cpf, String rg, LocalDate bornDate, String firstPhone) {
         super(id);
         this.type = type;
@@ -72,7 +70,6 @@ public class Person extends User {
     }
 
     public void setType(String type) {
-        System.out.println("?: "+type);
         this.type = type;
     }
     

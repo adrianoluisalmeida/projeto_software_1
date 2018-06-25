@@ -6,7 +6,9 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.model.types.GeoLocation;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -14,12 +16,18 @@ import javax.validation.constraints.Pattern;
  */
 public class Address {
     
+    @Size(min = 1, message = "Informe o CEP")
     private String postalCode;
+    @Size(min = 1, message = "Informe a UF")
     private String state;
+    @Size(min = 1, message = "Informe a cidade")
     private String city;
+    @Size(min = 1, message = "Informe o bairro")
     private String neighborhood;
+    @Size(min = 1, message = "Informe a rua")
     private String street;
-    @Pattern(regexp="[\\d]{6}", message = "Tipo de dado inválido no campo número.")
+    @NotNull(message = "Infome o número")
+    // @Pattern(regexp="[\\d]{6}", message = "Tipo de dado inválido no campo número.")
     private Integer number;
     private String complement;
     private GeoLocation location;

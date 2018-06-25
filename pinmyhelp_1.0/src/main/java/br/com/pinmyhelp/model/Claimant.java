@@ -28,7 +28,6 @@ public class Claimant extends Person {
         super(id, email, password);
     }
 
-    //constructor for create controller
     public Claimant(Integer id, String type, String name, String cpf, String rg, LocalDate bornDate, String firstPhone) {
         super(id, TYPE_CLAIMANT, name, cpf, rg, bornDate, firstPhone);
     }

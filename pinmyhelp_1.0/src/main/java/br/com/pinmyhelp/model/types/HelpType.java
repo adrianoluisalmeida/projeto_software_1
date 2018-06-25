@@ -16,8 +16,9 @@ public enum HelpType {
     T2(2,"Limpeza"),
     T3(3,"Animais de estimação"),
     T4(4, "Manutenção doméstica"),
-    T5(5, "Culinária");
-    
+    T5(5, "Culinária"),
+    T6(6, "Outro");
+
     private final int idType; //number to save on DB
     private final String type; //description to show
     

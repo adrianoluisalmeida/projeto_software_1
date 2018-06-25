@@ -7,7 +7,7 @@ package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.util.FormatUtils;
 import java.time.LocalDate;
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,20 +17,20 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class Entity extends User {
     
-    @NotNull(message = "O nome deve ser preenchido")
-    @Size(min = 5, message = "Nome deve ter pelo menos 5 carateres")
+    @Size(min = 1, message = "O nome deve ser preenchido")
     private String name;
-    @NotNull(message = "O CNPJ deve ser preenchido")
+    @Size(min = 1, message = "Informe um CNPJ válido")
     private String cnpj;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate foundationDate;
-    @NotNull(message = "O primeiro telefone deve ser preenchido")
+    @Size(min = 1, message = "O telefone deve ser preenchido")
     private String firstPhone;
     private String secondPhone;
     private String description;
     private double score;
     // atributo pra logo...
     private String logo;
+    @Valid
     private Address address;
     private String notes; // observacoes
 
@@ -47,6 +47,20 @@ public class Entity extends User {
 
     public Entity(Integer id, String email, String password) {
         super(id, email, password);
+    }
+
+    public Entity(Integer id, String name, String cnpj, LocalDate foundationDate, String firstPhone, String secondPhone, String description, double score, String logo, Address address, String notes) {
+        super(id);
+        this.name = name;
+        this.cnpj = cnpj;
+        this.foundationDate = foundationDate;
+        this.firstPhone = firstPhone;
+        this.secondPhone = secondPhone;
+        this.description = description;
+        this.score = score;
+        this.logo = logo;
+        this.address = address;
+        this.notes = notes;
     }
 
     /**

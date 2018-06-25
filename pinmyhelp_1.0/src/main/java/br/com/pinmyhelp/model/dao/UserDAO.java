@@ -76,6 +76,10 @@ public class UserDAO extends AbstractDAO<User> {
         return !find(u).isEmpty();
     }
     
+    public Boolean emailAlreadyExists(String email) {
+        return !find("email = ?", new String[]{email}).isEmpty();
+    }
+    
     public User findOne(String email, String password){
         List<User> list = find("email = ? AND password = ?", new String[]{email, password});
         if (list.size() > 0){

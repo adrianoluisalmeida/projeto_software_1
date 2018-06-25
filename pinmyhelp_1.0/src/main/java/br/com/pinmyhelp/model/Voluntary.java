@@ -5,7 +5,6 @@
  */
 package br.com.pinmyhelp.model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 /**
@@ -29,7 +28,6 @@ public class Voluntary extends Person {
         super(id, email, password);
     }
 
-    //constructor for create controller
     public Voluntary(Integer id, String type, String name, String cpf, String rg, LocalDate bornDate, String firstPhone) {
         super(id, TYPE_VOLUNTARY, name, cpf, rg, bornDate, firstPhone);
     }

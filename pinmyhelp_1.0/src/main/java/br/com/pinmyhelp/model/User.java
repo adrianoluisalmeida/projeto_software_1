@@ -9,7 +9,6 @@ package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -18,11 +17,9 @@ import javax.validation.constraints.Size;
  */
 public class User extends Record implements Serializable {
     
-    @NotNull(message = "O campo e-mail deve ser preenchido")
-    @Size(min = 4, message = "E-mail deve ter pelo menos 4 carateres")
+    @Size(min = 1, message = "O campo de e-mail deve ser preenchido")
     protected String email;
-    //@NotNull(message = "O campo senha deve ser preenchido")
-    //@Size(min = 4, message = "Senha deve ter pelo menos 4 carateres")
+    @Size(min = 1, message = "O campo senha deve ser preenchido")
     protected String password;
     protected boolean isAdmin = false;
 
