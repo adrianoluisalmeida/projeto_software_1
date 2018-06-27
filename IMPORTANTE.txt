@@ -1,0 +1,18 @@
+------------- ALTERAÇÕES BD
+
+Rodar script de criação do banco novamente.
+
+------------- AVISOS
+
+- login Voluntario/Requerente/Entidade devidamente validado e funcionando;
+- cadastro Voluntario/Requerente/Entidade devidamente validado e funcionando;
+	- TODO: Quando a entidade digitar o CEP buscar as info. de endereço.
+- criação e exibição das solicitações ajuda (visão de Requerente) funcionando;
+	- TODO: 	
+		- quando digitar CEP buscar as info. de endereço;
+		- visão de Entidade ainda não foi testada (muda basicamente no front);
+		- primeira vez que o Requerente vai solicitar ele pode não ter endereço cadastrado ainda:
+			- Soluções:
+				- quando isso acontecer abrir modal exigindo preenchimento;
+				- redirecionar para a pagina de edição de perfil (exibindo msg certa, etc);
+				- considerar que o endereço de sua primeira solicitação é o seu e atualizar automaticamente o perfil dele também.
