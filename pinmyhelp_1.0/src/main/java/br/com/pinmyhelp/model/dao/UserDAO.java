@@ -71,15 +71,7 @@ public class UserDAO extends AbstractDAO<User> {
         u.setId(id);
         return id;
     }
-    
-    public Boolean autenticate(User u) {
-        return !find(u).isEmpty();
-    }
-    
-    public Boolean emailAlreadyExists(String email) {
-        return !find("email = ?", new String[]{email}).isEmpty();
-    }
-    
+
     public User findOne(String email, String password){
         List<User> list = find("email = ? AND password = ?", new String[]{email, password});
         if (list.size() > 0){
@@ -87,5 +79,16 @@ public class UserDAO extends AbstractDAO<User> {
         }
         return null;
     }
+            
+    public User autenticateUser(User u) {
+        List<User> user = find(u);
+        if ( !user.isEmpty() )
+            return user.get(0);
+        return null;
+    }
     
+    public Boolean emailAlreadyExists(String email) {
+        return !find("email = ?", new String[]{email}).isEmpty();
+    }
+
 }

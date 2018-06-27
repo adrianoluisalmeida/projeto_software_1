@@ -9,6 +9,7 @@ import br.com.pinmyhelp.database.AbstractDAO;
 import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.Entity;
 import br.com.pinmyhelp.model.types.GeoLocation;
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @author isabella
  */
 @Component
-public class EntityDAO extends AbstractDAO<Entity> {
+public class EntityDAO extends AbstractDAO<Entity> implements Serializable {
     
     public EntityDAO() {
         setCreateSql("INSERT INTO entity("
