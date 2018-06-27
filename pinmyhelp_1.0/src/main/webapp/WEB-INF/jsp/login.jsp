@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,14 +32,16 @@
                             <strong>Pin My Help</strong>
                         </h3>
                     </div>
-                    <c:if test="${not empty login_error}"><span class="error">${login_error}</span></c:if>                            
                     <div class="md-form">
-                        <input type="email" id="Form-email" class="form-control" name="email" <c:if test="${not empty user_email}">value="${user_email}"</c:if> required>
+                        <input type="email" id="Form-email" class="form-control" name="email" value="${user.email}">
                         <label for="Form-email">Seu e-mail</label>
+                        <form:errors path="user.email" cssStyle="color:red"/>
                     </div>
                     <div class="md-form pb-3">
-                        <input type="password" id="Form-pass" class="form-control" name="password" required>
+                        <input type="password" id="Form-pass" class="form-control" name="password">
                         <label for="Form-pass">Senha</label>
+                        <form:errors path="user.password" cssStyle="color:red"/>
+                        <c:if test="${not empty login_error}"><span class="error">${login_error}</span></c:if>                            
                         <div class="form-check"></div>
                         <p class="font-small grey-text d-flex justify-content-end">
                             <a href="#" class="font-weight-light ml-1">

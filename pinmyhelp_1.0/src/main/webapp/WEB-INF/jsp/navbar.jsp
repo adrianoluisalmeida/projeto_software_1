@@ -28,7 +28,7 @@
                 </li>
                 <c:if test="${type != 'Voluntary'}"> 
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/requests/my">Meus Pedidos</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/solicitations/my">Minhas Solicitações</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/offers">Todas ofertas</a>
@@ -36,13 +36,12 @@
                 </c:if>
                 <c:if test="${type != 'Claimant'}"> 
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/requests">Todas solicitações</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/solicitations">Todas solicitações</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/offers/my">Minhas Ofertas</a>
                     </li>
                 </c:if>
-
             </ul>
             <!-- /Links -->
             <!-- Icons -->

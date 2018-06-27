@@ -9,16 +9,14 @@
     <!-- NAO colocar input com name = type aqui -->
 </c:if>
 <!-- Type -->
-<c:if test="${empty person.name}">
-    <div class="form-group mb-0 mt-4">
-        <select name="type" class="mdb-select form-control">
-            <option value="" disabled <c:if test="${(person.type != 'Voluntary') && (person.type != 'Claimant')}">selected</c:if>>Seu objetivo no Pin My Help</option>
-            <option value="Voluntary" <c:if test="${person.type == 'Voluntary'}">selected</c:if>>Quero Ajudar</option>
-            <option value="Claimant" <c:if test="${person.type == 'Claimant'}">selected</c:if>>Preciso de Ajuda</option>
-        </select>
-        <form:errors path="person.type" cssStyle="color:red"/>
-    </div>    
-</c:if>
+<div class="form-group mb-0 mt-4">
+    <select name="type" class="mdb-select form-control">
+        <option value="" disabled <c:if test="${(person.type != 'Voluntary') && (person.type != 'Claimant')}">selected</c:if>>Seu objetivo no Pin My Help</option>
+        <option value="Voluntary" <c:if test="${person.type == 'Voluntary'}">selected</c:if>>Quero Ajudar</option>
+        <option value="Claimant" <c:if test="${person.type == 'Claimant'}">selected</c:if>>Preciso de Ajuda</option>
+    </select>
+    <form:errors path="person.type" cssStyle="color:red"/>
+</div>    
 <div class="md-form">
     <input type="text" name="name" id="Form-name" <c:if test="${not empty person.name}">value="${person.name}"</c:if>  class="form-control">
     <label for="Form-name">Nome</label>
@@ -58,13 +56,17 @@
     <input type="email" name="email" id="Form-email" value="${person.email}" class="form-control">
     <label for="Form-email">Seu e-mail</label>
     <form:errors path="person.email" cssStyle="color:red"/>
-    <c:if test="${not empty email_error_person}"><span class="error">${email_error_person}</span></c:if>
+    <c:if test="${not empty email_error_person}">
+        <span class="error">${email_error_person}</span> 
+        <a href="#" class="font-weight-light ml-1 pull-right"> Esqueceu a senha?</a>
+    </c:if>
 </div>
 
 <div class="md-form pb-3">
     <input type="password" id="Form-pass" name="password" class="form-control">
     <label for="Form-pass">Senha</label>
     <form:errors path="person.password" cssStyle="color:red"/>
+    <c:if test="${not empty password_error_person}"><span class="error">${password_error_person}</span></c:if>
 </div>
 <c:if test="${not empty person.id}">
     <h4>Endereço</h4>

@@ -1,8 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@taglib tagdir="/WEB-INF/tags" prefix="custom" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib tagdir="/WEB-INF/tags" prefix="custom"%>
 
 <c:if test="${not empty entity}">
     <input type="hidden" name="id" value="${entity.id}"/>
@@ -41,13 +41,17 @@
     <input type="email" name="email" id="Form-email-entity" value="${entity.email}"  class="form-control">
     <label for="Form-email-entity">E-mail para contato e login</label>
     <form:errors path="entity.email" cssStyle="color:red"/>
-    <c:if test="${not empty email_error_entity}"><span class="error">${email_error_entity}</span></c:if>
+    <c:if test="${not empty email_error_entity}">
+        <span class="error">${email_error_entity}</span>
+        <a href="#" class="font-weight-light ml-1 pull-right"> Esqueceu a senha?</a>    
+    </c:if>
 </div>
 
 <div class="md-form">
     <input type="password" id="Form-pass-entity" name="password" value="${entity.password}" class="form-control">
     <label for="Form-pass-entity">Senha</label>
     <form:errors path="entity.password" cssStyle="color:red"/>
+    <c:if test="${not empty password_error_entity}"><span class="error">${password_error_entity}</span></c:if>
 </div>
 
 <h4>Endereço</h4>
@@ -106,7 +110,7 @@
 </div>
     
 <div class="md-form"> 
-    <textarea name="description" id="Form-description" class="form-control">${entity.description}</textarea>
+    <textarea name="description" id="Form-description" class="md-textarea form-control" rows="2">${entity.description}</textarea>
     <label for="Form-description">Descrição da entidade</label>
 </div>
 
