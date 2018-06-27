@@ -77,7 +77,7 @@ public class ConnectionManager {
         if (PRINT_CONN)
             System.out.println(String.format("Connection close!(%d)",connections));
         try {
-            if (connections == 0){
+            if (connections == 0) {
                 connection.close();
                 connection = null;
             }
