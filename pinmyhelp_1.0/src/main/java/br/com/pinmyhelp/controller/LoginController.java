@@ -39,22 +39,24 @@ public class LoginController {
     
     @RequestMapping(value = "sign-in", method = POST)
     public ModelAndView index(@Valid User user, BindingResult result, HttpSession session) {
-        if ( result.hasErrors() || !userDAO.autenticate(user) )
-            return redirectLogin(user);
-        User loggedUser = userDAO.findOne(user.getEmail(), user.getPassword());
+        if ( result.hasErrors() ) return new ModelAndView("login");
+        User loggedUser = userDAO.autenticateUser(user);
+        if ( loggedUser == null ) return redirectLogin(user);
         session.setAttribute("user", loggedUser);
         Person person = personDAO.findOne(loggedUser.getId());
         if (person != null){
+            session.setAttribute("person", person);
             session.setAttribute("type", person.getType());
-            session.setAttribute("picture", person.getProfilePicture());
-        }else{
+        } else {
             Entity entity = entityDAO.findOne(loggedUser.getId());
             if (entity != null){
+                session.setAttribute("entity", entity);
                 session.setAttribute("type", "Entity");
-                session.setAttribute("picture", entity.getLogo());
+            } else {
+                return new ModelAndView("login");
             }
         }
-        return new DashboardController().redirectDashboard(session);
+        return new ModelAndView("redirect:/dashboard");
     }
     
     public ModelAndView redirectLogin(User user){
@@ -69,7 +71,7 @@ public class LoginController {
     }
         
     @RequestMapping(value = "sign-out", method = GET)
-    public String index(HttpSession session) {
+    public String signOut(HttpSession session) {
         session.invalidate();
         return "login";
     }

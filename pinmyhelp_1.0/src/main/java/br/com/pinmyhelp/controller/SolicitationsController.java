@@ -1,7 +1,5 @@
 package br.com.pinmyhelp.controller;
 
-import br.com.pinmyhelp.database.ConnectionManager;
-import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.Claimant;
 import br.com.pinmyhelp.model.Entity;
 import br.com.pinmyhelp.model.HelpSolicitation;
@@ -10,23 +8,19 @@ import br.com.pinmyhelp.model.User;
 import br.com.pinmyhelp.model.dao.EntityDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
-import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -34,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author adriano
  */
 @Controller
-public class RequestsController {
+public class SolicitationsController {
     
     @Autowired
     PersonDAO personDAO;
@@ -45,102 +39,103 @@ public class RequestsController {
     @Autowired
     HelpSolicitationDAO helpSolicitationDAO;
 
-    @RequestMapping("/requests")
+    @RequestMapping("/solicitations")
     public String index(Model model) {
         model.addAttribute("title", "Solicitações");
-        model.addAttribute("page", "requests/index");
+        model.addAttribute("page", "solicitations/index");
         return "app";
     }
-   
     
-    @RequestMapping("/requests/my")
+    @RequestMapping("/solicitations/my")
     public ModelAndView my(HttpSession session){
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Meus Pedidos");
-        mav.addObject("page", "requests/my");
-        
-        ConnectionManager.openConnection();
-        ConnectionManager.beginTransaction();
-        User u = (User) session.getAttribute("user");
-        HelpSolicitation h = new HelpSolicitation();
-        Collection<HelpSolicitation> myRequests = new ArrayList<>();
-        if(session.getAttribute("type").equals("Claimant")) 
-            h.setClaimant((Person) personDAO.findOne(u.getId()));
-        //Ainda não testei usando a entidade como requerente
-        else if(session.getAttribute("type").equals("Entity"))
-            h.setEntity((Entity) entityDAO.findOne(u.getId())); 
-        myRequests = helpSolicitationDAO.find(h);
-        mav.addObject("myRequests", myRequests);
-        ConnectionManager.commitTransaction();
-        ConnectionManager.closeConnection();        
+        mav.addObject("page", "solicitations/my");
+        mav.addObject("mySolicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), null));
         return mav;
     }
     
-    @RequestMapping(value = "/requests/create", method = GET)
+    @RequestMapping(value = "/solicitations/create", method = GET)
     public ModelAndView create(HttpSession session){
-        ModelAndView mav = new ModelAndView("app");
-        ConnectionManager.openConnection();
-        User user = (User) session.getAttribute("user");
-        Entity entity = null;
-        Person person = null;
-        if(session.getAttribute("type").equals("Entity")){
-           entity = entityDAO.findOne(user.getId());
-           mav.addObject("claimant", entity);
-        } else {
-           person = personDAO.findOne(user.getId());
-           mav.addObject("claimant", person);
-           if (person.getAddress() == null)
-               mav.addObject("situation", "addressNedded"); 
-        }
-        ConnectionManager.closeConnection();
-        Collection<HelpType> HelpTypes = new ArrayList<>();
-        HelpTypes.addAll(Arrays.asList(HelpType.values()));
-        mav.addObject("HelpTypes", HelpTypes);
-        mav.addObject("title", "Nova solicitação de Ajuda");
-        mav.addObject("page", "requests/create");
-        return mav;
+        return getModelCreatePage(session);
     }
     
-        
-    @RequestMapping(value = "/requests/store", method = POST)
-    public ModelAndView store(@Valid HelpSolicitation help, GeoLocation location, @RequestParam("idType") int idType, @RequestParam("start-date") String startDate, @RequestParam("end-date") String endDate, BindingResult result, HttpSession session){  
-        if (result.hasErrors()) {
-           return create(session);
-        }
-        ConnectionManager.openConnection();
-        ConnectionManager.beginTransaction();
-        User u = (User) session.getAttribute("user");
-        if(session.getAttribute("type").equals("Claimant"))
-            help.setClaimant((Person) personDAO.findOne(u.getId()));
-        //Ainda não testei usando a entidade como requerente (no BD só tem um campo claimant_id)
-        //Então no HelpSolicitationDAO só insere em claimant_id o id que pega de claimant
-        //Tem que mudar em HelpSolicitationDAO para que insira o id de entidade quando o tipo é entity
-        else if(session.getAttribute("type").equals("Entity"))
-            help.setEntity((Entity) entityDAO.findOne(u.getId()));
-        help.setLocation(location);
-        help.setType(HelpType.get(idType));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        help.setStartDate(LocalDate.parse(startDate, formatter));
-        help.setEndDate(LocalDate.parse(endDate, formatter));
+    @RequestMapping(value = "/solicitations/store", method = POST)
+    public ModelAndView store(@Valid HelpSolicitation help, BindingResult result, @ModelAttribute("type_id") String typeId, HttpSession session){  
+        ModelAndView mv = getModelCreatePage(session);
+        Boolean datesAreValid = validateDates(help.getStartDate(), help.getEndDate(), result, mv);       
+        Boolean helpTypeIsValid = validateHelpType(typeId, help, mv);
+        if ( result.hasErrors() || !datesAreValid || !helpTypeIsValid )
+            return mv;
+        User user = (User) session.getAttribute("user");
+        if ( ((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT) ) {
+            help.setClaimant(new Claimant(user.getId()));
+        } else 
+            help.setEntity(new Entity(user.getId()));
         helpSolicitationDAO.create(help);
-        ConnectionManager.commitTransaction();
-        ConnectionManager.closeConnection();
         return new DashboardController().redirectDashboard(session);
     }
     
-    @RequestMapping(value = "/requests/edit/{idRequest}", method = GET)
+    @RequestMapping(value = "/solicitations/edit/{idRequest}", method = GET)
     public String edit(Model model){
         return "";
     }
     
-    @RequestMapping(value = "/requests/update", method = POST)
+    @RequestMapping(value = "/solicitations/update", method = POST)
     public String update(Model model){
         return "";
     }
     
-    @RequestMapping(value = "/requests/delete/{idRequest}", method = GET)
+    @RequestMapping(value = "/solicitations/delete/{idRequest}", method = GET)
     public String delete(Model model){
         return "";
     }
+
+    private Boolean validateDates(LocalDate startDate, LocalDate endDate, BindingResult result, ModelAndView mv) {
+        Boolean formatError = false;
+        if ( startDate == null || result.hasFieldErrors("startDate") ) {
+            mv.addObject("errorStartDate", "Informe uma data válida");
+            formatError = true;
+        } if ( endDate == null || result.hasFieldErrors("endDate") ) {
+            mv.addObject("errorEndDate", "Informe uma data válida");
+            formatError = true;
+        }
+        if ( !formatError ) {
+            if ( !startDate.isEqual(LocalDate.now()) && startDate.isBefore(LocalDate.now()) ) {
+                mv.addObject("errorStartDate", "Data de início não pode ser menor que a data atual");
+                formatError =true;
+            }
+            else if ( !startDate.isEqual(endDate) && startDate.isAfter(endDate) ) {
+                mv.addObject("errorStartDate", "Data de início não pode ser maior que a data fim");
+                formatError = true;
+            }
+        }
+        return !formatError;
+    }
     
+    private Boolean validateHelpType(String typeId, HelpSolicitation help, ModelAndView mv) {
+        if ( typeId == null ) {
+            mv.addObject("errorHelpType", "Escolha o tipo da ajuda solicitada");
+            return false;
+        }
+        try {
+            Integer id = Integer.parseInt(typeId);
+            HelpType helpType = HelpType.get(id);
+            if (helpType != null) {
+                help.setType(helpType);
+                return true;
+            }
+        } catch(NumberFormatException e) { }
+        mv.addObject("errorHelpType", "Escolha um tipo válido");
+        return false;
+    }
+    
+    private ModelAndView getModelCreatePage(HttpSession session) {
+        ModelAndView mv = new ModelAndView("app");
+        mv.addObject("title", "Nova solicitação de Ajuda");
+        mv.addObject("page", "solicitations/create");
+        mv.addObject("helpTypes", Arrays.asList(HelpType.values()));
+        return mv;
+    }
+
 }

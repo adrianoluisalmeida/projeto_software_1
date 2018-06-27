@@ -50,57 +50,71 @@ public class AccountController {
 
     @RequestMapping("/account/store/person")
     public ModelAndView createPerson(@Valid Person person, BindingResult result, HttpSession session) {
-        if (result.hasErrors()) {
-            ModelAndView mv = new ModelAndView("register");
+        ModelAndView mv = new ModelAndView("register");
+        if ( result.hasErrors() ) {
             if ( person.getBornDate() == null || result.hasFieldErrors("bornDate") )
                 mv.addObject("errorBornDate", "Informe uma data válida");
             return mv;
         }
-        if ( userDAO.emailAlreadyExists(person.getEmail()) ) {
-            ModelAndView mv = new ModelAndView("register");
-            mv.addObject("email_error_person", "E-mail já cadastrado");
+        if ( person.getPassword().length() < 6 ) {
+            mv.addObject("password_error_person", "A senha deve ter no mínimo 6 caracteres");
+            return mv;            
+        }
+        if ( person.getBornDate() == null ) { // it's also necessary to check the date here
+            mv.addObject("errorBornDate", "Informe uma data válida");
             return mv;
         }
+        if ( userDAO.emailAlreadyExists(person.getEmail()) ) {
+            mv.addObject("email_error_person", "E-mail já cadastrado");
+            return mv;
+        } 
         User user = new User(person.getEmail(), person.getPassword());
         // create one single connection for two inserts
         ConnectionManager.openConnection();
         ConnectionManager.beginTransaction();
         person.setId(userDAO.create(user));
-        personDAO.create(person);
+        user.setId(personDAO.create(person));
         ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();
         session.setAttribute("user", user);
-        session.setAttribute("type", person.getType());
-        return new DashboardController().redirectDashboard(session);
+        session.setAttribute("person", person);
+        return new ModelAndView("redirect:/dashboard");
     }
 
     @RequestMapping("/account/store/entity")
     public ModelAndView createEntity(@Valid Entity entity, BindingResult result, HttpSession session) {
+        ModelAndView mv = new ModelAndView("register");
         if (result.hasErrors()) {
-            ModelAndView mv = new ModelAndView("register");
             if ( entity.getFoundationDate() == null || result.hasFieldErrors("foundationDate") )
                 mv.addObject("errorFoundationDate", "Informe uma data válida");
             mv.addObject("tab", "tab-entity");
             return mv;
         }
+        if ( entity.getPassword().length() < 6 ) {
+            mv.addObject("password_error_entity", "A senha deve ter no mínimo 6 caracteres");
+            return mv;            
+        } 
+        if ( entity.getFoundationDate() == null) {
+            mv.addObject("errorFoundationDate", "Informe uma data válida");
+            return mv;
+        }
         if (userDAO.emailAlreadyExists(entity.getEmail())) {
-            ModelAndView mv = new ModelAndView("register");
             mv.addObject("tab", "tab-entity");
             mv.addObject("email_error_entity", "E-mail já cadastrado");
             mv.addObject("tab", "entity");
             return mv;
         }
-        User u = new User(entity.getEmail(), entity.getPassword());
+        User user = new User(entity.getEmail(), entity.getPassword());
         // create one single connection for two inserts
         ConnectionManager.openConnection();
         ConnectionManager.beginTransaction();
-        entity.setId(userDAO.create(u));
-        entityDAO.create(entity);
+        entity.setId(userDAO.create(user));
+        user.setId(entityDAO.create(entity));
         ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();
-        session.setAttribute("user", u);
-        session.setAttribute("type", "Entity");
-        return new DashboardController().redirectDashboard(session);
+        session.setAttribute("user", user);
+        session.setAttribute("entity", entity);
+        return new ModelAndView("redirect:/dashboard");
     }
 
     @RequestMapping(value = "/account/edit/person/{idPerson}", method = GET)
