@@ -41,7 +41,7 @@ public enum HelpType {
         return type;
     }
     
-    public static HelpType get(int idType){
+    public static HelpType get(Integer idType){
         for(HelpType t : HelpType.values()){
             if (t.getId() == idType)
                 return t;

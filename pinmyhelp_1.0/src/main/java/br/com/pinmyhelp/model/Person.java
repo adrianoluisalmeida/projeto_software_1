@@ -223,7 +223,7 @@ public class Person extends User {
 
     @Override
     public String toString() {
-        return "Person{" + "name=" + name + ", cpf=" + cpf + ", rg=" + rg + ", bornDate=" + bornDate + ", firstPhone=" + firstPhone + ", secondPhone=" + secondPhone + ", biography=" + biography + ", score=" + score + ", address=" + address + ", notes=" + notes + '}';
+        return "Person{" + "type=" + type + ", name=" + name + ", cpf=" + cpf + ", rg=" + rg + ", bornDate=" + bornDate + ", firstPhone=" + firstPhone + ", secondPhone=" + secondPhone + ", biography=" + biography + ", score=" + score + ", profilePicture=" + profilePicture + ", address=" + address + ", notes=" + notes + '}';
     }
     
     /**

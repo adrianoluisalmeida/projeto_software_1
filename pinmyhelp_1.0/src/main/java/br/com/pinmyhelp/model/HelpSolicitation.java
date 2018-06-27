@@ -9,14 +9,15 @@ import br.com.pinmyhelp.database.Record;
 import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
+import br.com.pinmyhelp.util.FormatUtils;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 /**
  *
@@ -26,17 +27,19 @@ public class HelpSolicitation extends Record implements Serializable {
     
     private Person claimant;
     private Entity entity;
-      //@NotNull(message = "O tipo deve ser preenchido")
     private HelpType type;
-    private String requirementDescription;
-   // @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Size(min = 1, message = "Forneça uma descriçao do seu pedido")
+    private String description;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate startDate;
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate endDate;
     private GeoLocation location;
     private HelpStatus status;
     private Collection<HelpOffer> helpOffers = new ArrayList<>();
     private Feedback feedback; // feedback do Voluntario (ou Entidade) sobre a solicitacao
+    @Valid
+    private Address address;
 
     public HelpSolicitation() {
     }
@@ -82,16 +85,20 @@ public class HelpSolicitation extends Record implements Serializable {
     public void setType(HelpType type) {
         this.type = type;
     }
-
-    public String getRequirementDescription() {
-        return requirementDescription;
+    
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
     }
 
-    public void setRequirementDescription(String requirementDescription) {
-        this.requirementDescription = requirementDescription;
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
-    
-    
 
     /**
      * @return the startDate
@@ -158,11 +165,6 @@ public class HelpSolicitation extends Record implements Serializable {
         this.feedback = feedback;
     }
 
-    @Override
-    public String toString() {
-        return "HelpSolicitation{" + "claimant=" + claimant + ", entity=" + entity + ", type=" + type + ", startDate=" + startDate + ", endDate=" + endDate + ", lagitude=" + location.getLatitude() + ", longitude=" + location.getLongitude() + ", status=" + status + ", helpOffers=" + helpOffers + ", feedback=" + feedback + '}';
-    }
-
     /**
      * @return the location
      */
@@ -176,5 +178,29 @@ public class HelpSolicitation extends Record implements Serializable {
     public void setLocation(GeoLocation location) {
         this.location = location;
     }
+
+    /**
+     * @return the address
+     */
+    public Address getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the address to set
+     */
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "HelpSolicitation{" + "claimant=" + claimant + ", entity=" + entity + ", type=" + type + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", location=" + location + ", status=" + status + ", helpOffers=" + helpOffers + ", feedback=" + feedback + ", address=" + address + '}';
+    }
     
+    public void removeMasks(){
+        if (address != null && address.getPostalCode() != null)
+            address.setPostalCode(FormatUtils.unmaskNumber(address.getPostalCode()));
+    }
+   
 }

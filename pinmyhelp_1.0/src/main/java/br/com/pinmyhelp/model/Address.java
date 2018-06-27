@@ -6,15 +6,15 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.model.types.GeoLocation;
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
  *
  * @author rhau
  */
-public class Address {
+public class Address implements Serializable {
     
     @Size(min = 1, message = "Informe o CEP")
     private String postalCode;
