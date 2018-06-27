@@ -5,11 +5,13 @@
  */
 package br.com.pinmyhelp.database;
 
+import java.io.Serializable;
+
 /**
  *
  * @author adriano
  */
-public abstract class Record {
+public abstract class Record implements Serializable {
     
     protected Integer id;
 
@@ -28,6 +30,4 @@ public abstract class Record {
         this.id = id;
     }
     
-    
- 
 }

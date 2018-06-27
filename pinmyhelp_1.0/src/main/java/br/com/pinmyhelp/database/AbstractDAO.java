@@ -164,7 +164,6 @@ public abstract class AbstractDAO<T extends Record> {
         return record;
     }
     
-    //Find by any atribute
     public List<T> find(T t) {
         Connection c = ConnectionManager.openConnection();
         List<T> records = null;
