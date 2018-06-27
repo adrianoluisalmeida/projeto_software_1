@@ -28,11 +28,11 @@ CREATE TABLE IF NOT EXISTS person (
     # INIT ADDRESS INFO - PREFIX: p_
     p_postal_code       CHAR(8)      NULL, # provides info about country, state and city
     p_neighborhood      VARCHAR(255) NULL,
-	p_street			VARCHAR(255) NULL,
-    p_number     		INT          NULL,
+    p_street            VARCHAR(255) NULL,
+    p_number            INT          NULL,
     p_complement        VARCHAR(255) NULL,
-    p_latitude          DOUBLE       NULL,     # it helps in the use of google maps api 
-    p_longitude         DOUBLE       NULL,     # it helps in the use of google maps api
+    p_latitude          DOUBLE       NULL, # it helps in the use of google maps api 
+    p_longitude         DOUBLE       NULL, # it helps in the use of google maps api
     # END ADDRESS INFO 
     PRIMARY KEY         (person_id),
     FOREIGN KEY         (person_id)  REFERENCES `user` (user_id)
@@ -53,11 +53,11 @@ CREATE TABLE IF NOT EXISTS entity (
     # INIT ADDRESS INFO - PREFIX: e_
     e_postal_code       CHAR(8)      NULL, # provides info about country, state and city
     e_neighborhood      VARCHAR(255) NULL,
-    e_street     		VARCHAR(255) NULL,
-    e_number     		INT          NULL,
+    e_street            VARCHAR(255) NULL,
+    e_number            INT          NULL,
     e_complement        VARCHAR(255) NULL,
-    e_latitude          DOUBLE       NULL,     # it helps in the use of google maps api 
-    e_longitude         DOUBLE       NULL,     # it helps in the use of google maps api
+    e_latitude          DOUBLE       NULL, # it helps in the use of google maps api 
+    e_longitude         DOUBLE       NULL, # it helps in the use of google maps api
     # END ADDRESS INFO 
     PRIMARY KEY         (entity_id),
     FOREIGN KEY         (entity_id)  REFERENCES `user` (user_id)
@@ -65,16 +65,23 @@ CREATE TABLE IF NOT EXISTS entity (
 
 # DROP TABLE IF EXISTS help_solicitation
 CREATE TABLE IF NOT EXISTS help_solicitation (
-    solicitation_id      INT            AUTO_INCREMENT,
-    solicitation_status  INT            NOT NULL, # TODO: change type to ENUM 
-    solicitation_type    VARCHAR(255)   NOT NULL DEFAULT 'Outro',
-    solicitation_created TIMESTAMP      NOT NULL DEFAULT NOW(),
-    solicitation_updated TIMESTAMP      NULL     ON UPDATE NOW(),
-    start_date           DATETIME       NOT NULL,
-    end_date             DATETIME       NULL,
-    s_latitude           DOUBLE         NULL,     # allows real-time geolocation based solicitation
-    s_longitude          DOUBLE         NULL,     # allows real-time geolocation based solicitation
-    claimant_id          INT            NULL,     # can be Entity or Person with type = 'Claimant'
+    solicitation_id          INT            AUTO_INCREMENT,
+    solicitation_status      INT            NOT NULL DEFAULT 1,
+    solicitation_type        INT            NOT NULL,
+    solicitation_description TEXT           NOT NULL,
+    solicitation_created     TIMESTAMP      NOT NULL DEFAULT NOW(),
+    solicitation_updated     TIMESTAMP      NULL     ON UPDATE NOW(),
+    start_date               DATETIME       NOT NULL,
+    end_date                 DATETIME       NULL,
+    # INIT ADDRESS INFO - PREFIX: s_
+    s_postal_code            CHAR(8)        NULL,     # provides info about country, state and city
+    s_neighborhood           VARCHAR(255)   NULL,
+    s_street                 VARCHAR(255)   NULL,
+    s_number                 INT            NULL,
+    s_latitude               DOUBLE         NULL,     # allows real-time geolocation based solicitation
+    s_longitude              DOUBLE         NULL,     # allows real-time geolocation based solicitation
+    # END ADDRESS INFO 
+    claimant_id              INT            NULL,     # can be Entity or Person with type = 'Claimant'
     PRIMARY KEY          (solicitation_id),
     FOREIGN KEY          (claimant_id)  REFERENCES `user` (user_id)
 ) ENGINE = InnoDB;
