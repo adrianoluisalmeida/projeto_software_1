@@ -33,7 +33,7 @@
             <div class="row height-60">
                 <div class="col-8">
                     <div class="md-form">
-                        <input type="text" name="address.postalCode" value="${helpSolicitation.address.postalCode}" id="Form-cep" class="form-control" >
+                        <input type="text" name="address.postalCode" value="${address.postalCode}"  id="Form-cep" class="form-control">
                     <label for="Form-cep">CEP</label>
                     <form:errors path="helpSolicitation.address.postalCode" cssStyle="color:red"/>
                 </div>
@@ -41,7 +41,7 @@
 
             <div class="col-4">
                 <div class="md-form">
-                    <input type="text" name="address.state" value="${helpSolicitation.address.state}" id="Form-uf" class="form-control" >
+                    <input type="text" name="address.state" value="${address.state}" id="Form-uf" class="form-control" >
                     <label for="Form-uf">UF</label>
                     <form:errors path="helpSolicitation.address.state" cssStyle="color:red"/>
                 </div>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="md-form">
-            <input type="text" name="address.city" value="${helpSolicitation.address.city}" id="Form-city" class="form-control" >
+            <input type="text" name="address.city" value="${address.city}" id="Form-city" class="form-control" >
             <label for="Form-city">Cidade</label>
             <form:errors path="helpSolicitation.address.city" cssStyle="color:red"/>
         </div>
@@ -57,7 +57,7 @@
         <div class="row height-60">
             <div class="col-8">
                 <div class="md-form">
-                    <input type="text" name="address.street" value="${helpSolicitation.address.street}" id="Form-street" class="form-control" >
+                    <input type="text" name="address.street" value="${address.street}" id="Form-street" class="form-control" >
                     <label for="Form-street">Rua</label>
                     <form:errors path="helpSolicitation.address.street" cssStyle="color:red"/>
                 </div>
@@ -65,7 +65,7 @@
 
             <div class="col-4">
                 <div class="md-form">
-                    <input type="number" name="address.number" value="${helpSolicitation.address.number}" id="Form-number" class="form-control" min="0">
+                    <input type="number" name="address.number" value="${address.number}" id="Form-number" class="form-control" min="0">
                     <label for="Form-number">Nº</label>
                     <form:errors path="helpSolicitation.address.number" cssStyle="color:red"/>
                 </div>
@@ -73,7 +73,7 @@
         </div>
 
         <div class="md-form">
-            <input type="text" name="address.neighborhood" value="${helpSolicitation.address.neighborhood}" id="Form-neighborhood" class="form-control" >
+            <input type="text" name="address.neighborhood" value="${address.neighborhood}" id="Form-neighborhood" class="form-control" >
             <label for="Form-neighborhood">Bairro</label>
             <form:errors path="helpSolicitation.address.neighborhood" cssStyle="color:red"/>
         </div>
@@ -135,16 +135,8 @@
                     <td>${person.name}</td>
                 </tr>
                 <tr>
-                    <c:choose>
-                        <c:when test="${person.type == 'Claimant'}">
-                            <td><b>CPF</b></td>
-                            <td>${person.cpf}</td>         
-                        </c:when>
-                        <c:when test="${person.type == 'Entity'}">
-                            <td><b>CNPJ</b></td>
-                            <td>${person.cnpj}</td>
-                        </c:when>
-                    </c:choose>
+                    <td><b>CPF</b></td>
+                    <td>${person.cpf}</td>         
                 </tr>
                 <tr>
                     <td><b>E-mail</b></td>
@@ -153,6 +145,26 @@
                 <tr>
                     <td><b>Telefone</b></td>
                     <td>${person.firstPhone}</td>
+                </tr>
+            </table>
+        </c:if>
+        <c:if test="${not empty entity}">
+            <table class="table table-striped mt-3">
+                <tr>
+                    <td><b>Nome</b></td>
+                    <td>${entity.name}</td>
+                </tr>
+                <tr>
+                    <td><b>CNPJ</b></td>
+                    <td>${entity.cnpj}</td>
+                </tr>
+                <tr>
+                    <td><b>E-mail</b></td>
+                    <td>${entity.email}</td>
+                </tr>
+                <tr>
+                    <td><b>Telefone</b></td>
+                    <td>${entity.firstPhone}</td>
                 </tr>
             </table>
         </c:if>

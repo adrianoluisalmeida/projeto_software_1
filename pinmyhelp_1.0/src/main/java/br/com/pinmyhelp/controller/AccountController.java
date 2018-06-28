@@ -79,7 +79,7 @@ public class AccountController {
         ConnectionManager.closeConnection();
         session.setAttribute("user", user);
         session.setAttribute("person", person);
-        redirectAttrs.addFlashAttribute("msg_success", "Sua conta criada com sucesso!");
+        redirectAttrs.addFlashAttribute("msg_success", "Sua conta foi criada com sucesso!");
         //return new DashboardController().redirectDashboard(session);
         return new ModelAndView("redirect:/login");
     }
@@ -117,7 +117,7 @@ public class AccountController {
         ConnectionManager.closeConnection();
         session.setAttribute("user", user);
         session.setAttribute("entity", entity);
-        redirectAttrs.addFlashAttribute("msg_success", "Sua conta criada com sucesso!");
+        redirectAttrs.addFlashAttribute("msg_success", "Sua conta foi criada com sucesso!");
         //return new DashboardController().redirectDashboard(session);
         return new ModelAndView("redirect:/login");
     }

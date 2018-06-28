@@ -15,6 +15,7 @@
                         <b>Requerente</b><br>
                         <c:choose>
                             <c:when test="${type == 'Claimant'}">${person.name}</c:when>
+                            <c:when test="${type == 'Entity'}">${entity.name}</c:when>
                         </c:choose>
                     </p>
                     <p class="card-text">

@@ -1,6 +1,7 @@
 package br.com.pinmyhelp.controller;
 
 import br.com.pinmyhelp.database.ConnectionManager;
+import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.Claimant;
 import br.com.pinmyhelp.model.Entity;
 import br.com.pinmyhelp.model.HelpSolicitation;
@@ -124,7 +125,7 @@ public class SolicitationsController {
 
         help.setStatus(HelpStatus.S1);
         help.setLocation(new GeoLocation(0, 0));
-        
+
         helpSolicitationDAO.update(help);
         // ConnectionManager.closeConnection();
         redirectAttrs.addFlashAttribute("msg_success", "Solicitação Alterada com sucesso!");
@@ -189,6 +190,13 @@ public class SolicitationsController {
         mv.addObject("title", "Nova solicitação de Ajuda");
         mv.addObject("page", "solicitations/create");
         mv.addObject("helpTypes", Arrays.asList(HelpType.values()));
+        if (session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
+            Person p = (Person) session.getAttribute("person");
+            mv.addObject("address", p.getAddress());
+        } else {
+            Entity e = (Entity) session.getAttribute("entity");
+            mv.addObject("address", e.getAddress());
+        }
         return mv;
     }
 
@@ -198,6 +206,7 @@ public class SolicitationsController {
         mv.addObject("id", id);
         mv.addObject("helpTypes", Arrays.asList(HelpType.values()));
         mv.addObject("helpSolicitation", solicitation);
+        mv.addObject("address", solicitation.getAddress());
         return mv;
     }
 

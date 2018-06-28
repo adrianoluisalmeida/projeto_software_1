@@ -8,8 +8,6 @@ package br.com.pinmyhelp.model.dao;
 import br.com.pinmyhelp.database.AbstractDAO;
 import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.HelpSolicitation;
-import br.com.pinmyhelp.model.User;
-import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.sql.PreparedStatement;
@@ -130,6 +128,5 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         if (limit == null)    
             return find("claimant_id = ?", new String[]{String.valueOf(id)});
         return find("claimant_id = ? limit " + limit, new String[]{String.valueOf(id)});
-    }
-    
+    } 
 }
