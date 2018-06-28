@@ -1,5 +1,6 @@
 package br.com.pinmyhelp.controller;
 
+import br.com.pinmyhelp.database.ConnectionManager;
 import br.com.pinmyhelp.model.Claimant;
 import br.com.pinmyhelp.model.Entity;
 import br.com.pinmyhelp.model.HelpSolicitation;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -73,7 +75,8 @@ public class SolicitationsController {
         } else 
             help.setEntity(new Entity(user.getId()));
         helpSolicitationDAO.create(help);
-        return new DashboardController().redirectDashboard(session);
+        //return new DashboardController().redirectDashboard(session);
+         return new ModelAndView("redirect:/solicitations/my");
     }
     
     @RequestMapping(value = "/solicitations/edit/{idRequest}", method = GET)
@@ -87,8 +90,18 @@ public class SolicitationsController {
     }
     
     @RequestMapping(value = "/solicitations/delete/{idRequest}", method = GET)
-    public String delete(Model model){
-        return "";
+    public ModelAndView delete(@PathVariable(value = "idRequest") int id, HttpSession session) {
+   
+      //     if (!checkUser(id, session)) {
+      //     return new LoginController().redirectLogin();
+       // }
+        ConnectionManager.openConnection();
+        HelpSolicitation solicitation = helpSolicitationDAO.findOne(id);
+        
+        helpSolicitationDAO.delete(solicitation);
+        
+        ConnectionManager.closeConnection();
+         return new ModelAndView("redirect:/solicitations/my");
     }
 
     private Boolean validateDates(LocalDate startDate, LocalDate endDate, BindingResult result, ModelAndView mv) {

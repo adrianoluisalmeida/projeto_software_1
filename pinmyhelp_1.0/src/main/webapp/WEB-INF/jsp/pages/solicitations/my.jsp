@@ -34,7 +34,7 @@
                     <!-- Button -->
                     <div class="row justify-content-center">
                         <a href="#" class="btn btn-blue-grey float-left">Editar</a>
-                        <a href="#" class="btn btn-danger float-left">Excluir</a>
+                        <a href="${pageContext.request.contextPath}/solicitations/delete/${solicitation.id}" class="btn btn-danger float-left">Excluir</a>
                     </div>
                 </div>
             </div>
