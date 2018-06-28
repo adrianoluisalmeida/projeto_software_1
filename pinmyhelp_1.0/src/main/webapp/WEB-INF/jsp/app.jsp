@@ -33,8 +33,6 @@
                 <div id="msg-returns" class="alert alert-success">${msg}</div> 
             </c:if>
                 
-           
-                
             <jsp:include page="pages/${page}.jsp" flush="true" />
         </div>
 

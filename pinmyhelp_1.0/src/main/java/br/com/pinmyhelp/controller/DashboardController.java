@@ -47,6 +47,7 @@ public class DashboardController {
         String type = (String) session.getAttribute("type");
         String pageDashboard = "entity/dashboard";
         if ( type.equals(Person.TYPE_CLAIMANT) ) {
+            
             pageDashboard = "claimant/dashboard";
             mav.addObject("mySolicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 4));
         } else if ( type.equals(Person.TYPE_VOLUNTARY) ) {
