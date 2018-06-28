@@ -78,7 +78,8 @@ public class AccountController {
         ConnectionManager.closeConnection();
         session.setAttribute("user", user);
         session.setAttribute("person", person);
-        return new ModelAndView("redirect:/dashboard");
+        //return new DashboardController().redirectDashboard(session);
+        return new ModelAndView("redirect:/login");
     }
 
     @RequestMapping("/account/store/entity")
@@ -114,7 +115,8 @@ public class AccountController {
         ConnectionManager.closeConnection();
         session.setAttribute("user", user);
         session.setAttribute("entity", entity);
-        return new ModelAndView("redirect:/dashboard");
+        //return new DashboardController().redirectDashboard(session);
+        return new ModelAndView("redirect:/login");
     }
 
     @RequestMapping(value = "/account/edit/person/{idPerson}", method = GET)
