@@ -29,7 +29,7 @@
                 </div>
             </div>
             <hr>
-            <h3>Meu endereço <button id="btn-get-address" class="btn btn-pink float-right waves-effect waves-light">Usar endereço atual</button></h3> 
+            <h3>Meu endereço <a id="btn-get-address" class="btn btn-pink float-right waves-effect waves-light">Usar endereço atual</a></h3> 
             <div class="row height-60">
                 <div class="col-8">
                     <div class="md-form">
@@ -107,7 +107,7 @@
                 </div>
             </div>
             <hr>          
-            <button type="submit" id="btn-store" class="btn btn-pink float-right waves-effect waves-light">Salvar</button></h3> 
+            <button type="submit" class="btn btn-pink float-right waves-effect waves-light">Salvar</button></h3> 
         </div>
         <div class="col-md-4 mt-3">
 
@@ -168,9 +168,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.mask.min.js"></script>                                          
 <script>
     $(function() {
-        var $buttonAddress = $('#btn-get-address');
-        $($buttonAddress).on('click', function () {
-            // $buttonAddress.prop("disabled", true); // disable button
+        $('#btn-get-address').click(function(){
             if ("geolocation" in navigator) { //check if geolocation is available 
                 navigator.geolocation.getCurrentPosition(function (position) {
                     getPositionInfo(position);
