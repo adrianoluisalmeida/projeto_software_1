@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -63,7 +64,7 @@ public class SolicitationsController {
     }
     
     @RequestMapping(value = "/solicitations/store", method = POST)
-    public ModelAndView store(@Valid HelpSolicitation help, BindingResult result, @ModelAttribute("type_id") String typeId, HttpSession session){  
+    public ModelAndView store(@Valid HelpSolicitation help, BindingResult result, @ModelAttribute("type_id") String typeId, HttpSession session, RedirectAttributes redirectAttrs){  
         ModelAndView mv = getModelCreatePage(session);
         Boolean datesAreValid = validateDates(help.getStartDate(), help.getEndDate(), result, mv);       
         Boolean helpTypeIsValid = validateHelpType(typeId, help, mv);
@@ -76,6 +77,7 @@ public class SolicitationsController {
             help.setEntity(new Entity(user.getId()));
         helpSolicitationDAO.create(help);
         //return new DashboardController().redirectDashboard(session);
+        redirectAttrs.addFlashAttribute("msg_success", "Solicitação criada com sucesso!");
          return new ModelAndView("redirect:/solicitations/my");
     }
     
@@ -90,18 +92,15 @@ public class SolicitationsController {
     }
     
     @RequestMapping(value = "/solicitations/delete/{idRequest}", method = GET)
-    public ModelAndView delete(@PathVariable(value = "idRequest") int id, HttpSession session) {
-   
-      //     if (!checkUser(id, session)) {
-      //     return new LoginController().redirectLogin();
-       // }
+    public ModelAndView delete(@PathVariable(value = "idRequest") int id, HttpSession session, RedirectAttributes redirectAttrs) {
         ConnectionManager.openConnection();
         HelpSolicitation solicitation = helpSolicitationDAO.findOne(id);
         
         helpSolicitationDAO.delete(solicitation);
         
         ConnectionManager.closeConnection();
-         return new ModelAndView("redirect:/solicitations/my");
+       redirectAttrs.addFlashAttribute("msg_success", "Solicitação removida com sucesso!");
+        return new ModelAndView("redirect:/solicitations/my");
     }
 
     private Boolean validateDates(LocalDate startDate, LocalDate endDate, BindingResult result, ModelAndView mv) {

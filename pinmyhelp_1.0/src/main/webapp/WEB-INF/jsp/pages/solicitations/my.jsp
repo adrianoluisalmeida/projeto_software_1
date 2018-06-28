@@ -6,6 +6,9 @@
         <h3>Meus Pedidos de Ajuda <a href="${pageContext.request.contextPath}/solicitations/create" class="btn btn-pink btn-sm float-right">Novo pedido</a></h3>
     </div>
     <div class="clearfix"></div>
+    
+    
+    
     <c:forEach var="solicitation" items="${mySolicitations}">
         <div class=" col-md-4 float-left">
             <div class="card">

@@ -19,6 +19,8 @@
         <link href="${pageContext.request.contextPath}/assets/css/mdb.min.css" rel="stylesheet">
         <!-- Your custom styles (optional) -->
         <link href="${pageContext.request.contextPath}/assets/css/custom.css" rel="stylesheet">
+        <!-- Toast -->
+        <link href="${pageContext.request.contextPath}/assets/css/jquery.toast.min.css" rel="stylesheet">
         <!-- JQuery -->
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
     </head>
@@ -30,6 +32,9 @@
                 <br/>
                 <div id="msg-returns" class="alert alert-success">${msg}</div> 
             </c:if>
+                
+           
+                
             <jsp:include page="pages/${page}.jsp" flush="true" />
         </div>
 
@@ -40,6 +45,8 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/mdb.js"></script>
+        <!-- Toast -->
+        <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.toast.min.js"></script>
         <script type="text/javascript">
 
             $(document).ready(function () {
@@ -57,6 +64,6 @@
             //            $('[name="hora"]').mask('00:00:00');
 
         </script>
-
+        <jsp:include page="messages.jsp" flush="true" />
     </body>
 </html>

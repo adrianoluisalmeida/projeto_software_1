@@ -26,6 +26,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -49,7 +50,7 @@ public class AccountController {
     }
 
     @RequestMapping("/account/store/person")
-    public ModelAndView createPerson(@Valid Person person, BindingResult result, HttpSession session) {
+    public ModelAndView createPerson(@Valid Person person, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
         ModelAndView mv = new ModelAndView("register");
         if ( result.hasErrors() ) {
             if ( person.getBornDate() == null || result.hasFieldErrors("bornDate") )
@@ -78,12 +79,13 @@ public class AccountController {
         ConnectionManager.closeConnection();
         session.setAttribute("user", user);
         session.setAttribute("person", person);
+        redirectAttrs.addFlashAttribute("msg_success", "Sua conta criada com sucesso!");
         //return new DashboardController().redirectDashboard(session);
         return new ModelAndView("redirect:/login");
     }
 
     @RequestMapping("/account/store/entity")
-    public ModelAndView createEntity(@Valid Entity entity, BindingResult result, HttpSession session) {
+    public ModelAndView createEntity(@Valid Entity entity, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
         ModelAndView mv = new ModelAndView("register");
         if (result.hasErrors()) {
             if ( entity.getFoundationDate() == null || result.hasFieldErrors("foundationDate") )
@@ -115,6 +117,7 @@ public class AccountController {
         ConnectionManager.closeConnection();
         session.setAttribute("user", user);
         session.setAttribute("entity", entity);
+        redirectAttrs.addFlashAttribute("msg_success", "Sua conta criada com sucesso!");
         //return new DashboardController().redirectDashboard(session);
         return new ModelAndView("redirect:/login");
     }
@@ -146,7 +149,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account/update/person", method = POST)
-    public ModelAndView updatePerson(@Valid Person person, Address address, BindingResult result, HttpSession session) {
+    public ModelAndView updatePerson(@Valid Person person, Address address, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
         if (session.getAttribute("user") == null) {
             return new LoginController().redirectLogin();
         }
@@ -167,11 +170,12 @@ public class AccountController {
         }
         personDAO.update(person);
         ConnectionManager.closeConnection();
+        redirectAttrs.addFlashAttribute("msg_success", "Conta Alterada com sucesso!");
         return new DashboardController().redirectDashboard(session);
     }
 
     @RequestMapping(value = "/account/update/entity", method = POST)
-    public ModelAndView updateEntity(@Valid Entity entity, Address address, BindingResult result, HttpSession session) {
+    public ModelAndView updateEntity(@Valid Entity entity, Address address, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
         if (session.getAttribute("user") == null) {
             return new LoginController().redirectLogin();
         }
@@ -192,11 +196,12 @@ public class AccountController {
         }
         entityDAO.update(entity);
         ConnectionManager.closeConnection();
+        redirectAttrs.addFlashAttribute("msg_success", "Conta Alterada com sucesso!");
         return new DashboardController().redirectDashboard(session);
     }
 
     @RequestMapping(value = "/account/delete/person/{idPerson}", method = GET)
-    public ModelAndView deletePerson(@PathVariable(value = "idPerson") int id, HttpSession session) {
+    public ModelAndView deletePerson(@PathVariable(value = "idPerson") int id, HttpSession session, RedirectAttributes redirectAttrs) {
         if (!checkUser(id, session)) {
             return new LoginController().redirectLogin();
         }
@@ -207,11 +212,13 @@ public class AccountController {
         personDAO.delete(person);
         userDAO.delete(user);
         ConnectionManager.closeConnection();
+        redirectAttrs.addFlashAttribute("msg_success", "Conta Removida com sucesso!");
+        
         return new LoginController().redirectLogin();
     }
 
     @RequestMapping(value = "/account/delete/entity/{idEntity}", method = GET)
-    public ModelAndView deleteEntity(@PathVariable(value = "idEntity") int id, HttpSession session) {
+    public ModelAndView deleteEntity(@PathVariable(value = "idEntity") int id, HttpSession session, RedirectAttributes redirectAttrs) {
         if (!checkUser(id, session)) {
             return new LoginController().redirectLogin();
         }
@@ -222,6 +229,7 @@ public class AccountController {
         entityDAO.delete(entity);
         userDAO.delete(user);
         ConnectionManager.closeConnection();
+        redirectAttrs.addFlashAttribute("msg_success", "Conta Removida com sucesso!");
         return new LoginController().redirectLogin();
     }
 
@@ -245,7 +253,7 @@ public class AccountController {
      * @return
      */
     @RequestMapping(value = "/account/update/profile", method = POST)
-    public ModelAndView updateProfile(HttpServletRequest request, HttpSession session) {
+    public ModelAndView updateProfile(HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttrs) {
         if (session.getAttribute("user") == null) {
             return new LoginController().redirectLogin();
         }
@@ -287,6 +295,8 @@ public class AccountController {
         } catch (IOException | IllegalStateException ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        redirectAttrs.addFlashAttribute("msg_success", "Profile Alterado com sucesso!");
         return new DashboardController().redirectDashboard(session);
     }
 

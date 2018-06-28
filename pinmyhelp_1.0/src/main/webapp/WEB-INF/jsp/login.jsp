@@ -17,6 +17,8 @@
     <link href="${pageContext.request.contextPath}/assets/css/mdb.min.css" rel="stylesheet">
     <!-- Custom styles -->
     <link href="${pageContext.request.contextPath}/assets/css/custom.css" rel="stylesheet">
+    
+    <link href="${pageContext.request.contextPath}/assets/css/jquery.toast.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -82,6 +84,8 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/mdb.js"></script>
     <!-- Mask JQuery -->                                              
-   
+    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.toast.min.js"></script>
+   <jsp:include page="messages.jsp" flush="true" />
 </body>
 </html>
