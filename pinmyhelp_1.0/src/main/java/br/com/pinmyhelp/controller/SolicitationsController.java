@@ -53,7 +53,8 @@ public class SolicitationsController {
         mav.addObject("solicitations", helpSolicitationDAO.findAll());
         return mav;
     }
-
+    
+    
     @RequestMapping("/solicitations/my")
     public ModelAndView my(HttpSession session) {
         ModelAndView mav = new ModelAndView("app");

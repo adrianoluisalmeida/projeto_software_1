@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -28,6 +29,14 @@ public class OffersController {
     }
     
     
+    @RequestMapping("/offers/help/{idOffer}")
+    public ModelAndView help(Model model) {
+        ModelAndView mav = new ModelAndView("app");
+        mav.addObject("title", "Solicitações - Oferecer ajuda");
+        mav.addObject("page", "offers/help");
+        return mav;
+    }
+
     @RequestMapping(value = "/offers/create", method = GET)
     public String create(Model model){
         model.addAttribute("title", "Oferecer Ajuda");
