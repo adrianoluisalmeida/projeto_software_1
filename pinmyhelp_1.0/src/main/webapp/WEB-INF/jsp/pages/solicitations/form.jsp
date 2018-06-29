@@ -78,16 +78,16 @@
             <form:errors path="helpSolicitation.address.neighborhood" cssStyle="color:red"/>
         </div>
 
-        <%--     <div class="row">
+             <div class="row">
                  <div class="col">  
                      <div class="md-form">
                          <input type="text" id="Form-address" name="Form-address" class="form-control" value="${claimant.address.street}, ${claimant.address.number} - ${claimant.address.neighborhood}, ${claimant.address.city} - ${claimant.address.state}, ${claimant.address.postalCode}, Brasil"/>
-                         <input type="hidden" id="Form-latitude" name="latitude" value="${claimant.address.location.latitude}"/>
-                         <input type="hidden" id="Form-longitude" name="longitude" value="${claimant.address.location.longitude}"/>
+                         <input type="hidden" id="Form-latitude" name="latitude" value="${address.location.latitude}"/>
+                         <input type="hidden" id="Form-longitude" name="longitude" value="${address.location.longitude}"/>
                          <label for="Form-address">Endereço</label>
                      </div>
                  </div>
-             </div>    --%>
+             </div>    
         <hr>
         <h3>Data</h3>
         <div class="row">
@@ -217,24 +217,24 @@
                     for (i in address) {
                         switch (String(address[i].types[0])) {
                             case "street_number":
-                                $("#Form-number").focus();
                                 $("#Form-number").val(String(address[i].long_name));
+                                $("#Form-number").focus();
                                 break;
                             case "route":
-                                $("#Form-street").focus();
                                 $("#Form-street").val(String(address[i].long_name));
+                                $("#Form-street").focus();
                                 break;
                             case "administrative_area_level_2":
-                                $("#Form-city").focus();
                                 $("#Form-city").val(String(address[i].long_name));
+                                $("#Form-city").focus();
                                 break;
                             case  "administrative_area_level_1":
-                                $("#Form-uf").focus();
                                 $("#Form-uf").val(String(address[i].short_name));
+                                $("#Form-uf").focus();
                                 break;
                             case "postal_code":
-                                $("#Form-cep").focus();
                                 $("#Form-cep").val(String(address[i].long_name));
+                                $("#Form-cep").focus();
                                 break;
                         }
                         /*  $($input).keyup(function (event) { // if user edit his address then active the button again
