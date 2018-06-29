@@ -1,100 +1,27 @@
-<!--Dashboard voluntary or entity -->
+<!-- DASHBOARD VOLUNTARY -->
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib tagdir="/WEB-INF/tags" prefix="custom"%>
+
 <div class="col mt-5">
-    
-    <div class="col-md-12 mt-3">
-        <h3>Últimas solicitações</h3>
-    </div>
-    
-    <!-- Card -->
-    <div class=" col-md-4 float-left">
-        <div class="card">
-            <!-- Card image -->
-            <!--<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg"-->
-            <!--alt="Card image cap">-->
-            <!-- Card content -->
-            <div class="card-body">
-                <!-- Title -->
-                <h4 class="card-title"><a>Ir ao supermercado</a></h4>
-                <!-- Text -->
-                <p class="card-text">
-                    <b>Requerente</b><br>
-                    Dona Maria
-                </p>
-                <p class="card-text">
-                    <b>Data e Hora necessário</b><br>
-                    00/00/0000
-                </p>
-                <!-- Button -->
-                <div class="row justify-content-center">
-
-                    <a href="${pageContext.request.contextPath}/requests/help" class="btn btn-pink float-left">Ajudar</a>
-                </div>
+    <c:choose>
+        <c:when test="${not empty solicitations}">
+            <div class="col-md-12 mt-3">
+                <h3>Últimas solicitações de Ajuda</h3>
             </div>
-        </div>
-    </div>
-    <!-- Card -->
+            <div class="clearfix"></div>
+            <jsp:include page="../solicitations/list.jsp" flush="true" />
+            <div class="clearfix"></div>
 
-    <!-- Card -->
-    <div class=" col-md-4 float-left">
-        <div class="card">
-            <!-- Card image -->
-            <!--<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg"-->
-            <!--alt="Card image cap">-->
-            <!-- Card content -->
-            <div class="card-body">
-                <!-- Title -->
-                <h4 class="card-title"><a>Ir ao supermercado</a></h4>
-                <!-- Text -->
-                <p class="card-text">
-                    <b>Requerente</b><br>
-                    Dona Maria
-                </p>
-                <p class="card-text">
-                    <b>Data e Hora necessário</b><br>
-                    00/00/0000
-                </p>
-                <!-- Button -->
-                <div class="row justify-content-center">
-                    <a href="${pageContext.request.contextPath}/offers/create" class="btn btn-pink float-left">Ajudar</a>
-                </div>
+            <div class="col-md-12 mt-3 pr-4">
+                <a href="${pageContext.request.contextPath}/solicitations" class="float-right">Ver todas as solicitações</a>
             </div>
-        </div>
-    </div>
-    <!-- Card -->
-
-    <!-- Card -->
-    <div class=" col-md-4 float-left">
-        <div class="card">
-            <!-- Card image -->
-            <!--<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg"-->
-            <!--alt="Card image cap">-->
-            <!-- Card content -->
-            <div class="card-body">
-                <!-- Title -->
-                <h4 class="card-title"><a>Ir ao supermercado</a></h4>
-                <!-- Text -->
-                <p class="card-text">
-                    <b>Requerente</b><br>
-                    Dona Maria
-                </p>
-                <p class="card-text">
-                    <b>Data e Hora necessário</b><br>
-                    00/00/0000
-                </p>
-                <!-- Button -->
-                <div class="row justify-content-center">
-                    <a href="offer.html" class="btn btn-pink float-left">Ajudar</a>
-                </div>
+        </c:when>
+        <c:otherwise>
+            <div class="col-md-12 mt-3">
+                <h4>Ainda não há nenhuma solicitação de ajuda</h4>
             </div>
+            <div class="clearfix"></div>
         </div>
-    </div>
-    <!-- Card -->
-    
-</div> <!-- ./col -->
-<!-- Card -->
-
-<div class="clearfix"></div>
-
-<div class="col-md-12 mt-3 pr-4">
-    <a href="${pageContext.request.contextPath}/requests" class="float-right">ver todas as solicitações</a>
-</div>
+    </c:otherwise>
+</c:choose>

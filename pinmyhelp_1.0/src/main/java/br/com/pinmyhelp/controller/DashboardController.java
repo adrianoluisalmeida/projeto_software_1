@@ -51,9 +51,10 @@ public class DashboardController {
                 pageDashboard = "claimant/dashboard";
             else if ( type.equals("Entity") ) 
                 pageDashboard = "entity/dashboard";
-            mav.addObject("mySolicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 4));
+            mav.addObject("solicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 4));
         } else if ( type.equals(Person.TYPE_VOLUNTARY) ) {
-            pageDashboard = "voluntary/dashboard";            
+            pageDashboard = "voluntary/dashboard";   
+            mav.addObject("solicitations", helpSolicitationDAO.findAll());
         } 
         mav.addObject("title", "Dashboard");
         mav.addObject("page", pageDashboard);

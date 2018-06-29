@@ -46,10 +46,12 @@ public class SolicitationsController {
     HelpSolicitationDAO helpSolicitationDAO;
 
     @RequestMapping("/solicitations")
-    public String index(Model model) {
-        model.addAttribute("title", "Solicitações");
-        model.addAttribute("page", "solicitations/index");
-        return "app";
+    public ModelAndView index(Model model) {
+        ModelAndView mav = new ModelAndView("app");
+        mav.addObject("title", "Solicitações");
+        mav.addObject("page", "solicitations/index");
+        mav.addObject("solicitations", helpSolicitationDAO.findAll());
+        return mav;
     }
 
     @RequestMapping("/solicitations/my")
@@ -57,7 +59,7 @@ public class SolicitationsController {
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Meus Pedidos");
         mav.addObject("page", "solicitations/my");
-        mav.addObject("mySolicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), null));
+        mav.addObject("solicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), null));
         return mav;
     }
 

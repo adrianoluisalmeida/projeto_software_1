@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="custom"%> 
-<c:forEach var="solicitation" items="${mySolicitations}">
+<c:forEach var="solicitation" items="${solicitations}">
         <div class=" col-md-4 float-left">
             <div class="card">
                 <!-- Card image -->
