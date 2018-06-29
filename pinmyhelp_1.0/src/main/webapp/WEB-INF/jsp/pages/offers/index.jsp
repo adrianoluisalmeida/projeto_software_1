@@ -15,7 +15,45 @@
                 <th>Ações</th>
             </tr>
         </thead>
+        
         <!--Table head-->
+        
+        
+        <div class="modal fade" id="modalLoginAvatarDemo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style=" padding-right: 15px;">
+            <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+                <!--Content-->
+                <div class="modal-content">
+
+                    <!--Header-->
+                    <div class="modal-header">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%281%29.jpg" class="rounded-circle img-responsive" alt="Avatar photo">
+                    </div>
+                    <!--Body-->
+                    <div class="modal-body text-center mb-1">
+
+                        <h5 class="mt-1 mb-2">Maria Doe</h5>
+
+                        <div class="md-form ml-0 mr-0">
+                            <p>
+                                <b>Nome: </b> Deborah
+                            </p>
+                            <p>
+                                Estudante .... estudante e outras coisas para a biografia aqui.
+                            </p>
+                            <p>
+                                <b>Telefone: </b> (51) 9 9999-9999
+                            </p>
+                            <p>
+                                <b>E-mail: </b> deb@gmail.com
+                            </p>
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
 
         <!--Table body-->
         <tbody>
@@ -25,12 +63,13 @@
                 </td>
             </tr>
             <tr>
+
                 <td></td>
                 <td>
-                    <b>Pedro Soares</b>
+                    <b>Joaquim Ferreira</b>
                 </td>
                 <td>
-                    <b>Joaquim Ferreira</b>
+                    <a data-toggle="modal" data-target="#modalLoginAvatarDemo">Pedro Soares</a>
                 </td>
                 <td>
                     <b>00/00/0000 às 19:00</b>
@@ -59,7 +98,7 @@
                     <b>Maria</b>
                 </td>
                 <td>
-                    <b>Pedrão Ferreira</b>
+                    <a data-toggle="modal" data-target="#modalLoginAvatarDemo">Pedro Soares</a>
                 </td>
                 <td>
                     <b>00/00/0000 às 20:00</b>

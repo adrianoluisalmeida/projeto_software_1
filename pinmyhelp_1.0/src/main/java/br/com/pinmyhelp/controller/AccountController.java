@@ -297,7 +297,7 @@ public class AccountController {
         }
         
         redirectAttrs.addFlashAttribute("msg_success", "Profile Alterado com sucesso!");
-        return new DashboardController().redirectDashboard(session);
+        return new ModelAndView("redirect:/dashboard");
     }
 
     /**
