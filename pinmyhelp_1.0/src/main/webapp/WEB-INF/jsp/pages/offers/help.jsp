@@ -59,10 +59,10 @@
 </div>
 
 <div class="row mt-5">
-    <form action="offers/store/${solicitation.id}" class="col-md">
+    <form action="${pageContext.request.contextPath}/offers/store/${solicitation.id}" method="POST" enctype="multipart/form-data" accept-charset="iso-8859-1,utf-8" class="col-md">
         <div class="md-form">
-            <textarea type="text" id="form7" class="md-textarea form-control" rows="3"></textarea>
-            <label for="form7">Gostaria de fazer alguma observação sobre sua oferta?</label>
+            <textarea type="text" id="Form-observation" name="observation" class="md-textarea form-control" rows="3"></textarea>
+            <label for="Form-observation">Gostaria de fazer alguma observação sobre sua oferta?</label>
         </div>
         <button type="submit" class="btn btn-pink float-right">Realizar oferta</button>
     </form>

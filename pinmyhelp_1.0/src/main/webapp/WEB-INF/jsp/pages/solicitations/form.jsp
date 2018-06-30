@@ -117,17 +117,6 @@
     <div class="col-md-4 mt-3">
 
         <h3>Minhas informações</h3>
-
-        <!--Caso for uma entedidade, pode selecionar requerente
-        <p><i>Caso for entidade</i></p>
-        <div class="form-group mb-0 mt-4">
-            <select name="objective" class="mdb-select form-control">
-                <option value="" disabled selected>Selecione um requerente</option>
-                <option value="1" selected>Pedro Soares</option>
-                <option value="2">Maria Luísa</option>
-            </select>
-        </div>
-        -->
             <jsp:include page="../user_info.jsp" flush="true" />
 
     </div>

@@ -12,8 +12,9 @@ package br.com.pinmyhelp.model.types;
 public enum OfferStatus {
     
     //HelpTypes - change
-    S1(1,"Status 1"),
-    S2(2,"Status 2");
+    S1(1,"Ofertada"),
+    S2(2,"Aceita"),
+    S3(3,"Recusada");
     
     private final int id; //number to save on DB
     private final String type; //description to show

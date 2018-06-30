@@ -44,6 +44,10 @@ public class HelpSolicitation extends Record implements Serializable {
     public HelpSolicitation() {
     }
 
+    public HelpSolicitation(Integer id) {
+        super(id);
+    }
+
     /**
      * @return the claimant
      */
