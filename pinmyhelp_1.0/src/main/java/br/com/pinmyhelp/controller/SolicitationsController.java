@@ -1,7 +1,6 @@
 package br.com.pinmyhelp.controller;
 
 import br.com.pinmyhelp.database.ConnectionManager;
-import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.Claimant;
 import br.com.pinmyhelp.model.Entity;
 import br.com.pinmyhelp.model.HelpSolicitation;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,10 +52,8 @@ public class SolicitationsController {
         Collection<HelpSolicitation> helps = null;
         if(session.getAttribute("type").equals(Person.TYPE_VOLUNTARY))
             helps = helpSolicitationDAO.findAll();
-        else if(session.getAttribute("type").equals("Entity")){
-            Entity e = (Entity) session.getAttribute("entity");
-            helps = helpSolicitationDAO.find("claimant_id != ? ", e.getId());
-        }
+        else 
+            helps = helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 4); // 4 = limit
         mav.addObject("solicitations", helps);
         return mav;
     }
@@ -84,14 +80,21 @@ public class SolicitationsController {
         Boolean datesAreValid = validateDates(help.getStartDate(), help.getEndDate(), result, mv);
         Boolean helpTypeIsValid = validateHelpType(typeId, help, mv);
         if (result.hasErrors() || !datesAreValid || !helpTypeIsValid) {
+            mv.addObject("address", help.getAddress());
             return mv;
         }
         User user = (User) session.getAttribute("user");
-        if (((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT)) {
+        if ( ((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT) ) {
             help.setClaimant(new Claimant(user.getId()));
-        } else {
+            Person person = (Person) session.getAttribute("person");
+            // if claimant doesn't have any address, updt with the address of his first help solicitation
+            if (person.getAddress().getPostalCode() == null) { // 
+                person.setAddress(help.getAddress());
+                personDAO.update(person);
+                session.setAttribute("person", person);
+            }
+        } else 
             help.setEntity(new Entity(user.getId()));
-        }
         helpSolicitationDAO.create(help);
         redirectAttrs.addFlashAttribute("msg_success", "Solicitação criada com sucesso!");
         return new ModelAndView("redirect:/solicitations/my");
