@@ -8,7 +8,14 @@
                 <h3>Todas solicitações de Ajuda</h3>
             </div>
             <div class="clearfix"></div>
-            <jsp:include page="../solicitations/list.jsp" flush="true" />
+            <c:choose>
+                <c:when test="${type == 'Voluntary'}">
+                    <jsp:include page="../solicitations/list.jsp" flush="true" />
+                </c:when>
+                <c:otherwise>
+                    <jsp:include page="../offers/solicitations_list.jsp" flush="true" />                    
+                </c:otherwise>
+            </c:choose>
             <div class="clearfix"></div>
 
             <div class="col-md-12 mt-3 pr-4">

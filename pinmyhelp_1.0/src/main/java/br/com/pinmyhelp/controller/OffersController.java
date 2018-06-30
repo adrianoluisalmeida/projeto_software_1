@@ -1,7 +1,11 @@
 package br.com.pinmyhelp.controller;
 
+import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
+import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -13,6 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class OffersController {
+    
+    @Autowired
+    HelpSolicitationDAO helpSolicitationDAO;
+
 
     @RequestMapping("/offers")
     public String index(Model model) {
@@ -29,24 +37,19 @@ public class OffersController {
     }
     
     
-    @RequestMapping("/offers/help/{idOffer}")
-    public ModelAndView help(Model model) {
+    @RequestMapping("/offers/help/{solicitation_id}")
+    public ModelAndView help(HttpSession session, @PathVariable(value = "solicitation_id") int solicitation_id) {
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Solicitações - Oferecer ajuda");
         mav.addObject("page", "offers/help");
+        mav.addObject("solicitation", helpSolicitationDAO.findOne(solicitation_id));
         return mav;
     }
-
-    @RequestMapping(value = "/offers/create", method = GET)
-    public String create(Model model){
-        model.addAttribute("title", "Oferecer Ajuda");
-        model.addAttribute("page", "offers/help");
-        return "app";
-    }
     
-    @RequestMapping(value = "/offers/store", method = POST)
-    public String store(Model model){
-        return "";
+    @RequestMapping(value = "/offers/store/{solicitation_id}", method = POST)
+    public ModelAndView store(HttpSession session, @PathVariable(value = "solicitation_id") int solicitation_id) {
+        ModelAndView mav = new ModelAndView("app");
+        return mav; 
     }
     
     @RequestMapping(value = "/offers/edit/{idOffer}", method = GET)

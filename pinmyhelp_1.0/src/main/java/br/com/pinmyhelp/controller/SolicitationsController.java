@@ -15,6 +15,7 @@ import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collection;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,18 @@ public class SolicitationsController {
     HelpSolicitationDAO helpSolicitationDAO;
 
     @RequestMapping("/solicitations")
-    public ModelAndView index(Model model) {
+    public ModelAndView index(HttpSession session) {
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Solicitações");
         mav.addObject("page", "solicitations/index");
-        mav.addObject("solicitations", helpSolicitationDAO.findAll());
+        Collection<HelpSolicitation> helps = null;
+        if(session.getAttribute("type").equals(Person.TYPE_VOLUNTARY))
+            helps = helpSolicitationDAO.findAll();
+        else if(session.getAttribute("type").equals("Entity")){
+            Entity e = (Entity) session.getAttribute("entity");
+            helps = helpSolicitationDAO.find("claimant_id != ? ", e.getId());
+        }
+        mav.addObject("solicitations", helps);
         return mav;
     }
     
@@ -60,7 +68,8 @@ public class SolicitationsController {
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Meus Pedidos");
         mav.addObject("page", "solicitations/my");
-        mav.addObject("solicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), null));
+        Collection<HelpSolicitation> helps = helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), null);
+        mav.addObject("solicitations", helps);
         return mav;
     }
 
@@ -84,7 +93,6 @@ public class SolicitationsController {
             help.setEntity(new Entity(user.getId()));
         }
         helpSolicitationDAO.create(help);
-        //return new DashboardController().redirectDashboard(session);
         redirectAttrs.addFlashAttribute("msg_success", "Solicitação criada com sucesso!");
         return new ModelAndView("redirect:/solicitations/my");
     }

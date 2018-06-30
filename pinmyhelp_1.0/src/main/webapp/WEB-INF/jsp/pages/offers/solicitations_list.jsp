@@ -14,8 +14,8 @@
                     <p class="card-text">
                         <b>Requerente</b><br>
                         <c:choose>
-                            <c:when test="${type == 'Claimant'}">${person.name}</c:when>
-                            <c:when test="${type == 'Entity'}">${entity.name}</c:when>
+                            <c:when test="${not empty solicitation.claimant}">${solicitation.claimant.name}</c:when>
+                            <c:when test="${not empty solicitation.entity}">${solicitation.entity.name}</c:when>
                         </c:choose>
                     </p>
                     <p class="card-text">
