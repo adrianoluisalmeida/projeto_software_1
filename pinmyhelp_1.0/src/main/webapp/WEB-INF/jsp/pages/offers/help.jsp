@@ -1,4 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib tagdir="/WEB-INF/tags" prefix="custom"%> 
 
 <div class="row mt-5">
     <div class="col-md-4 mt-3">
@@ -8,8 +9,8 @@
         <p>${solicitation.description}</p>
         <hr>
         <h4>Período</h4>
-        <p>Data de início: ${solicitation.startDate}</p>
-        <p>Data de fim: ${solicitation.endDate}</p>
+        <p>Data de início:  <custom:localDateFormat localDate="${solicitation.startDate}"/></p>
+        <p>Data de fim:  <custom:localDateFormat localDate="${solicitation.endDate}"/></p>
     </div>
     <div class="col-md-4 mt-3">
         <h3>Requerente</h3>

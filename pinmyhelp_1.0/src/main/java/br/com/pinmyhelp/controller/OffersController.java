@@ -4,6 +4,7 @@ import br.com.pinmyhelp.model.Entity;
 import br.com.pinmyhelp.model.HelpOffer;
 import br.com.pinmyhelp.model.HelpSolicitation;
 import br.com.pinmyhelp.model.Person;
+import br.com.pinmyhelp.model.User;
 import br.com.pinmyhelp.model.Voluntary;
 import br.com.pinmyhelp.model.dao.HelpOfferDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
@@ -35,17 +36,27 @@ public class OffersController {
     HelpOfferDAO helpOfferDAO;
 
     @RequestMapping("/offers")
-    public String index(Model model) {
-        model.addAttribute("title", "Ofertas");
-        model.addAttribute("page", "offers/index");
-        return "app";
+    public ModelAndView index() {
+        ModelAndView mav = new ModelAndView("app");
+        mav.addObject("title", "Ofertas");
+        mav.addObject("page", "offers/index");
+        //SÓ PARA TESTE -- as ofertas resgatadas aqui devem ser todas ofertas realizadas para
+        //todas solicitações de um usuário (claimant ou entity)
+        //então tem que fazer join entre help_offer e help_solicitation, pra pegar todas ofertas 
+        //pra todas solicitações do usuário logado
+        //Após isso fazer um novo método que resgata as ofertas para uma solicitação em específico
+        mav.addObject("offers", helpOfferDAO.findAll());
+        return mav;
     }
 
     @RequestMapping("/offers/my")
-    public String my(Model model) {
-        model.addAttribute("title", "Minhas ofertas");
-        model.addAttribute("page", "offers/my");
-        return "app";
+    public ModelAndView my(HttpSession session) {
+        ModelAndView mav = new ModelAndView("app");
+        mav.addObject("title", "Minhas ofertas");
+        User u = (User) session.getAttribute("user");
+        mav.addObject("offers", helpOfferDAO.find("voluntary_id = ? ", u.getId()));
+        mav.addObject("page", "offers/my");
+        return mav;
     }
 
     @RequestMapping("/offers/help/{solicitation_id}")
