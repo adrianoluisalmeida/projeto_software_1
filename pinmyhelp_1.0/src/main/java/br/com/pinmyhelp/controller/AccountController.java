@@ -7,7 +7,6 @@ import br.com.pinmyhelp.model.dao.EntityDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
 import br.com.pinmyhelp.database.ConnectionManager;
-import br.com.pinmyhelp.model.Address;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -77,10 +76,9 @@ public class AccountController {
         user.setId(personDAO.create(person));
         ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();
-        session.setAttribute("user", user);
-        session.setAttribute("person", person);
         redirectAttrs.addFlashAttribute("msg_success", "Sua conta foi criada com sucesso!");
-        //return new DashboardController().redirectDashboard(session);
+        mv.setViewName("redirect:/login");
+        session.setAttribute("registered_email", person.getEmail());
         return new ModelAndView("redirect:/login");
     }
 
@@ -115,45 +113,38 @@ public class AccountController {
         user.setId(entityDAO.create(entity));
         ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();
-        session.setAttribute("user", user);
-        session.setAttribute("entity", entity);
         redirectAttrs.addFlashAttribute("msg_success", "Sua conta foi criada com sucesso!");
-        //return new DashboardController().redirectDashboard(session);
+        session.setAttribute("registered_email", entity.getEmail());
         return new ModelAndView("redirect:/login");
     }
 
     @RequestMapping(value = "/account/edit/person/{idPerson}", method = GET)
     public ModelAndView editPerson(@PathVariable(value = "idPerson") int id, HttpSession session) {
-        if (!checkUser(id, session)) {
+        if ( !checkUser(id, session) ) 
             return new ModelAndView("redirect:/login");
-        }
-        Person person = personDAO.findOne(id);
+        // Person person = personDAO.findOne(id);
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("page", "account/edit");
         mav.addObject("editPage", "person");
-        mav.addObject("person", person);
+        // mav.addObject("person", person); 
         return mav;
     }
 
     @RequestMapping(value = "/account/edit/entity/{idEntity}", method = GET)
     public ModelAndView editEntity(@PathVariable(value = "idEntity") int id, HttpSession session) {
-        if (!checkUser(id, session)) {
+        if ( !checkUser(id, session) ) 
             return new ModelAndView("redirect:/login");
-        }
-        Entity entity = entityDAO.findOne(id);
+        // Entity entity = entityDAO.findOne(id);
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("page", "account/edit");
         mav.addObject("editPage", "entity");
-        mav.addObject("entity", entity);
+        // mav.addObject("entity", entity);
         return mav;
     }
 
     @RequestMapping(value = "/account/update/person", method = POST)
-    public ModelAndView updatePerson(@Valid Person person, Address address, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
-        if (session.getAttribute("user") == null) {
-            return new LoginController().redirectLogin();
-        }
-        person.setAddress(address);
+    public ModelAndView updatePerson(@Valid Person person, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
+        if (session.getAttribute("user") == null) return new LoginController().redirectLogin();
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView("app");
             mav.addObject("page", "account/edit");
@@ -170,16 +161,15 @@ public class AccountController {
         }
         personDAO.update(person);
         ConnectionManager.closeConnection();
+        ModelAndView mv = new ModelAndView("redirect:/dashboard");
+        mv.addObject("person", person);
         redirectAttrs.addFlashAttribute("msg_success", "Conta Alterada com sucesso!");
-        return new DashboardController().redirectDashboard(session);
+        return mv;
     }
 
     @RequestMapping(value = "/account/update/entity", method = POST)
-    public ModelAndView updateEntity(@Valid Entity entity, Address address, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
-        if (session.getAttribute("user") == null) {
-            return new LoginController().redirectLogin();
-        }
-        entity.setAddress(address);
+    public ModelAndView updateEntity(@Valid Entity entity, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
+        if (session.getAttribute("user") == null) return new LoginController().redirectLogin();
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView("app");
             mav.addObject("page", "acount/edit");
@@ -196,8 +186,10 @@ public class AccountController {
         }
         entityDAO.update(entity);
         ConnectionManager.closeConnection();
+        ModelAndView mv = new ModelAndView("redirect:/dashboard");
+        mv.addObject("entity", entity);
         redirectAttrs.addFlashAttribute("msg_success", "Conta Alterada com sucesso!");
-        return new DashboardController().redirectDashboard(session);
+        return mv;
     }
 
     @RequestMapping(value = "/account/delete/person/{idPerson}", method = GET)
@@ -296,7 +288,7 @@ public class AccountController {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        redirectAttrs.addFlashAttribute("msg_success", "Profile Alterado com sucesso!");
+        redirectAttrs.addFlashAttribute("msg_success", "Perfil alterado com sucesso!");
         return new ModelAndView("redirect:/dashboard");
     }
 

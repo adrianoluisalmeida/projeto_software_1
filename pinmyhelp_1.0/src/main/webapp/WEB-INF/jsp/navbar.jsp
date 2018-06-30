@@ -21,24 +21,24 @@
         <div class="collapse navbar-collapse" id="basicExampleNav">
             <!-- Links -->
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li id="nav-dashboard" class="nav-item active">
                     <a class="nav-link" href="${pageContext.request.contextPath}/dashboard">Dashboard
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <c:if test="${type != 'Voluntary'}"> 
-                    <li class="nav-item">
+                    <li id="nav-my-solicitations" class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/solicitations/my">Minhas Solicitações</a>
                     </li>
-                    <li class="nav-item">
+                    <li id="nav-offers" class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/offers">Todas ofertas</a>
                     </li>
                 </c:if>
                 <c:if test="${type != 'Claimant'}"> 
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/solicitations">Todas solicitações</a>
+                    <li id="nav-solicitations" class="nav-item">
+                        <a class="nav-link"href="${pageContext.request.contextPath}/solicitations">Todas solicitações</a>
                     </li>
-                    <li class="nav-item">
+                    <li id="nav-my-offers" class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/offers/my">Minhas Ofertas</a>
                     </li>
                 </c:if>
@@ -46,12 +46,12 @@
             <!-- /Links -->
             <!-- Icons -->
             <ul class="navbar-nav ml-auto nav-flex-icons justify-content-center">
-                <li class="nav-item">
+                <li id="messages" class="nav-item">
                     <a class="nav-link waves-effect waves-light"> <c:if test="${not empty messages}">messages.quantity</c:if>
-                            <i class="fa fa-envelope"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item avatar dropdown">
+                        <i class="fa fa-envelope"></i>
+                    </a>
+                </li>
+                    <li id="nav-profile" class="nav-item avatar dropdown">
                         <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <c:choose>
@@ -81,4 +81,4 @@
     </div>
 </nav>
 <!-- /Navbar -->
-
+    

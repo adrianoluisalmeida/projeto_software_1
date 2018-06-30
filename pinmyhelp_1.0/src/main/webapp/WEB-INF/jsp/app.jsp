@@ -46,21 +46,23 @@
         <!-- Toast -->
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.toast.min.js"></script>
         <script type="text/javascript">
-
             $(document).ready(function () {
+                /* set active navbar */
+                $(".navbar li.nav-item").removeClass("active");
+                <c:choose>
+                    <c:when test="${fn:contains(page, 'dashboard')}">$("#nav-dashboard").addClass("active");</c:when>
+                    <c:when test="${page eq 'solicitations/index'}">$("#nav-solicitations").addClass("active");</c:when>
+                    <c:when test="${page eq 'offers/index'}">$("#nav-offers").addClass("active");</c:when>                
+                    <c:when test="${fn:contains(page, 'solicitations')}">$("#nav-my-solicitations").addClass("active");</c:when>
+                    <c:when test="${fn:contains(page, 'offers')}">$("#nav-my-offers").addClass("active");</c:when>
+                    <c:otherwise>$("#nav-dashboard").addClass("active");</c:otherwise>
+                </c:choose>
+
+                /* toast */
                 setTimeout(function () {
                     $('#msg-returns').hide();
-                }, 5000);
+                }, 6000);
             });
-
-
-            //            $("#data").datepicker({
-            //                minDate: 0,
-            //                dateFormat: "dd/mm/yyyy"
-            //            });
-            //            $("#data").mask("00/00/0000");
-            //            $('[name="hora"]').mask('00:00:00');
-
         </script>
         <jsp:include page="messages.jsp" flush="true" />
     </body>

@@ -35,7 +35,7 @@
                         </h3>
                     </div>
                     <div class="md-form">
-                        <input type="email" id="Form-email" class="form-control" name="email" value="${user.email}">
+                        <input type="email" id="Form-email" class="form-control" name="email" value="${registered_email}">
                         <label for="Form-email">Seu e-mail</label>
                         <form:errors path="user.email" cssStyle="color:red"/>
                     </div>

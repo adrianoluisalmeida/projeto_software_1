@@ -39,6 +39,7 @@ public class LoginController {
     
     @RequestMapping(value = "sign-in", method = POST)
     public ModelAndView index(@Valid User user, BindingResult result, HttpSession session) {
+        session.setAttribute("registered_email", user.getEmail());
         if ( result.hasErrors() ) return new ModelAndView("login");
         User loggedUser = userDAO.autenticateUser(user);
         if ( loggedUser == null ) return redirectLogin(user);
