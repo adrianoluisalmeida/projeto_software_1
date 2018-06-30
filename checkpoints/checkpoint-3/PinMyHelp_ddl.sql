@@ -52,6 +52,8 @@ CREATE TABLE IF NOT EXISTS entity (
     entity_notes        TEXT         NULL,
     # INIT ADDRESS INFO - PREFIX: e_
     e_postal_code       CHAR(8)      NULL, # provides info about country, state and city
+	e_uf                CHAR(2)      NULL,
+    e_city              VARCHAR(255) NULL,
     e_neighborhood      VARCHAR(255) NULL,
     e_street            VARCHAR(255) NULL,
     e_number            INT          NULL,
@@ -74,7 +76,9 @@ CREATE TABLE IF NOT EXISTS help_solicitation (
     start_date               DATETIME       NOT NULL,
     end_date                 DATETIME       NULL,
     # INIT ADDRESS INFO - PREFIX: s_
-    s_postal_code            CHAR(8)        NULL,     # provides info about country, state and city
+    s_postal_code            CHAR(8)        NULL,   
+	s_uf                     CHAR(2)        NULL,
+    s_city                   VARCHAR(255)   NULL,
     s_neighborhood           VARCHAR(255)   NULL,
     s_street                 VARCHAR(255)   NULL,
     s_number                 INT            NULL,
