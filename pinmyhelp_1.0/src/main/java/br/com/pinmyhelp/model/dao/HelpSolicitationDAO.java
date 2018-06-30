@@ -10,6 +10,7 @@ import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.Entity;
 import br.com.pinmyhelp.model.HelpSolicitation;
 import br.com.pinmyhelp.model.Person;
+import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.sql.PreparedStatement;
@@ -32,6 +33,8 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
                 + " start_date,"
                 + " end_date,"
                 + " s_postal_code,"
+                + " s_uf,"
+                + " s_city,"
                 + " s_neighborhood,"
                 + " s_street,"
                 + " s_number,"
@@ -39,7 +42,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
                 + " s_longitude,"
                 + " claimant_id"
                 + ") VALUES "
-                + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                + "(?, ?, ?, ?, ?, ? ?, ?, ?, ?, ?, ?, ?)");
         setUpdateSql("UPDATE help_solicitation SET"
                 + " solicitation_status = ?,"
                 + " solicitation_description = ?,"
@@ -47,6 +50,8 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
                 + " start_date = ?,"
                 + " end_date = ?,"
                 + " s_postal_code = ?,"
+                + " s_uf = ?,"
+                + " s_city = ?,"
                 + " s_neighborhood = ?,"
                 + " s_street = ?,"
                 + " s_number = ?,"
@@ -69,12 +74,14 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         ps.setDate(3, h.getStartDate() != null ? java.sql.Date.valueOf(h.getStartDate()) : null);
         ps.setDate(4, h.getEndDate() != null ? java.sql.Date.valueOf(h.getEndDate()) : null);        
         ps.setString(5, h.getAddress().getPostalCode());
-        ps.setString(6, h.getAddress().getNeighborhood());
-        ps.setString(7,h.getAddress().getStreet());
-        ps.setInt(8, h.getAddress().getNumber());
-        ps.setDouble(9, 0.0);
-        ps.setDouble(10, 0.0);
-        ps.setInt(11, h.getClaimant() != null ? h.getClaimant().getId() : h.getEntity().getId());
+        ps.setString(6, h.getAddress().getState());
+        ps.setString(7, h.getAddress().getCity());
+        ps.setString(8, h.getAddress().getNeighborhood());
+        ps.setString(9,h.getAddress().getStreet());
+        ps.setInt(10, h.getAddress().getNumber());
+        ps.setDouble(11, 0.0);
+        ps.setDouble(12, 0.0);
+        ps.setInt(13, h.getClaimant() != null ? h.getClaimant().getId() : h.getEntity().getId());
     }
 
     @Override
@@ -86,13 +93,15 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         ps.setDate(4, h.getStartDate() != null ? java.sql.Date.valueOf(h.getStartDate()) : null);
         ps.setDate(5, h.getEndDate() != null ? java.sql.Date.valueOf(h.getEndDate()) : null);    
         ps.setString(6, h.getAddress().getPostalCode());
-        ps.setString(7, h.getAddress().getNeighborhood());
-        ps.setString(8,h.getAddress().getStreet());
-        ps.setInt(9, h.getAddress().getNumber());
-        ps.setDouble(10, h.getLocation().getLatitude());
-        ps.setDouble(11, h.getLocation().getLongitude());
-        ps.setInt(12, h.getClaimant() != null ? h.getClaimant().getId() : h.getEntity().getId());
-        ps.setInt(13, h.getId());
+        ps.setString(7, h.getAddress().getState());
+        ps.setString(8, h.getAddress().getCity());
+        ps.setString(9, h.getAddress().getNeighborhood());
+        ps.setString(10,h.getAddress().getStreet());
+        ps.setInt(11, h.getAddress().getNumber());
+        ps.setDouble(12, h.getLocation().getLatitude());
+        ps.setDouble(13, h.getLocation().getLongitude());
+        ps.setInt(14, h.getClaimant() != null ? h.getClaimant().getId() : h.getEntity().getId());
+        ps.setInt(15, h.getId());
     }
 
     @Override
@@ -116,21 +125,25 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         if(rs.getDate("end_date") != null) h.setEndDate(rs.getDate("end_date").toLocalDate());
         Address a = new Address();
         a.setPostalCode(rs.getString("s_postal_code"));
+        a.setState(rs.getString("s_uf"));
+        a.setCity(rs.getString("s_city"));
         a.setNeighborhood(rs.getString("s_neighborhood"));
         a.setStreet(rs.getString("s_street"));
         a.setNumber(rs.getInt("s_number"));
         h.setAddress(a);
-        /*h.setLocation(
+        h.setLocation(
                 new GeoLocation(rs.getDouble("s_latitude"), rs.getDouble("s_longitude"))
-        );*/
+        );
         PersonDAO pdao = new PersonDAO();
         EntityDAO edao = new EntityDAO();
         Person p = pdao.findOne(rs.getInt("claimant_id"));
         if (p != null)
             h.setClaimant(p);
-        Entity e = edao.findOne(rs.getInt("claimant_id"));
-        if (e != null)
-            h.setEntity(e);
+        else {
+            Entity e = edao.findOne(rs.getInt("claimant_id"));
+            if (e != null)
+                h.setEntity(e);
+        }
         return h;
     }
 
@@ -139,4 +152,5 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
             return find("claimant_id = ?", new String[]{String.valueOf(id)});
         return find("claimant_id = ? limit " + limit, new String[]{String.valueOf(id)});
     } 
+    
 }
