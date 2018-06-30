@@ -15,9 +15,10 @@ import java.io.Serializable;
  */
 public class HelpOffer extends Record implements Serializable {
     
-    private Voluntary voluntary;
+    private Person voluntary;
     private Entity entity;
     private OfferStatus status;
+    private String observation;
     private HelpSolicitation helpSolicitation;
     private Feedback feedback; // feedback do Requerente (ou Entidade) sobre a oferta
     
@@ -38,14 +39,14 @@ public class HelpOffer extends Record implements Serializable {
     /**
      * @return the voluntary
      */
-    public Voluntary getVoluntary() {
+    public Person getVoluntary() {
         return voluntary;
     }
 
     /**
      * @param voluntary the voluntary to set
      */
-    public void setVoluntary(Voluntary voluntary) {
+    public void setVoluntary(Person voluntary) {
         this.voluntary = voluntary;
     }
 
@@ -77,6 +78,15 @@ public class HelpOffer extends Record implements Serializable {
         this.status = status;
     }
 
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
+
+    
     /**
      * @return the helpSolicitation
      */
