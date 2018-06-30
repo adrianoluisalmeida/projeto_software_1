@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="custom"%>
 
 <div class="row mt-5">
@@ -21,7 +22,6 @@
                         <option value="" disabled selected>Selecione um tipo</option>
                         <c:forEach var="helpType" items="${helpTypes}">
                             <option value="${helpType.id}" <c:if test="${helpSolicitation.type.id == helpType.id}">selected</c:if>>${helpType.type}</option>
-
                         </c:forEach>
                     </select>
                 </div>
@@ -30,6 +30,11 @@
             </div>
             <hr>
             <h3>Meu endereço <!-- <a id="btn-get-address" class="btn btn-pink float-right waves-effect waves-light">Usar endereço atual</a> --></h3> 
+            <c:if test="${empty person.address.postalCode}">
+                <p><i class="fa fa-info-circle"></i> Você ainda não possui nenhum endereço cadastrado em seu perfil, com isso o endereço abaixo será considerado seu endereço atual até atualização
+                    de seu <a href="${pageContext.request.contextPath}/account/edit/claimant/${sessionScope.user.id}" class="font-weight-light ml-1">Cadastro</a>.
+                </p>
+            </c:if>
             <div class="row height-60">
                 <div class="col-8">
                     <div class="md-form">
@@ -111,7 +116,9 @@
 
         <h3>Minhas informações</h3>
             <jsp:include page="../user_info.jsp" flush="true" />
-
+            <p class="font-small grey-text d-flex pull-right">Não está correto?
+                <a href="${pageContext.request.contextPath}/account/edit/${fn:toLowerCase(type)}/${sessionScope.user.id}" class="font-weight-light ml-1"> Atualize</a>
+            </p>
     </div>
 </div>
 
