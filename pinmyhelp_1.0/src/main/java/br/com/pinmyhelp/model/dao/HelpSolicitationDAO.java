@@ -7,7 +7,9 @@ package br.com.pinmyhelp.model.dao;
 
 import br.com.pinmyhelp.database.AbstractDAO;
 import br.com.pinmyhelp.model.Address;
+import br.com.pinmyhelp.model.Entity;
 import br.com.pinmyhelp.model.HelpSolicitation;
+import br.com.pinmyhelp.model.Person;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.sql.PreparedStatement;
@@ -121,6 +123,14 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         /*h.setLocation(
                 new GeoLocation(rs.getDouble("s_latitude"), rs.getDouble("s_longitude"))
         );*/
+        PersonDAO pdao = new PersonDAO();
+        EntityDAO edao = new EntityDAO();
+        Person p = pdao.findOne(rs.getInt("claimant_id"));
+        if (p != null)
+            h.setClaimant(p);
+        Entity e = edao.findOne(rs.getInt("claimant_id"));
+        if (e != null)
+            h.setEntity(e);
         return h;
     }
 

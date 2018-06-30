@@ -10,7 +10,7 @@
                 <h3>Últimas solicitações de Ajuda</h3>
             </div>
             <div class="clearfix"></div>
-            <jsp:include page="../offers/list.jsp" flush="true" />
+            <jsp:include page="../offers/solicitations_list.jsp" flush="true" />
             <div class="clearfix"></div>
 
             <div class="col-md-12 mt-3 pr-4">
