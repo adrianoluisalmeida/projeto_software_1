@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -72,9 +73,10 @@ public class LoginController {
     }
         
     @RequestMapping(value = "sign-out", method = GET)
-    public String signOut(HttpSession session) {
+    public String signOut(HttpSession session, RedirectAttributes redirectAttrs) {
         session.invalidate();
-        return "login";
+        redirectAttrs.addFlashAttribute("msg_success", "Volte sempre! :)");
+        return "redirect:/login";
     }
     
 }

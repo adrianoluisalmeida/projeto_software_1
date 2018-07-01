@@ -9,7 +9,6 @@ import br.com.pinmyhelp.model.User;
 import br.com.pinmyhelp.model.dao.EntityDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
-import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.time.LocalDate;
@@ -49,12 +48,7 @@ public class SolicitationsController {
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Solicitações");
         mav.addObject("page", "solicitations/index");
-        Collection<HelpSolicitation> helps = null;
-        if(session.getAttribute("type").equals(Person.TYPE_VOLUNTARY))
-            helps = helpSolicitationDAO.findAll();
-        else 
-            helps = helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 4); // 4 = limit
-        mav.addObject("solicitations", helps);
+        mav.addObject("solicitations", helpSolicitationDAO.findAll()); // filtar pro proximadade
         return mav;
     }
     
@@ -77,12 +71,13 @@ public class SolicitationsController {
     @RequestMapping(value = "/solicitations/store", method = POST)
     public ModelAndView store(@Valid HelpSolicitation help, BindingResult result, @ModelAttribute("type_id") String typeId, HttpSession session, RedirectAttributes redirectAttrs) {
         ModelAndView mv = getModelCreatePage(session);
+        mv.addObject("address", help.getAddress());
         Boolean datesAreValid = validateDates(help.getStartDate(), help.getEndDate(), result, mv);
         Boolean helpTypeIsValid = validateHelpType(typeId, help, mv);
-        if (result.hasErrors() || !datesAreValid || !helpTypeIsValid) {
-            mv.addObject("address", help.getAddress());
+        if (result.hasErrors() || !datesAreValid || !helpTypeIsValid)
             return mv;
-        }
+        ConnectionManager.openConnection();
+        ConnectionManager.beginTransaction();
         User user = (User) session.getAttribute("user");
         if ( ((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT) ) {
             help.setClaimant(new Claimant(user.getId()));
@@ -96,16 +91,15 @@ public class SolicitationsController {
         } else 
             help.setEntity(new Entity(user.getId()));
         helpSolicitationDAO.create(help);
+        ConnectionManager.commitTransaction();
+        ConnectionManager.closeConnection();
         redirectAttrs.addFlashAttribute("msg_success", "Solicitação criada com sucesso!");
         return new ModelAndView("redirect:/solicitations/my");
     }
 
     @RequestMapping(value = "/solicitations/edit/{idRequest}", method = GET)
     public ModelAndView edit(@PathVariable(value = "idRequest") int id, HttpSession session) {
-
         HelpSolicitation solicitation = helpSolicitationDAO.findOne(id);
-
-        //ModelAndView mav = new ModelAndView("app");
         ModelAndView mav = getModelEditPage(session, id, solicitation);
         return mav;
     }
@@ -121,40 +115,27 @@ public class SolicitationsController {
      */
     @RequestMapping(value = "/solicitations/update/{idRequest}", method = POST)
     public ModelAndView update(@PathVariable(value = "idRequest") int id, @Valid HelpSolicitation help, BindingResult result, @ModelAttribute("type_id") String typeId, HttpSession session, RedirectAttributes redirectAttrs) {
-
         ModelAndView mv = getModelEditPage(session, id, help);
+        mv.addObject("address", help.getAddress());
         Boolean datesAreValid = validateDates(help.getStartDate(), help.getEndDate(), result, mv);
         Boolean helpTypeIsValid = validateHelpType(typeId, help, mv);
-        if (result.hasErrors() || !datesAreValid || !helpTypeIsValid) {
+        if (result.hasErrors() || !datesAreValid || !helpTypeIsValid)
             return mv;
-        }
-
-        // ConnectionManager.openConnection();
         User user = (User) session.getAttribute("user");
-        if (((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT)) {
+        if (((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT))
             help.setClaimant(new Claimant(user.getId()));
-        } else {
+        else 
             help.setEntity(new Entity(user.getId()));
-        }
-
-        help.setStatus(HelpStatus.S1);
-        help.setLocation(new GeoLocation(0, 0));
-
+        
+        help.setStatus(HelpStatus.SOLICITADA);
         helpSolicitationDAO.update(help);
-        // ConnectionManager.closeConnection();
         redirectAttrs.addFlashAttribute("msg_success", "Solicitação Alterada com sucesso!");
-
         return new ModelAndView("redirect:/solicitations/my");
     }
 
     @RequestMapping(value = "/solicitations/delete/{idRequest}", method = GET)
     public ModelAndView delete(@PathVariable(value = "idRequest") int id, HttpSession session, RedirectAttributes redirectAttrs) {
-        ConnectionManager.openConnection();
-        HelpSolicitation solicitation = helpSolicitationDAO.findOne(id);
-
-        helpSolicitationDAO.delete(solicitation);
-
-        ConnectionManager.closeConnection();
+        helpSolicitationDAO.delete(new HelpSolicitation(id));
         redirectAttrs.addFlashAttribute("msg_success", "Solicitação removida com sucesso!");
         return new ModelAndView("redirect:/solicitations/my");
     }

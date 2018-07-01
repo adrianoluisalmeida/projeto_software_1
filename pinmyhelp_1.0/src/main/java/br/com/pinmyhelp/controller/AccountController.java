@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -51,23 +52,7 @@ public class AccountController {
     @RequestMapping("/account/store/person")
     public ModelAndView createPerson(@Valid Person person, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
         ModelAndView mv = new ModelAndView("register");
-        if ( result.hasErrors() ) {
-            if ( person.getBornDate() == null || result.hasFieldErrors("bornDate") )
-                mv.addObject("errorBornDate", "Informe uma data válida");
-            return mv;
-        }
-        if ( person.getPassword().length() < 6 ) {
-            mv.addObject("password_error_person", "A senha deve ter no mínimo 6 caracteres");
-            return mv;            
-        }
-        if ( person.getBornDate() == null ) { // it's also necessary to check the date here
-            mv.addObject("errorBornDate", "Informe uma data válida");
-            return mv;
-        }
-        if ( userDAO.emailAlreadyExists(person.getEmail()) ) {
-            mv.addObject("email_error_person", "E-mail já cadastrado");
-            return mv;
-        } 
+        if ( !validPerson(person, mv, result, false, session) ) return mv;
         User user = new User(person.getEmail(), person.getPassword());
         // create one single connection for two inserts
         ConnectionManager.openConnection();
@@ -85,26 +70,8 @@ public class AccountController {
     @RequestMapping("/account/store/entity")
     public ModelAndView createEntity(@Valid Entity entity, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
         ModelAndView mv = new ModelAndView("register");
-        if (result.hasErrors()) {
-            if ( entity.getFoundationDate() == null || result.hasFieldErrors("foundationDate") )
-                mv.addObject("errorFoundationDate", "Informe uma data válida");
-            mv.addObject("tab", "tab-entity");
-            return mv;
-        }
-        if ( entity.getPassword().length() < 6 ) {
-            mv.addObject("password_error_entity", "A senha deve ter no mínimo 6 caracteres");
-            return mv;            
-        } 
-        if ( entity.getFoundationDate() == null) {
-            mv.addObject("errorFoundationDate", "Informe uma data válida");
-            return mv;
-        }
-        if (userDAO.emailAlreadyExists(entity.getEmail())) {
-            mv.addObject("tab", "tab-entity");
-            mv.addObject("email_error_entity", "E-mail já cadastrado");
-            mv.addObject("tab", "entity");
-            return mv;
-        }
+        mv.addObject("tab", "tab-entity");
+        if ( !validEntity(entity, mv, result, false, session) ) return mv;  
         User user = new User(entity.getEmail(), entity.getPassword());
         // create one single connection for two inserts
         ConnectionManager.openConnection();
@@ -144,51 +111,57 @@ public class AccountController {
 
     @RequestMapping(value = "/account/update/person", method = POST)
     public ModelAndView updatePerson(@Valid Person person, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
-        if (session.getAttribute("user") == null) return new LoginController().redirectLogin();
-        if (result.hasErrors()) {
-            ModelAndView mav = new ModelAndView("app");
-            mav.addObject("page", "account/edit");
-            mav.addObject("editPage", "person");
-            mav.addObject("person", person);
-            return mav;
+        User user = (User) session.getAttribute("user");
+        if (user == null) return new ModelAndView("redirect:/login");
+        ModelAndView mv = new ModelAndView("app");
+        if ( !validPerson(person, mv, result, true, session) ) {        
+            mv.addObject("page", "account/edit");
+            mv.addObject("editPage", "person");
+            return mv;
         }
         // create one single connection for two inserts
         ConnectionManager.openConnection();
-        if (person.getPassword() != null) {
-            User user = userDAO.findOne(person.getId());
+        ConnectionManager.beginTransaction();
+        if (!user.getEmail().equals(person.getEmail()) || !user.getPassword().equals(person.getPassword())) {
+            user.setEmail(person.getEmail());
             user.setPassword(person.getPassword());
             userDAO.update(user);
+            session.setAttribute("user", user);
         }
         personDAO.update(person);
+        ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();
-        ModelAndView mv = new ModelAndView("redirect:/dashboard");
-        mv.addObject("person", person);
-        redirectAttrs.addFlashAttribute("msg_success", "Conta Alterada com sucesso!");
+        mv.setViewName("redirect:/dashboard");
+        session.setAttribute("person", person);
+        redirectAttrs.addFlashAttribute("msg_success", "Conta alterada com sucesso!");
         return mv;
     }
 
     @RequestMapping(value = "/account/update/entity", method = POST)
     public ModelAndView updateEntity(@Valid Entity entity, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
-        if (session.getAttribute("user") == null) return new LoginController().redirectLogin();
-        if (result.hasErrors()) {
-            ModelAndView mav = new ModelAndView("app");
-            mav.addObject("page", "acount/edit");
-            mav.addObject("editPage", "entity");
-            mav.addObject("entity", entity);
-            return mav;
+        User user = (User) session.getAttribute("user");
+        if (user == null) return new ModelAndView("redirect:/login");
+        ModelAndView mv = new ModelAndView("app");
+        if ( !validEntity(entity, mv, result, false, session) ) {
+            mv.addObject("editPage", "entity");
+            mv.addObject("page", "acount/edit");
+            return mv;
         }
-        // single connection for all operations
+        // create one single connection for two inserts
         ConnectionManager.openConnection();
-        if (entity.getPassword() != null) {
-            User user = userDAO.findOne(entity.getId());
+        ConnectionManager.beginTransaction();
+        if (!user.getEmail().equals(entity.getEmail()) || !user.getPassword().equals(entity.getPassword())) {
+            user.setEmail(entity.getEmail());
             user.setPassword(entity.getPassword());
             userDAO.update(user);
+            session.setAttribute("user", user);
         }
         entityDAO.update(entity);
+        ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();
-        ModelAndView mv = new ModelAndView("redirect:/dashboard");
-        mv.addObject("entity", entity);
-        redirectAttrs.addFlashAttribute("msg_success", "Conta Alterada com sucesso!");
+        mv.setViewName("redirect:/dashboard");
+        session.setAttribute("entity", entity);
+        redirectAttrs.addFlashAttribute("msg_success", "Conta alterada com sucesso!");
         return mv;
     }
 
@@ -204,7 +177,7 @@ public class AccountController {
         personDAO.delete(person);
         userDAO.delete(user);
         ConnectionManager.closeConnection();
-        redirectAttrs.addFlashAttribute("msg_success", "Conta Removida com sucesso!");
+        redirectAttrs.addFlashAttribute("msg_success", "Conta removida com sucesso!");
         
         return new LoginController().redirectLogin();
     }
@@ -221,7 +194,7 @@ public class AccountController {
         entityDAO.delete(entity);
         userDAO.delete(user);
         ConnectionManager.closeConnection();
-        redirectAttrs.addFlashAttribute("msg_success", "Conta Removida com sucesso!");
+        redirectAttrs.addFlashAttribute("msg_success", "Conta removida com sucesso!");
         return new LoginController().redirectLogin();
     }
 
@@ -246,9 +219,7 @@ public class AccountController {
      */
     @RequestMapping(value = "/account/update/profile", method = POST)
     public ModelAndView updateProfile(HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttrs) {
-        if (session.getAttribute("user") == null) {
-            return new LoginController().redirectLogin();
-        }
+        if (session.getAttribute("user") == null) return new LoginController().redirectLogin();
         try {
             int id = Integer.valueOf(request.getParameter("id"));
             String fileName = null;
@@ -261,7 +232,6 @@ public class AccountController {
                 fileName = String.format("%d.%s", new Date().getTime(), sn[sn.length - 1]);
                 File file = new File(String.format("%s/%s", dir.getAbsolutePath(), fileName));
                 multipartFile.transferTo(file);
-
             }
             ConnectionManager.openConnection();
             Person person = personDAO.findOne(id);
@@ -314,6 +284,64 @@ public class AccountController {
         System.err.println("Usuario não pode fazer essa operação!");
         session.invalidate();
         return false;
+    }
+    
+    public boolean validPerson(Person person, ModelAndView mv, BindingResult result, boolean update, HttpSession session) {
+        if ( result.hasErrors() ) {
+            if ( person.getBornDate() == null || result.hasFieldErrors("bornDate") )
+                mv.addObject("errorBornDate", "Informe uma data válida");
+            return false;
+        }
+        if ( person.getPassword().length() < 6 ) {
+            mv.addObject("password_error_person", "A senha deve ter no mínimo 6 caracteres");
+            return false;           
+        }
+        if ( person.getBornDate() == null ) { // it's also necessary to check the date here
+            mv.addObject("errorBornDate", "Informe uma data válida");
+            return false;
+        }
+        if ( !update ) {
+            if ( userDAO.emailAlreadyExists(person.getEmail()) ) {
+                mv.addObject("email_error_person", "E-mail já cadastrado");
+                return false;
+            } 
+        } else {
+            User user = (User) session.getAttribute("user");
+            if ( !person.getEmail().equals(user.getEmail()) && userDAO.emailAlreadyExists(person.getEmail()) ) {
+                mv.addObject("email_error_person", "E-mail já cadastrado");
+                return false;
+            }   
+        }
+        return true;
+    }
+
+    public boolean validEntity(Entity entity, ModelAndView mv, BindingResult result, boolean update, HttpSession session) {
+        if (result.hasErrors()) {
+            if ( entity.getFoundationDate() == null || result.hasFieldErrors("foundationDate") )
+                mv.addObject("errorFoundationDate", "Informe uma data válida");
+            return false;
+        }
+        if ( entity.getPassword().length() < 6 ) {
+            mv.addObject("password_error_entity", "A senha deve ter no mínimo 6 caracteres");
+            return false;            
+        } 
+        if ( entity.getFoundationDate() == null) {
+            mv.addObject("errorFoundationDate", "Informe uma data válida");
+            return false;
+        }
+        if ( !update ) {
+            if ( userDAO.emailAlreadyExists(entity.getEmail()) ) {
+                mv.addObject("email_error_entity", "E-mail já cadastrado");
+                return false;
+            } 
+        } else {
+            User user = (User) session.getAttribute("user");
+            if ( !entity.getEmail().equals(user.getEmail()) && userDAO.emailAlreadyExists(entity.getEmail()) ) {
+                mv.addObject("email_error_entity", "E-mail já cadastrado");
+                return false;
+            }   
+        }
+        return true;
     }
 
 }

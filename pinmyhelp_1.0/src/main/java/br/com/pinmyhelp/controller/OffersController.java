@@ -5,7 +5,6 @@ import br.com.pinmyhelp.model.HelpOffer;
 import br.com.pinmyhelp.model.HelpSolicitation;
 import br.com.pinmyhelp.model.Person;
 import br.com.pinmyhelp.model.User;
-import br.com.pinmyhelp.model.Voluntary;
 import br.com.pinmyhelp.model.dao.HelpOfferDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.types.OfferStatus;
@@ -36,24 +35,20 @@ public class OffersController {
     HelpOfferDAO helpOfferDAO;
 
     @RequestMapping("/offers")
-    public ModelAndView index() {
+    public ModelAndView index(HttpSession session) {
+        User user = (User) session.getAttribute("user");
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Ofertas");
         mav.addObject("page", "offers/index");
-        //SÓ PARA TESTE -- as ofertas resgatadas aqui devem ser todas ofertas realizadas para
-        //todas solicitações de um usuário (claimant ou entity)
-        //então tem que fazer join entre help_offer e help_solicitation, pra pegar todas ofertas 
-        //pra todas solicitações do usuário logado
-        //Após isso fazer um novo método que resgata as ofertas para uma solicitação em específico
-        mav.addObject("offers", helpOfferDAO.findAll());
+        mav.addObject("offers", helpOfferDAO.findByClaimantId(user.getId(), null));
         return mav;
     }
 
     @RequestMapping("/offers/my")
     public ModelAndView my(HttpSession session) {
+        User u = (User) session.getAttribute("user");
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Minhas ofertas");
-        User u = (User) session.getAttribute("user");
         mav.addObject("offers", helpOfferDAO.find("voluntary_id = ? ", u.getId()));
         mav.addObject("page", "offers/my");
         return mav;
@@ -70,15 +65,17 @@ public class OffersController {
 
     @RequestMapping(value = "/offers/store/{solicitation_id}", method = POST)
     public ModelAndView store(@Valid HelpOffer helpOffer, BindingResult result, HttpSession session, @PathVariable(value = "solicitation_id") int solicitation_id, RedirectAttributes redirectAttrs) {
+        System.out.println(helpOffer);
         if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("msg_error", "Opa, ocorreu algum problema...");
             return new ModelAndView("redirect:/offers/help/" + solicitation_id);
         }
         if (session.getAttribute("type").equals(Person.TYPE_VOLUNTARY)) {
-            helpOffer.setVoluntary((Voluntary) session.getAttribute("person"));
+            helpOffer.setVoluntary((Person) session.getAttribute("person"));
         } else if (session.getAttribute("type").equals("Entity")) {
             helpOffer.setEntity((Entity) session.getAttribute("entity"));
         }
+        System.out.println("ate aqui tudo bem");
         helpOffer.setStatus(OfferStatus.S1);
         helpOffer.setHelpSolicitation(new HelpSolicitation(solicitation_id));
         helpOfferDAO.create(helpOffer);
