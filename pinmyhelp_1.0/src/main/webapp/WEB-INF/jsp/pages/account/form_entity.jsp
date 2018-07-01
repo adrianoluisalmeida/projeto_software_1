@@ -31,7 +31,6 @@
 
 
 <div class="md-form">
-
     <input name="firstPhone" id="Form-phone-entity" value="${entity.firstPhone}"  type="tel" class="form-control">
     <label for="Form-phone-entity">Telefone</label>
     <form:errors path="entity.firstPhone" cssStyle="color:red"/>
@@ -48,7 +47,7 @@
 </div>
 
 <div class="md-form">
-    <input type="password" id="Form-pass-entity" name="password" value="${entity.password}" class="form-control">
+    <input type="password" id="Form-pass-entity" name="password" class="form-control">
     <label for="Form-pass-entity">Senha</label>
     <form:errors path="entity.password" cssStyle="color:red"/>
     <c:if test="${not empty password_error_entity}"><span class="error">${password_error_entity}</span></c:if>
@@ -58,7 +57,7 @@
 <div class="row height-60">
     <div class="col-8">
         <div class="md-form">
-            <input type="text" name="address.postalCode" value="${entity.address.postalCode}" id="Form-cep" class="form-control" >
+            <input type="text" name="address.postalCode" value="${entity.address.postalCode}" id="Form-cep" class="form-control address-input" >
             <label for="Form-cep">CEP</label>
             <form:errors path="entity.address.postalCode" cssStyle="color:red"/>
         </div>
@@ -66,7 +65,7 @@
 
     <div class="col-4">
         <div class="md-form">
-            <input type="text" name="address.state" value="${entity.address.state}" id="Form-uf" class="form-control" >
+            <input type="text" name="address.state" value="${entity.address.state}" id="Form-uf" class="form-control address-input" readonly="readonly">
             <label for="Form-uf">UF</label>
             <form:errors path="entity.address.state" cssStyle="color:red"/>
         </div>
@@ -74,7 +73,7 @@
 </div>
 
 <div class="md-form">
-    <input type="text" name="address.city" value="${entity.address.city}" id="Form-city" class="form-control" >
+    <input type="text" name="address.city" value="${entity.address.city}" id="Form-city" class="form-control address-input" readonly="readonly">
     <label for="Form-city">Cidade</label>
     <form:errors path="entity.address.city" cssStyle="color:red"/>
 </div>
@@ -98,16 +97,18 @@
 </div>
 
 <div class="md-form">
-    <input type="text" name="address.neighborhood" value="${entity.address.neighborhood}" id="Form-neighborhood" class="form-control" >
+    <input type="text" name="address.neighborhood" value="${entity.address.neighborhood}" id="Form-neighborhood" class="form-control address-input" >
     <label for="Form-neighborhood">Bairro</label>
     <form:errors path="entity.address.neighborhood" cssStyle="color:red"/>
 </div>
-
 
 <div class="md-form">
     <input type="text" name="address.complement" value="${entity.address.complement}" id="Form-complement" class="form-control">
     <label for="Form-complement">Complemento</label>
 </div>
+    
+<input type="hidden" id="Form-latitude" name="address.location.latitude" value="${entity.address.location.latitude}"/>
+<input type="hidden" id="Form-longitude" name="address.location.longitude" value="${entity.address.location.longitude}"/>
     
 <div class="md-form"> 
     <textarea name="description" id="Form-description" class="md-textarea form-control" rows="2">${entity.description}</textarea>

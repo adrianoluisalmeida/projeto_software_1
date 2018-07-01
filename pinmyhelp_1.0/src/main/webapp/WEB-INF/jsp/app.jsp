@@ -57,11 +57,6 @@
                     <c:when test="${fn:contains(page, 'offers')}">$("#nav-my-offers").addClass("active");</c:when>
                     <c:otherwise>$("#nav-dashboard").addClass("active");</c:otherwise>
                 </c:choose>
-
-                /* toast */
-                setTimeout(function () {
-                    $('#msg-returns').hide();
-                }, 6000);
             });
         </script>
         <jsp:include page="messages.jsp" flush="true" />

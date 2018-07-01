@@ -1,7 +1,6 @@
 <!--DASHBOARD ENTITY -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <div class="col mt-5">
     <c:choose>
         <c:when test="${not empty solicitations}">

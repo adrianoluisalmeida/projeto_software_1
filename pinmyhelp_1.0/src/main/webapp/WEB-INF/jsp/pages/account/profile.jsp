@@ -8,10 +8,10 @@
             <h2>Editar perfil</h2>
             <div class="md-form" style="text-align: center">
                 <c:if test="${empty person.profilePicture}">
-                    <img style="width: 300px; border-radius: 50%;" src="${pageContext.request.contextPath}/assets/img/profile-icon.png" rel="stylesheet" />
+                    <img style="width: 200px; border-radius: 50%;" src="${pageContext.request.contextPath}/assets/img/profile-icon.png" rel="stylesheet" />
                 </c:if>
                 <c:if test="${not empty person.profilePicture}">
-                    <img style="width: 300px; border-radius: 50%;" src="${pageContext.request.contextPath}/upload/${person.profilePicture}" rel="stylesheet" />
+                    <img style="width: 200px; border-radius: 50%;" src="${pageContext.request.contextPath}/upload/${person.profilePicture}" rel="stylesheet" />
                 </c:if>
             </div>
             <div class="md-form">
@@ -20,7 +20,7 @@
                 <input id="Form-picture" type="file" name="picture" />
             </div>
             <div class="md-form"> 
-                <textarea name="bio" id="Form-description" class="form-control"><c:if test="${not empty person.biography}">${person.biography}</c:if></textarea>
+                <textarea name="bio" id="Form-description" class="md-textarea form-control"><c:if test="${not empty person.biography}">${person.biography}</c:if></textarea>
                 <!--<input type="text" name="description" >-->
                 <label for="Form-description">Biografia</label>
             </div>
