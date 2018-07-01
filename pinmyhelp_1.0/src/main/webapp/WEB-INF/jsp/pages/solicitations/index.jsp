@@ -9,7 +9,7 @@
             </div>
             <div class="clearfix"></div>
             <c:choose>
-                <c:when test="${type == 'Voluntary'}">
+                <c:when test="${type != 'Voluntary'}">
                     <jsp:include page="../solicitations/list.jsp" flush="true" />
                 </c:when>
                 <c:otherwise>
@@ -18,9 +18,9 @@
             </c:choose>
             <div class="clearfix"></div>
 
-            <div class="col-md-12 mt-3 pr-4">
+            <%-- <div class="col-md-12 mt-3 pr-4">
                 <a href="${pageContext.request.contextPath}/solicitations" class="float-right">Ver todas as solicitações</a>
-            </div>
+            </div> --%>
         </c:when>
         <c:otherwise>
             <div class="col-md-12 mt-3">

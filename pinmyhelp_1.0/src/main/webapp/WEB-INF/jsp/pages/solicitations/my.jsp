@@ -15,7 +15,7 @@
                 <h4>Você ainda não realizou nenhuma solicitação de ajuda<a href="${pageContext.request.contextPath}/solicitations/create" class="btn btn-pink btn-sm float-right">Novo pedido</a></h4>
             </div>
             <div class="clearfix"></div>
-        </div>
     </c:otherwise>
 </c:choose>
+</div>
 <div class="clearfix"></div>
