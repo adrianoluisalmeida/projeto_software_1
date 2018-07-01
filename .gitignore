@@ -53,4 +53,4 @@ nbactions.xml
 # End of https://www.gitignore.io/api/java,maven,netbeans,java-web
 
 # database config
-pinmyhelp_1.0/src/main/java/br/com/pinmyhelp/database/Database.java
+Database.java
