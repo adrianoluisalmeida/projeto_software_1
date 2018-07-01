@@ -224,6 +224,32 @@ public abstract class AbstractDAO<T extends Record> {
     }
     
     /**
+     * Finds record(s) with any filter (allow joins)
+     * @param filter - sql with number of params equals the lenght of array
+     * @param params - array of params
+     * @return List with result
+     */
+    public List<T> findJoinable(String filter, Object[] params) {
+        Connection c = ConnectionManager.openConnection();
+        List<T> records = null;
+        try {
+            String sql = String.format("%s %s", getFindAllSql(), filter);
+            PreparedStatement ps = c.prepareStatement(sql);
+            for (int i = 0; i < params.length; i++) {
+                ps.setObject(i+1, params[i]);
+            }
+            ResultSet rs = ps.executeQuery();
+            records = fillList(rs);
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ConnectionManager.closeConnection();
+        return records;
+    }
+    
+    /**
      * Finds record(s) with any filter
      * @param filter - sql with single param
      * @param param - parameter
