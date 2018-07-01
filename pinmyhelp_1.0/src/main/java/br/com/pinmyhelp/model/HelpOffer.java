@@ -111,7 +111,7 @@ public class HelpOffer extends Record implements Serializable {
 
     @Override
     public String toString() {
-        return "HelpOffer{" + "voluntary=" + voluntary + ", entity=" + entity + ", status=" + status + ", helpSolicitation=" + helpSolicitation + ", feedback=" + feedback + '}';
+        return "HelpOffer{" + "voluntary=" + voluntary + ", entity=" + entity + ", status=" + status + ", observation=" + observation + ", helpSolicitation=" + helpSolicitation + ", feedback=" + feedback + '}';
     }
 
 }

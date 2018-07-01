@@ -132,9 +132,7 @@ public class Address implements Serializable {
      */
     public void setComplement(String complement) {
         this.complement = complement;
-    }
-
-    
+    } 
 
     /**
      * @return the location

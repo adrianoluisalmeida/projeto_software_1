@@ -30,11 +30,15 @@ public class EntityDAO extends AbstractDAO<Entity> implements Serializable {
                 + " foundation_date,"
                 + " entity_first_phone,"
                 + " e_postal_code,"
+                + " e_uf,"
+                + " e_city,"
                 + " e_neighborhood,"
                 + " e_street,"
                 + " e_number,"
-                + " e_complement"
-                + ") VALUES (?,?,?,?,?,?,?,?,?,?) ");
+                + " e_complement,"
+                + " e_latitude,"
+                + " e_longitude"
+                + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         setUpdateSql("UPDATE entity SET"
                 + " entity_name = ?,"
                 + " cnpj = ?,"
@@ -46,6 +50,8 @@ public class EntityDAO extends AbstractDAO<Entity> implements Serializable {
                 + " entity_score = ?,"
                 + " entity_notes = ?,"
                 + " e_postal_code = ?,"
+                + " e_uf = ?,"
+                + " e_city = ?,"
                 + " e_neighborhood = ?,"
                 + " e_street = ?,"
                 + " e_number = ?,"
@@ -67,11 +73,16 @@ public class EntityDAO extends AbstractDAO<Entity> implements Serializable {
         ps.setString(3, e.getCnpj());
         ps.setDate(4, java.sql.Date.valueOf(e.getFoundationDate()));
         ps.setString(5, e.getFirstPhone());
+        // Address
         ps.setString(6, e.getAddress().getPostalCode());
-        ps.setString(7, e.getAddress().getNeighborhood());
-        ps.setString(8, e.getAddress().getStreet());
-        ps.setObject(9, e.getAddress().getNumber());
-        ps.setString(10, e.getAddress().getComplement());
+        ps.setString(7, e.getAddress().getState());
+        ps.setString(8, e.getAddress().getCity());
+        ps.setString(9, e.getAddress().getNeighborhood());
+        ps.setString(10, e.getAddress().getStreet());
+        ps.setInt(11, e.getAddress().getNumber());
+        ps.setString(12, e.getAddress().getComplement());
+        ps.setDouble(13, e.getAddress().getLocation().getLatitude());
+        ps.setDouble(14, e.getAddress().getLocation().getLongitude());
     }
 
     @Override
@@ -86,16 +97,18 @@ public class EntityDAO extends AbstractDAO<Entity> implements Serializable {
         ps.setString(7, e.getDescription());
         ps.setDouble(8, e.getScore());
         ps.setString(9, e.getNotes());
-        //Adress
+        // Adress
         ps.setString(10, e.getAddress().getPostalCode());
-        ps.setString(11, e.getAddress().getNeighborhood());
-        ps.setString(12, e.getAddress().getStreet());
-        ps.setObject(13, e.getAddress().getNumber());
-        ps.setString(14, e.getAddress().getComplement());
-        ps.setDouble(15, e.getAddress().getLocation().getLatitude());
-        ps.setDouble(16, e.getAddress().getLocation().getLongitude());
-        //Primary key
-        ps.setInt(17, e.getId());
+        ps.setString(11, e.getAddress().getState());
+        ps.setString(12, e.getAddress().getCity());
+        ps.setString(13, e.getAddress().getNeighborhood());
+        ps.setString(14, e.getAddress().getStreet());
+        ps.setInt(15, e.getAddress().getNumber());
+        ps.setString(16, e.getAddress().getComplement());
+        ps.setDouble(17, e.getAddress().getLocation().getLatitude());
+        ps.setDouble(18, e.getAddress().getLocation().getLongitude());
+        // Primary key
+        ps.setInt(19, e.getId());
     }
 
     @Override
@@ -125,12 +138,13 @@ public class EntityDAO extends AbstractDAO<Entity> implements Serializable {
         p.setPassword(rs.getString("password"));
         Address address = new Address();
         address.setPostalCode(rs.getString("e_postal_code"));
+        address.setState(rs.getString("s_uf"));
+        address.setCity(rs.getString("s_city"));
         address.setNeighborhood(rs.getString("e_neighborhood"));
         address.setStreet(rs.getString("e_street"));
         address.setNumber((rs.getObject("e_number") != null)?rs.getInt("e_number"):null);
         address.setComplement(rs.getString("e_complement"));
-        address.setLocation(
-                new GeoLocation(rs.getDouble("e_latitude"), rs.getDouble("e_longitude")));
+        address.setLocation( new GeoLocation(rs.getDouble("e_latitude"), rs.getDouble("e_longitude")) );
         p.setAddress(address);  
         return p;
     }

@@ -12,8 +12,10 @@ package br.com.pinmyhelp.model.types;
 public enum HelpStatus {
     
     //HelpTypes - change
-    S1(1,"Solicitada"),
-    S2(2,"Status 2");
+    SOLICITADA(1,"Em aberto"),
+    ENCERRRADA(2,"Encerrada"),
+    CANCELADA(3, "Cancelada"),
+    INTERESSE(4, "Em aberto (há voluntários)");
     
     private final int id; //number to save on DB
     private final String status; //description to show

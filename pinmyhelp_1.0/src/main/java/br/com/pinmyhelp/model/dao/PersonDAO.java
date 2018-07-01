@@ -22,11 +22,36 @@ import org.springframework.stereotype.Component;
 public class PersonDAO extends AbstractDAO<Person>{
    
     public PersonDAO(){
-        setCreateSql("INSERT INTO person (person_id, person_type, person_name, cpf, rg, born_date, person_first_phone) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        setUpdateSql("UPDATE person SET person_name = ?, cpf = ?, rg = ?, born_date = ?, "
-                + "person_first_phone = ?, person_second_phone = ?, profile_picture = ?, biography = ?, "
-                + "person_score = ?, person_notes = ?, p_postal_code = ?, p_neighborhood = ?, "
-                + "p_street = ?, p_number = ?, p_complement = ?, p_latitude = ?, p_longitude = ? WHERE person_id = ?");
+        setCreateSql("INSERT INTO person("
+                + " person_id,"
+                + " person_type,"
+                + " person_name,"
+                + " cpf,"
+                + " rg,"
+                + " born_date,"
+                + " person_first_phone"
+                + ") VALUES (?,?,?,?,?,?,?)");
+        setUpdateSql("UPDATE person SET"
+                + " person_name = ?,"
+                + " cpf = ?,"
+                + " rg = ?,"
+                + " born_date = ?,"
+                + " person_first_phone = ?,"
+                + " person_second_phone = ?,"
+                + " profile_picture = ?,"
+                + " biography = ?,"
+                + " person_score = ?,"
+                + " person_notes = ?,"
+                + " p_postal_code = ?,"
+                + " p_uf = ?,"
+                + " p_city = ?,"
+                + " p_neighborhood = ?,"
+                + " p_street = ?,"
+                + " p_number = ?,"
+                + " p_complement = ?,"
+                + " p_latitude = ?,"
+                + " p_longitude = ?"
+                + " WHERE person_id = ?");
         setDeleteSql("DELETE FROM person WHERE person_id = ?");
         setFindOneSql("SELECT * FROM person JOIN user ON person.person_id = user.user_id WHERE person_id = ?");
         setFindSql("SELECT * FROM person JOIN user ON person.person_id = user.user_id WHERE person_type = ?");
@@ -59,14 +84,18 @@ public class PersonDAO extends AbstractDAO<Person>{
         ps.setString(8, p.getBiography());
         ps.setDouble(9, p.getScore());
         ps.setString(10, p.getNotes());
+        // Address
         ps.setString(11, p.getAddress().getPostalCode());
-        ps.setString(12, p.getAddress().getNeighborhood());
-        ps.setString(13, p.getAddress().getStreet());
-        ps.setObject(14, p.getAddress().getNumber());
-        ps.setString(15, p.getAddress().getComplement());
-        ps.setDouble(16, p.getAddress().getLocation().getLatitude());
-        ps.setDouble(17, p.getAddress().getLocation().getLongitude());
-        ps.setInt(18, p.getId());
+        ps.setString(12, p.getAddress().getState());
+        ps.setString(13, p.getAddress().getCity());
+        ps.setString(14, p.getAddress().getNeighborhood());
+        ps.setString(15, p.getAddress().getStreet());
+        ps.setInt(16, p.getAddress().getNumber());
+        ps.setString(17, p.getAddress().getComplement());
+        ps.setDouble(18, p.getAddress().getLocation().getLatitude());
+        ps.setDouble(19, p.getAddress().getLocation().getLongitude());
+        // Primary key
+        ps.setInt(20, p.getId());
     }
 
     @Override
@@ -98,14 +127,13 @@ public class PersonDAO extends AbstractDAO<Person>{
         p.setEmail(rs.getString("email"));
         Address address = new Address();
         address.setPostalCode(rs.getString("p_postal_code"));
+        address.setState(rs.getString("p_uf"));
+        address.setCity(rs.getString("p_city"));
         address.setNeighborhood(rs.getString("p_neighborhood"));
         address.setStreet(rs.getString("p_street"));
-        if (rs.getObject("p_number") != null)
-            address.setNumber(rs.getInt("p_number"));
+        if ( rs.getObject("p_number") != null ) address.setNumber((Integer) rs.getObject("p_number"));
         address.setComplement(rs.getString("p_complement"));
-        address.setLocation(
-                new GeoLocation(rs.getDouble("p_latitude"), rs.getDouble("p_longitude"))
-        );
+        address.setLocation( new GeoLocation(rs.getDouble("p_latitude"), rs.getDouble("p_longitude")) );
         p.setAddress(address);  
         return p;
     }

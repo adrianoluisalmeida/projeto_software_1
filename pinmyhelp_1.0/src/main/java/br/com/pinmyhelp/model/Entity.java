@@ -28,7 +28,6 @@ public class Entity extends User {
     private String secondPhone;
     private String description;
     private double score;
-    // atributo pra logo...
     private String logo;
     @Valid
     private Address address;

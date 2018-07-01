@@ -42,7 +42,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
                 + " s_longitude,"
                 + " claimant_id"
                 + ") VALUES "
-                + "(?, ?, ?, ?, ?, ? ?, ?, ?, ?, ?, ?, ?)");
+                + "(?,?, ?,?,?,?,?,?,?,?,?,?,?)");
         setUpdateSql("UPDATE help_solicitation SET"
                 + " solicitation_status = ?,"
                 + " solicitation_description = ?,"
@@ -72,15 +72,16 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         ps.setInt(1, h.getType().getId());
         ps.setString(2, h.getDescription());
         ps.setDate(3, h.getStartDate() != null ? java.sql.Date.valueOf(h.getStartDate()) : null);
-        ps.setDate(4, h.getEndDate() != null ? java.sql.Date.valueOf(h.getEndDate()) : null);        
+        ps.setDate(4, h.getEndDate() != null ? java.sql.Date.valueOf(h.getEndDate()) : null);       
+        // Address
         ps.setString(5, h.getAddress().getPostalCode());
         ps.setString(6, h.getAddress().getState());
         ps.setString(7, h.getAddress().getCity());
         ps.setString(8, h.getAddress().getNeighborhood());
         ps.setString(9,h.getAddress().getStreet());
         ps.setInt(10, h.getAddress().getNumber());
-        ps.setDouble(11, 0.0);
-        ps.setDouble(12, 0.0);
+        ps.setDouble(11, h.getAddress().getLocation().getLatitude());
+        ps.setDouble(12, h.getAddress().getLocation().getLongitude());
         ps.setInt(13, h.getClaimant() != null ? h.getClaimant().getId() : h.getEntity().getId());
     }
 
@@ -92,6 +93,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         ps.setInt(3, h.getType().getId());
         ps.setDate(4, h.getStartDate() != null ? java.sql.Date.valueOf(h.getStartDate()) : null);
         ps.setDate(5, h.getEndDate() != null ? java.sql.Date.valueOf(h.getEndDate()) : null);    
+        // Address
         ps.setString(6, h.getAddress().getPostalCode());
         ps.setString(7, h.getAddress().getState());
         ps.setString(8, h.getAddress().getCity());
@@ -101,6 +103,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         ps.setDouble(12, h.getLocation().getLatitude());
         ps.setDouble(13, h.getLocation().getLongitude());
         ps.setInt(14, h.getClaimant() != null ? h.getClaimant().getId() : h.getEntity().getId());
+        // Primary key
         ps.setInt(15, h.getId());
     }
 
@@ -131,9 +134,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         a.setStreet(rs.getString("s_street"));
         a.setNumber(rs.getInt("s_number"));
         h.setAddress(a);
-        h.setLocation(
-                new GeoLocation(rs.getDouble("s_latitude"), rs.getDouble("s_longitude"))
-        );
+        h.setLocation( new GeoLocation(rs.getDouble("s_latitude"), rs.getDouble("s_longitude")) );
         PersonDAO pdao = new PersonDAO();
         EntityDAO edao = new EntityDAO();
         Person p = pdao.findOne(rs.getInt("claimant_id"));
@@ -148,9 +149,10 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
     }
 
     public List<HelpSolicitation> findByClaimantId(Integer id, Integer limit) {
-        if (limit == null)    
-            return find("claimant_id = ?", new String[]{String.valueOf(id)});
-        return find("claimant_id = ? limit " + limit, new String[]{String.valueOf(id)});
+        String base = "claimant_id = ? order by start_date";
+        if (limit != null && limit > 0)    
+            return find(base + " limit " + limit, new String[]{String.valueOf(id)});
+        return find(base, new String[]{String.valueOf(id)});
     } 
     
 }
