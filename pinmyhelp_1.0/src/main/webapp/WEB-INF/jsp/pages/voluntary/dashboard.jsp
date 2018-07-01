@@ -22,6 +22,6 @@
                 <h4>Ainda não há nenhuma solicitação de ajuda</h4>
             </div>
             <div class="clearfix"></div>
-        </div>
-    </c:otherwise>
-</c:choose>
+        </c:otherwise>
+    </c:choose>
+</div>

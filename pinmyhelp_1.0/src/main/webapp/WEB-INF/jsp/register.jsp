@@ -19,6 +19,7 @@
         <link href="${pageContext.request.contextPath}/assets/css/custom.css" rel="stylesheet">
     </head>
     <body>
+        <a href="${pageContext.request.contextPath}/login"><i class="fa fa-chevron-left pull-left pink-text" style="margin-left:5px; font-size: 20px;"></i></a>
         <div class="container">
             <div class="col-md-6 center-block" style="margin: 0 auto; margin-top: 10px">
                 <section class="form-elegant">
@@ -77,6 +78,7 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/mdb.js"></script>
         <!-- Mask JQuery -->
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.mask.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/infocep.js"></script>
 
     <c:if test="${not empty tab}">
         <c:choose>
@@ -89,29 +91,26 @@
             </c:when>
         </c:choose>        
     </c:if>
-        <script>
-            // put mask into form fields
-            $(function() {
-                $("#Form-cpf").mask("000.000.000-00", {clearIfNotMatch: true});
-                $("#Form-rg").mask("0000000000"); // could change between states
-                $("#Form-phone").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function (phone, e, field, options) {
-                        var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
-                        mask = (phone.length > 14) ? masks[1] : masks[0];
-                        console.log(phone.length);
-                        $("#Form-phone").mask(mask, options);
-                    }});
-                $("#Form-birth").mask("00/00/0000", {clearIfNotMatch: true});
-                $("#Form-cnpj").mask("00.000.000/0000-00", {clearIfNotMatch: true});
-                $("#Form-foundation").mask("00/00/0000", {clearIfNotMatch: true});
-                $("#Form-phone-entity").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function (phone, e, field, options) {
-                        var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
-                        mask = (phone.length > 14) ? masks[1] : masks[0];
-                        console.log(phone.length);
-                        $("#Form-phone-entity").mask(mask, options);
-                    }});
-                $("#Form-cep").mask("00.000-000", {clearIfNotMatch: true});
-            });
-        </script>
-
+    <script>
+        // put mask into form fields
+        $(function() {
+            $("#Form-cpf").mask("000.000.000-00", {clearIfNotMatch: true});
+            $("#Form-rg").mask("0000000000"); // could change between states
+            $("#Form-phone").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function (phone, e, field, options) {
+                    var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
+                    mask = (phone.length > 14) ? masks[1] : masks[0];
+                    $("#Form-phone").mask(mask, options);
+                }});
+            $("#Form-birth").mask("00/00/0000", {clearIfNotMatch: true});
+            $("#Form-cnpj").mask("00.000.000/0000-00", {clearIfNotMatch: true});
+            $("#Form-foundation").mask("00/00/0000", {clearIfNotMatch: true});
+            $("#Form-phone-entity").mask("(00) 0000-0000", {clearIfNotMatch: true, onKeyPress: function (phone, e, field, options) {
+                    var masks = ['(00) 0000-00000', '(00) 0 0000-0000'];
+                    mask = (phone.length > 14) ? masks[1] : masks[0];
+                    $("#Form-phone-entity").mask(mask, options);
+                }});
+            $("#Form-cep").mask("00.000-000", {clearIfNotMatch: true});
+        });
+    </script>
     </body>
 </html>

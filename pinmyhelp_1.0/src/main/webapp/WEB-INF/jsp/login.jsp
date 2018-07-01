@@ -84,8 +84,8 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/mdb.js"></script>
     <!-- Mask JQuery -->                                              
-    
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.toast.min.js"></script>
-   <jsp:include page="messages.jsp" flush="true" />
+    <jsp:include page="messages.jsp" flush="true" />
+    
 </body>
 </html>
