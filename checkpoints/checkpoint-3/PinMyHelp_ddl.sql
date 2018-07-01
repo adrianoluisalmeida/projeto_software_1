@@ -26,7 +26,9 @@ CREATE TABLE IF NOT EXISTS person (
     person_score        DECIMAL(8,2) NOT NULL DEFAULT 0.0,
     person_notes        TEXT         NULL,
     # INIT ADDRESS INFO - PREFIX: p_
-    p_postal_code       CHAR(8)      NULL, # provides info about country, state and city
+    p_postal_code       CHAR(8)      NULL, 
+    p_uf                CHAR(2)      NULL,
+    p_city              VARCHAR(255) NULL,
     p_neighborhood      VARCHAR(255) NULL,
     p_street            VARCHAR(255) NULL,
     p_number            INT          NULL,
@@ -51,8 +53,8 @@ CREATE TABLE IF NOT EXISTS entity (
     entity_score        DECIMAL(8,2) NOT NULL DEFAULT 0.0,
     entity_notes        TEXT         NULL,
     # INIT ADDRESS INFO - PREFIX: e_
-    e_postal_code       CHAR(8)      NULL, # provides info about country, state and city
-	e_uf                CHAR(2)      NULL,
+    e_postal_code       CHAR(8)      NULL, 
+    e_uf                CHAR(2)      NULL,
     e_city              VARCHAR(255) NULL,
     e_neighborhood      VARCHAR(255) NULL,
     e_street            VARCHAR(255) NULL,
@@ -77,7 +79,7 @@ CREATE TABLE IF NOT EXISTS help_solicitation (
     end_date                 DATETIME       NULL,
     # INIT ADDRESS INFO - PREFIX: s_
     s_postal_code            CHAR(8)        NULL,   
-	s_uf                     CHAR(2)        NULL,
+    s_uf                     CHAR(2)        NULL,
     s_city                   VARCHAR(255)   NULL,
     s_neighborhood           VARCHAR(255)   NULL,
     s_street                 VARCHAR(255)   NULL,
