@@ -5,32 +5,38 @@
 <!--Index ofertas recebidas -->
 <div class="col-md-12 mt-5">
     <h3>Lista de Ofertas realizadas</h3>
-    <!--Table-->
-    <table class="table table-striped table-responsive-md btn-table" id="my-offers">
+    <c:choose>
+        <c:when test="${not empty offers}">
+            <!--Table-->
+            <table class="table table-striped table-responsive-md btn-table" id="my-offers">
 
-        <!--Table head-->
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Requerente</th>
-                <th>Voluntário</th>
-                <th>Data/Hora</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Requerente</th>
+                        <th>Voluntário</th>
+                        <th>Data/Hora</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
 
-        <!--Table head-->
+                <!--Table head-->
 
-        <!--Table body-->
-        <tbody>
-            <jsp:include page="../offers/list.jsp" flush="true" />                    
-            </tr>
-        </tbody>
-        <!--Table body-->
+                <!--Table body-->
+                <tbody>
+                    <jsp:include page="../offers/list.jsp" flush="true" />                    
+                    </tr>
+                </tbody>
+                <!--Table body-->
 
-    </table>
-    <!--Table-->
-
+            </table>
+            <!--Table-->
+        </c:when>
+        <c:otherwise>
+            <p>Você ainda não realizou nenhuma oferta de ajuda.</p>
+        </c:otherwise>
+    </c:choose>
     <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
