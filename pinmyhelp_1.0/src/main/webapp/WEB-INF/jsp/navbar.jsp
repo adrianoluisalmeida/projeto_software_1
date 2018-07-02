@@ -42,6 +42,11 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/offers/my">Minhas Ofertas</a>
                     </li>
                 </c:if>
+                <c:if test="${sessionScope.user.admin}">
+                    <li id="nav-solicitations" class="nav-item">
+                        <a class="nav-link"href="${pageContext.request.contextPath}/report">Relatórios</a>
+                    </li>
+                </c:if>
             </ul>
             <!-- /Links -->
             <!-- Icons -->

@@ -14,8 +14,9 @@ import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
 import br.com.pinmyhelp.model.types.HelpStatus;
-import br.com.pinmyhelp.model.types.HelpType;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,56 +43,74 @@ public class ReportController {
     @Autowired
     HelpSolicitationDAO helpDAO;
     
-    @RequestMapping("/report/test")
-    public ModelAndView test(HttpSession session){
+    @RequestMapping("/report")
+    public ModelAndView index(HttpSession session){
         if (!checkUser(session)){
             return new ModelAndView("redirect:/login");
         }
-        ModelAndView mav = new ModelAndView("pages/report/test");
+        ModelAndView mav = new ModelAndView("app");
+        mav.addObject("page", "report/index");
         return mav;
     }
-
-    @RequestMapping("/report/voluntaries")
-    public ModelAndView listVoluntaries(HttpSession session){
+    
+    @RequestMapping("/report/generate")
+    public ModelAndView generate(HttpServletRequest request, HttpSession session){
         if (!checkUser(session)){
             return new ModelAndView("redirect:/login");
         }
+        int type = Integer.valueOf(request.getParameter("type"));
+        String name = request.getParameter("name");
+        switch (type){
+            case 1: return listClaimants(name);
+            case 2: return listVoluntaries(name);
+            case 3: return listEntities(name);
+            case 4: String startDate = request.getParameter("startDate");
+                    String endDate = request.getParameter("endDate");
+                    return listSolicitations(name, startDate, endDate);
+        }
+        //TODO change this
+        return new ModelAndView("redirect:/dashboard");
+    }
+
+    private String getFindString(String string){
+        StringBuilder builder = new StringBuilder();
+        builder.append('%');
+        builder.append(string);
+        builder.append('%');
+        return builder.toString();
+    }
+    
+    private ModelAndView listVoluntaries(String name){
         ModelAndView mav = new ModelAndView("pages/report/persons");
-        List<Person> persons = personDAO.find("person_type = ?", "Voluntary");
+        List<Person> persons = personDAO.find("person_type = ? AND person_name like ?", new String[]{"Voluntary",getFindString(name)});
         mav.addObject("title","Listagem de voluntários");
         mav.addObject("persons", persons);
         return mav;
     }
     
-    @RequestMapping("/report/claimants")
-    public ModelAndView listClaimants(HttpSession session){
-        if (!checkUser(session)){
-            return new ModelAndView("redirect:/login");
-        }
+    private ModelAndView listClaimants(String name){
         ModelAndView mav = new ModelAndView("pages/report/persons");
-        List<Person> persons = personDAO.find("person_type = ?", "Claimant");
+        List<Person> persons = personDAO.find("person_type = ? AND person_name like ?", new String[]{"Claimant",getFindString(name)});
         mav.addObject("title","Listagem de requerentes");
         mav.addObject("persons", persons);
         return mav;
     }
     
-    @RequestMapping("/report/entities")
-    public ModelAndView listEntities(HttpSession session){
-        if (!checkUser(session)){
-            return new ModelAndView("redirect:/login");
-        }
+    private ModelAndView listEntities(String name){
         ModelAndView mav = new ModelAndView("pages/report/entities");
-        List<Entity> entities = entityDAO.findAll();
+        List<Entity> entities = entityDAO.find("entity_name like ?", getFindString(name));
         mav.addObject("title","Listagem de entidades");
         mav.addObject("persons", entities);
         return mav;
     }
     
-    @RequestMapping("/report/solicitations")
-    public ModelAndView listSolicitations(HttpServletRequest request, HttpSession session){
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
+    private ModelAndView listSolicitations(String name, String startDate, String endDate){
         List<HelpSolicitation> list = helpDAO.find("start_date >= ? and start_date <= ?", new String[]{startDate, endDate});
+        if (name.trim().length() > 0){
+            //Utiliza streams pra filtrar a pesquisa ao invéz de pesquisar no banco, para não ter que mudar o sql no DAO
+            list = list.stream().filter(a -> (a.getClaimant() != null && a.getClaimant().getName().toUpperCase().contains(name.toUpperCase())) ||
+                (a.getEntity() != null && a.getEntity().getName().toUpperCase().contains(name.toUpperCase()))).collect(Collectors.toList());
+        }
         ModelAndView mov = new ModelAndView("pages/report/solicitations");
         mov.addObject("title", "Solicitações de ajuda");
         mov.addObject("solicitations",list);
