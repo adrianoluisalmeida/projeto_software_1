@@ -138,8 +138,8 @@ public class EntityDAO extends AbstractDAO<Entity> implements Serializable {
         p.setPassword(rs.getString("password"));
         Address address = new Address();
         address.setPostalCode(rs.getString("e_postal_code"));
-        address.setState(rs.getString("s_uf"));
-        address.setCity(rs.getString("s_city"));
+        address.setState(rs.getString("e_uf"));
+        address.setCity(rs.getString("e_city"));
         address.setNeighborhood(rs.getString("e_neighborhood"));
         address.setStreet(rs.getString("e_street"));
         address.setNumber((rs.getObject("e_number") != null)?rs.getInt("e_number"):null);
