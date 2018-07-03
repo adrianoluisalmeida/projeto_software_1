@@ -159,17 +159,13 @@ public class OffersController {
         return new ModelAndView("redirect:/offers");
     }
 
-    @RequestMapping(value = "/offers/delete/{offer_id}", method = GET)
+    @RequestMapping(value = "/offers/cancel/{offer_id}", method = GET)
     public ModelAndView delete(@PathVariable(value = "offer_id") int offer_id, RedirectAttributes redirectAttrs) {
         HelpOffer helpOffer = helpOfferDAO.findOne(offer_id);
         helpOffer.setStatus(OfferStatus.CANCELADA);
         helpOfferDAO.update(helpOffer);
-        
-        //SE FOR ESCOLHIDO DELETAR
-        //helpOfferDAO.delete(helpOffer);
-        
         redirectAttrs.addFlashAttribute("msg_success", "Oferta cancelada com sucesso!");      
-        return new ModelAndView("redirect:/offers");
+        return new ModelAndView("redirect:/offers/my");
     }
 
 }

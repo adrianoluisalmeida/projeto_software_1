@@ -32,6 +32,10 @@
             <b><custom:localDateFormat localDate="${offer.helpSolicitation.startDate}"/></b>
         </td>
         <td>
+            <a type="button" href="${pageContext.request.contextPath}/offers/viewOffer/${offer.id}" class="btn btn-blue-grey btn-rounded btn-table btn-sm" data-toggle="tooltip"
+               data-placement="top" title="Visualizar Oferta">
+                <i class="fa fa-info-circle"></i>
+            </a> 
             <!-- SÓ APARECEM OS BOTÕES SE A SITUAÇÃO É OFERTADA -->
             <c:if test="${offer.status == 'OFERTADA'}">
                 <a type="button" href="${pageContext.request.contextPath}/offers/approve/${offer.id}" class="btn btn-success btn-rounded btn-table btn-sm" data-toggle="tooltip"

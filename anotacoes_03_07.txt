@@ -14,15 +14,18 @@
 
 
 - CONTROLE STATUS AJUDA E OFERTA:
-	- adicionados controles quando: oferece ajuda, aprova ajuda e rejeita ajuda.
-		- Oferece ajuda: Solicitação recebe status EM ABERTO COM VOLUNTÁRIOS; oferta recebe status OFERTADA;
-		- Aprova ajuda: Solicitação recebe status ENCERRADA; oferta recebe status APROVADA; outras ofertas dessa solicitação recebem status REJEITADA;
-	- NO front: Na lista de ofertas recebidas, só aparece os botões aprovar e rejeitar se a situação da oferta é "OFERTADA"
+	- Oferece ajuda: Solicitação recebe status EM ABERTO COM VOLUNTÁRIOS; oferta recebe status OFERTADA;
+	- Aprova ajuda: Solicitação recebe status ENCERRADA; oferta recebe status APROVADA; outras ofertas dessa solicitação recebem status REJEITADA;
+	- No front: Nas listas de ofertas, só aparece os botões aprovar, rejeitar ou cancelar se a situação da oferta é "OFERTADA"
 		- caso já tenha sido APROVADA aparece "Oferta aprovada", e caso tenha status REJEITADA aparece como "Oferta rejeitada"
-
 
 - LISTA DE OFERTAS DE DETERMINADA SOLICITAÇÃO:
 	- adicionado botão "Ofertas" nos cards das solicitações (ficou meio feio, da pra melhorar): botão manda para lista de ofertas dessa solicitação
+
+
+- CONTROLE BOTÕES LISTA SOLICITAÇÃO:
+	- Se o usuário já ofertou ajuda para solicitação, aparece botão "Visualizar oferta"
+	- Se a solicitação já foi encerrada e o usuário não realizou oferta para esta solicitação, não aparece botão nenhum. (Poderia ser desabilitado o botão ou inserir outra informação ali)
 
 
 ------------------------------------------------------------------------------
@@ -30,7 +33,7 @@
 
 - O QUE FALTA:
 	- Cancelar oferta: 
-		-Terminar de implementar método delete, não está pegando offer_id do
+		-Terminar de implementar método delete, não está pegando offer_id
 	
 	-NOTIFICAÇÕES:
 		- Notificação aos voluntários quando aprova e rejeita oferta

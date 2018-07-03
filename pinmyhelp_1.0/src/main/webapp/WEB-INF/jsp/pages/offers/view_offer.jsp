@@ -12,14 +12,28 @@
         <p>Data de início:  <custom:localDateFormat localDate="${offer.helpSolicitation.startDate}"/></p>
         <p>Data de fim:  <custom:localDateFormat localDate="${offer.helpSolicitation.endDate}"/></p>
         <hr>
+        <h4>Situação da solicitação</h4> 
+        <p>${offer.helpSolicitation.status.status}</p>
+        <hr>
+    </div>
+    <div class="col-md-4 mt-3">
+        <h3>Oferta</h3>
+        <hr>        
         <h4>Observação sobre a oferta</h4> 
         <p>${offer.observation}</p>
         <hr>
         <h4>Situação da oferta</h4> 
         <p>${offer.status.status}</p>
+        <hr>
+        <c:if test="${type != 'Claimant'}">
+            <a href="${pageContext.request.contextPath}/offers/my" class="float-right">Ver todas minhas ofertas</a>        
+        </c:if>
+
     </div>
+    
     <div class="col-md-4 mt-3">
         <h3>Requerente</h3>
+        <hr>
         <table class="table table-striped">
             <c:if test="${not empty offer.helpSolicitation.claimant}">
                 <tr>
@@ -58,14 +72,11 @@
                 </tr>
             </c:if>
         </table>
-    </div>
-    <div class="col-md-4 mt-3">
         <h3>Voluntário</h3>
+        <hr>
         <jsp:include page="../user_info.jsp" flush="true" />
     </div>
 </div>
 
-<div class="clearfix"></div>
-<a href="${pageContext.request.contextPath}/offers/my" class="float-right">Ver todas minhas ofertas</a>
 
 
