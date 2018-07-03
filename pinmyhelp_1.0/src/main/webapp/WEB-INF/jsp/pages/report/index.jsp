@@ -4,8 +4,8 @@
     <form target="_blank" action="${pageContext.request.contextPath}/report/generate" accept-charset="iso-8859-1,utf-8" method="POST" enctype="multipart/form-data">
         <div class="mt-5">
             <h2>Gerar relatório</h2>
-            <div class="md-form"> 
-                <select id="options" name="type" onchange="typeCheck()">
+            <div class="md-form" > 
+                <select id="options" name="type" onchange="typeCheck()" class="mdb-select form-control">
                     <option value="1">Requerentes</option>
                     <option value="2">Voluntários</option>
                     <option value="3">Entidades</option>
