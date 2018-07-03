@@ -91,6 +91,15 @@ public class OffersController {
         mav.addObject("solicitation", helpSolicitationDAO.findOne(solicitation_id));
         return mav;
     }
+    
+    @RequestMapping("/offers/viewOffer/{offer_id}")
+    public ModelAndView seeHelp(HttpSession session, @PathVariable(value = "offer_id") int offer_id) {
+        ModelAndView mav = new ModelAndView("app");
+        mav.addObject("title", "Solicitações - Visualizar oferta ajuda");
+        mav.addObject("page", "offers/view_offer");
+        mav.addObject("offer", helpOfferDAO.findOne(offer_id));
+        return mav;
+    }
 
     @RequestMapping(value = "/offers/store/{solicitation_id}", method = POST)
     public ModelAndView store(@Valid HelpOffer helpOffer, BindingResult result, HttpSession session, @PathVariable(value = "solicitation_id") int solicitation_id, RedirectAttributes redirectAttrs) {

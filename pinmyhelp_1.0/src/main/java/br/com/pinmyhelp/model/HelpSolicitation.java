@@ -37,6 +37,7 @@ public class HelpSolicitation extends Record implements Serializable {
     private GeoLocation location;
     private HelpStatus status;
     private Collection<HelpOffer> helpOffers = new ArrayList<>();
+    private HelpOffer helpOffer;
     private Feedback feedback; // feedback do Voluntario (ou Entidade) sobre a solicitacao
     @Valid
     private Address address;
@@ -161,6 +162,15 @@ public class HelpSolicitation extends Record implements Serializable {
         this.helpOffers = helpOffers;
     }
 
+    public HelpOffer getHelpOffer() {
+        return helpOffer;
+    }
+
+    public void setHelpOffer(HelpOffer helpOffer) {
+        this.helpOffer = helpOffer;
+    }
+
+    
     public Feedback getFeedback() {
         return feedback;
     }

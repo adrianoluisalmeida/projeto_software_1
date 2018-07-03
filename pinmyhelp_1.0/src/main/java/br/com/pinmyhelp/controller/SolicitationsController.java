@@ -3,15 +3,18 @@ package br.com.pinmyhelp.controller;
 import br.com.pinmyhelp.database.ConnectionManager;
 import br.com.pinmyhelp.model.Claimant;
 import br.com.pinmyhelp.model.Entity;
+import br.com.pinmyhelp.model.HelpOffer;
 import br.com.pinmyhelp.model.HelpSolicitation;
 import br.com.pinmyhelp.model.Person;
 import br.com.pinmyhelp.model.User;
 import br.com.pinmyhelp.model.dao.EntityDAO;
+import br.com.pinmyhelp.model.dao.HelpOfferDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -44,10 +47,14 @@ public class SolicitationsController {
     @Autowired
     HelpSolicitationDAO helpSolicitationDAO;
 
+    @Autowired
+    HelpOfferDAO helpOfferDAO;
+
     @RequestMapping("/solicitations")
     public ModelAndView index(HttpSession session) {
         ModelAndView mav = new ModelAndView("app");
-        if (session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
+        String type = (String) session.getAttribute("type");
+        if (type.equals(Person.TYPE_CLAIMANT)) {
             mav.addObject("title", "Acesso negado");
             mav.addObject("page", "accessDenied");
             return mav;
@@ -55,13 +62,23 @@ public class SolicitationsController {
         mav.addObject("title", "Solicitações");
         mav.addObject("page", "solicitations/index");
         User u = (User) session.getAttribute("user");
-        if (session.getAttribute("type").equals("Entity")) 
-            mav.addObject("solicitations", helpSolicitationDAO.find("claimant_id != ? ", u.getId()));
-        else
-            mav.addObject("solicitations", helpSolicitationDAO.findAll()); // filtar pro proximadade
-        
-        //FALTA: se voluntário/entidade já ofertou ajuda em alguma solicitação, 
-        //o botão "ajudar" na lista de solicitações deve mudar para "visualizar oferta"
+        Collection<HelpSolicitation> solicitations = null;
+        if (type.equals("Entity")) {
+            solicitations = helpSolicitationDAO.find("claimant_id != ? ", u.getId());
+        } else {
+            solicitations = helpSolicitationDAO.findAll();
+        }
+
+        //se voluntário/entidade já ofertou ajuda em alguma solicitação, 
+        Collection<HelpOffer> offers = helpOfferDAO.find("voluntary_id = ? ", u.getId());
+        for (HelpOffer offer : offers) {
+            for (HelpSolicitation solicitation : solicitations) {
+                if ((offer.getHelpSolicitation().getId()).equals(solicitation.getId())) {
+                    solicitation.setHelpOffer(offer);
+                }               
+            }
+        }     
+        mav.addObject("solicitations", solicitations);
         return mav;
     }
 
@@ -77,7 +94,7 @@ public class SolicitationsController {
         mav.addObject("page", "solicitations/my");
         Collection<HelpSolicitation> helps = helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), null);
         mav.addObject("solicitations", helps);
-        
+
         return mav;
     }
 

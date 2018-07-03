@@ -27,11 +27,22 @@
                     ${solicitation.status.status}
                 </p>
                 <!-- Button -->
-                <div class="row justify-content-center">
-                    <a href="${pageContext.request.contextPath}/offers/help/${solicitation.id}" class="btn btn-pink float-left">Ajudar</a>
-                </div>
+                <c:choose>
+                    <c:when test="${not empty solicitation.helpOffer}">
+                        <div class="row justify-content-center">
+                            <a href="${pageContext.request.contextPath}/offers/viewOffer/${solicitation.helpOffer.id}" class="btn btn-pink float-left">Visualizar oferta</a>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${solicitation.status != 'ENCERRADA'}">
+                            <div class="row justify-content-center">
+                                <a href="${pageContext.request.contextPath}/offers/help/${solicitation.id}" class="btn btn-pink float-left">Ajudar</a>
+                            </div>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>
-<!-- Card -->
+    <!-- Card -->
 </c:forEach>
