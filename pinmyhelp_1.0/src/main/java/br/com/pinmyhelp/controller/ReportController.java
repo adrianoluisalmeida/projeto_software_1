@@ -16,7 +16,6 @@ import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
 import br.com.pinmyhelp.model.types.HelpStatus;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;

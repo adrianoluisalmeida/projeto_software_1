@@ -121,3 +121,14 @@ CREATE TABLE IF NOT EXISTS feedback (
     FOREIGN KEY         (solicitation_id) REFERENCES help_solicitation (solicitation_id),
     FOREIGN KEY         (offer_id)        REFERENCES help_offer (offer_id)
 ) ENGINE = InnoDB;
+
+#DROP TABLE IF EXISTS message
+CREATE TABLE IF NOT EXISTS message(
+	message_id 		  INT          	AUTO_INCREMENT,
+    user_id 		  INT 			NOT NULL,
+    title			  VARCHAR(255) 	NOT NULL,
+    content			  TEXT 			NOT NULL,
+    is_readed		  BOOLEAN			NOT NULL DEFAULT FALSE,
+    PRIMARY KEY 	  (message_id),
+    FOREIGN KEY       (user_id)  REFERENCES `user` (user_id)
+)ENGINE = InnoDB;
