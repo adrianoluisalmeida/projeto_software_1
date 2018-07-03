@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!--Index ofertas recebidas -->
+<!-- Página: Todas ofertas recebidas para minhas solicitações de ajuda. 
+Disponível somente para requerente e entidade -->
+
 <div class="col-md-12 mt-5">
     <h3>Lista de Ofertas recebidas</h3>
     <c:choose>

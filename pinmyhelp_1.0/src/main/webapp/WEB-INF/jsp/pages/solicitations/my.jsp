@@ -1,6 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="custom"%>
 
+<!--Página: minhas solicitações realizadas. 
+Página disponível somente para requerente ou entidade -->
+
 <div class="col mt-5">
     <c:choose>
         <c:when test="${not empty solicitations}">

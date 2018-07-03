@@ -36,8 +36,13 @@ public class OffersController {
 
     @RequestMapping("/offers")
     public ModelAndView index(HttpSession session) {
-        User user = (User) session.getAttribute("user");
         ModelAndView mav = new ModelAndView("app");
+        if (session.getAttribute("type").equals(Person.TYPE_VOLUNTARY)) {
+            mav.addObject("title", "Acesso negado");
+            mav.addObject("page", "accessDenied");
+            return mav;
+        }
+        User user = (User) session.getAttribute("user");
         mav.addObject("title", "Ofertas");
         mav.addObject("page", "offers/index");
         mav.addObject("offers", helpOfferDAO.findByClaimantId(user.getId(), null));
@@ -46,8 +51,13 @@ public class OffersController {
 
     @RequestMapping("/offers/my")
     public ModelAndView my(HttpSession session) {
-        User u = (User) session.getAttribute("user");
         ModelAndView mav = new ModelAndView("app");
+        if (session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
+            mav.addObject("title", "Acesso negado");
+            mav.addObject("page", "accessDenied");
+            return mav;
+        }
+        User u = (User) session.getAttribute("user");
         mav.addObject("title", "Minhas ofertas");
         mav.addObject("offers", helpOfferDAO.find("voluntary_id = ? ", u.getId()));
         mav.addObject("page", "offers/my");

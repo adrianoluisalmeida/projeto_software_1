@@ -14,6 +14,7 @@ import br.com.pinmyhelp.model.types.HelpType;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +47,29 @@ public class SolicitationsController {
     @RequestMapping("/solicitations")
     public ModelAndView index(HttpSession session) {
         ModelAndView mav = new ModelAndView("app");
+        if (session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
+            mav.addObject("title", "Acesso negado");
+            mav.addObject("page", "accessDenied");
+            return mav;
+        }
         mav.addObject("title", "Solicitações");
         mav.addObject("page", "solicitations/index");
-        mav.addObject("solicitations", helpSolicitationDAO.findAll()); // filtar pro proximadade
+        User u = (User) session.getAttribute("user");
+        if (session.getAttribute("type").equals("Entity")) 
+            mav.addObject("solicitations", helpSolicitationDAO.find("claimant_id != ? ", u.getId()));
+        else
+            mav.addObject("solicitations", helpSolicitationDAO.findAll()); // filtar pro proximadade
         return mav;
     }
-    
-    
+
     @RequestMapping("/solicitations/my")
     public ModelAndView my(HttpSession session) {
         ModelAndView mav = new ModelAndView("app");
+        if (session.getAttribute("type").equals(Person.TYPE_VOLUNTARY)) {
+            mav.addObject("title", "Acesso negado");
+            mav.addObject("page", "accessDenied");
+            return mav;
+        }
         mav.addObject("title", "Meus Pedidos");
         mav.addObject("page", "solicitations/my");
         Collection<HelpSolicitation> helps = helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), null);
@@ -74,12 +88,13 @@ public class SolicitationsController {
         mv.addObject("address", help.getAddress());
         Boolean datesAreValid = validateDates(help.getStartDate(), help.getEndDate(), result, mv);
         Boolean helpTypeIsValid = validateHelpType(typeId, help, mv);
-        if (result.hasErrors() || !datesAreValid || !helpTypeIsValid)
+        if (result.hasErrors() || !datesAreValid || !helpTypeIsValid) {
             return mv;
+        }
         ConnectionManager.openConnection();
         ConnectionManager.beginTransaction();
         User user = (User) session.getAttribute("user");
-        if ( ((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT) ) {
+        if (((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT)) {
             help.setClaimant(new Claimant(user.getId()));
             Person person = (Person) session.getAttribute("person");
             // if claimant doesn't have any address, updt with the address of his first help solicitation
@@ -88,8 +103,9 @@ public class SolicitationsController {
                 personDAO.update(person);
                 session.setAttribute("person", person);
             }
-        } else 
+        } else {
             help.setEntity(new Entity(user.getId()));
+        }
         helpSolicitationDAO.create(help);
         ConnectionManager.commitTransaction();
         ConnectionManager.closeConnection();
@@ -100,7 +116,15 @@ public class SolicitationsController {
     @RequestMapping(value = "/solicitations/edit/{idRequest}", method = GET)
     public ModelAndView edit(@PathVariable(value = "idRequest") int id, HttpSession session) {
         HelpSolicitation solicitation = helpSolicitationDAO.findOne(id);
-        ModelAndView mav = getModelEditPage(session, id, solicitation);
+        User user = (User) session.getAttribute("user");
+        ModelAndView mav = new ModelAndView("app");
+        int idClaimant = solicitation.getClaimant() != null ? solicitation.getClaimant().getId() : solicitation.getEntity().getId();
+        if (!(user.getId().equals(idClaimant))) {
+            mav.addObject("title", "Acesso negado");
+            mav.addObject("page", "accessDenied");
+            return mav;
+        }
+        mav = getModelEditPage(session, id, solicitation);
         return mav;
     }
 
@@ -119,14 +143,16 @@ public class SolicitationsController {
         mv.addObject("address", help.getAddress());
         Boolean datesAreValid = validateDates(help.getStartDate(), help.getEndDate(), result, mv);
         Boolean helpTypeIsValid = validateHelpType(typeId, help, mv);
-        if (result.hasErrors() || !datesAreValid || !helpTypeIsValid)
+        if (result.hasErrors() || !datesAreValid || !helpTypeIsValid) {
             return mv;
+        }
         User user = (User) session.getAttribute("user");
-        if (((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT))
+        if (((String) session.getAttribute("type")).equals(Person.TYPE_CLAIMANT)) {
             help.setClaimant(new Claimant(user.getId()));
-        else 
+        } else {
             help.setEntity(new Entity(user.getId()));
-        
+        }
+
         help.setStatus(HelpStatus.SOLICITADA);
         helpSolicitationDAO.update(help);
         redirectAttrs.addFlashAttribute("msg_success", "Solicitação Alterada com sucesso!");

@@ -2,7 +2,9 @@
 <%@taglib tagdir="/WEB-INF/tags" prefix="custom"%> 
 
 
-<!--Index ofertas recebidas -->
+<!--Página: minhas ofertas realizadas. 
+Página disponível somente para voluntário ou entidade -->
+
 <div class="col-md-12 mt-5">
     <h3>Lista de Ofertas realizadas</h3>
     <c:choose>
