@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS help_solicitation (
 CREATE TABLE IF NOT EXISTS help_offer (
     offer_id            INT               AUTO_INCREMENT,
     offer_status        INT               NOT NULL, # TODO: change type to ENUM 
+    offer_observation	TEXT 		  NULL, 
     offer_created       TIMESTAMP         NOT NULL DEFAULT NOW(),
     offer_updated       TIMESTAMP         NULL     ON UPDATE NOW(),
     solicitation_id     INT               NOT NULL,

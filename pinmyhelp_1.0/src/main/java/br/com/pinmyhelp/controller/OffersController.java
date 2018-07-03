@@ -88,8 +88,8 @@ public class OffersController {
         System.out.println("ate aqui tudo bem");
         helpOffer.setStatus(OfferStatus.S1);
         helpOffer.setHelpSolicitation(new HelpSolicitation(solicitation_id));
-        helpOfferDAO.create(helpOffer);
-        redirectAttrs.addFlashAttribute("msg_success", "Oferta realizada com sucesso!");
+        if(helpOfferDAO.create(helpOffer) != null)
+            redirectAttrs.addFlashAttribute("msg_success", "Oferta realizada com sucesso!");
         return new ModelAndView("redirect:/offers/my");
     }
 
