@@ -49,16 +49,18 @@ public class DashboardController {
         String type = (String) session.getAttribute("type");
         String pageDashboard = "entity/dashboard";
         if (type.equals(Person.TYPE_CLAIMANT) || type.equals("Entity")) {
+            //consulta MINHAS solicitações
+            mav.addObject("solicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 3));
             if(type.equals(Person.TYPE_CLAIMANT))
                 pageDashboard = "claimant/dashboard";
-            else if ( type.equals("Entity") ) 
+            else if ( type.equals("Entity") ) {
                 pageDashboard = "entity/dashboard";
-            //consulta solicitações
-            mav.addObject("solicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 3));
-            //converte para json, para utilizar no mapa
-            Gson gson = new Gson(); 
-            String userJSONString = gson.toJson(helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 3)); 
-            mav.addObject("gson", userJSONString);
+                //Consulta TODAS solicitações
+                //converte para json, para utilizar no mapa
+                Gson gson = new Gson(); 
+                String userJSONString = gson.toJson(helpSolicitationDAO.find("claimant_id != ? ", ((User) session.getAttribute("user")).getId())); 
+                mav.addObject("gson", userJSONString);
+            }
         } else if ( type.equals(Person.TYPE_VOLUNTARY) ) {
             pageDashboard = "voluntary/dashboard";   
             mav.addObject("solicitations", helpSolicitationDAO.findAll());
