@@ -1,11 +1,13 @@
 package br.com.pinmyhelp.controller;
 
+import br.com.pinmyhelp.model.HelpSolicitation;
 import br.com.pinmyhelp.model.Person;
 import br.com.pinmyhelp.model.User;
 import br.com.pinmyhelp.model.dao.EntityDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
+import com.google.gson.Gson;
 
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +53,19 @@ public class DashboardController {
                 pageDashboard = "claimant/dashboard";
             else if ( type.equals("Entity") ) 
                 pageDashboard = "entity/dashboard";
+            //consulta solicitações
             mav.addObject("solicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 3));
+            //converte para json, para utilizar no mapa
+            Gson gson = new Gson(); 
+            String userJSONString = gson.toJson(helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 3)); 
+            mav.addObject("gson", userJSONString);
         } else if ( type.equals(Person.TYPE_VOLUNTARY) ) {
             pageDashboard = "voluntary/dashboard";   
             mav.addObject("solicitations", helpSolicitationDAO.findAll());
+            
+            Gson gson = new Gson(); 
+            String userJSONString = gson.toJson(helpSolicitationDAO.findAll()); 
+            mav.addObject("gson", userJSONString);
         } 
         mav.addObject("title", "Dashboard");
         mav.addObject("page", pageDashboard);

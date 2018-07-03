@@ -25,3 +25,6 @@
         </c:otherwise>
     </c:choose>
 </div>
+<div class="clearfix"></div>
+
+<jsp:include page="../../map.jsp" flush="true" />

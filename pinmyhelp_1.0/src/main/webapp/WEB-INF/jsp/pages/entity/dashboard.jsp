@@ -9,17 +9,20 @@
             </div>
             <div class="clearfix"></div>
             <jsp:include page="../solicitations/list.jsp" flush="true" />
-             <div class="clearfix"></div>
-        <div class="col-md-12 mt-3 pr-4">
-            <a href="${pageContext.request.contextPath}/solicitations/my" class="float-right">Ver todas as minhas solicitações</a>
-        </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12 mt-3 pr-4">
+                <a href="${pageContext.request.contextPath}/solicitations/my" class="float-right">Ver todas as minhas solicitações</a>
+            </div>
         </c:when>
         <c:otherwise>
             <div class="col-md-12 mt-3">
                 <h4>Você ainda não realizou nenhuma solicitação de ajuda<a href="${pageContext.request.contextPath}/solicitations/create" class="btn btn-pink btn-sm float-right">Novo pedido</a></h4>
             </div>
             <div class="clearfix"></div>
-        </div>
-    </c:otherwise>
-</c:choose>
+
+        </c:otherwise>
+    </c:choose>
+</div>
 <div class="clearfix"></div>
+
+<jsp:include page="../../map.jsp" flush="true" />
