@@ -4,6 +4,11 @@
 	- ALTER TABLE help_offer ADD COLUMN offer_observation text AFTER offer_status;
 
 
+
+- CONTROLE LISTA SOLICITAÇÕES:
+	- Solicitações das próprias entidades não aparecem para elas mesmas na lista de todos solicitações, somente solicitações de outros usuários
+
+
 - CONTROLE USUÁRIOS:
 	-adicionado controle de usuário para algumas páginas, como index e my de solicitações e ofertas, para usuário não acessar direto pelo link
 
