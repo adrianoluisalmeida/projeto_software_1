@@ -10,6 +10,7 @@
                     <option value="2">Voluntários</option>
                     <option value="3">Entidades</option>
                     <option value="4">Solicitações de ajuda</option>
+                    <option value="5">Feedbacks</option>
                 </select>
             </div>
             <div class="md-form">
@@ -35,7 +36,7 @@
 <script type="text/javascript">
     function typeCheck(){
         var type = document.getElementById("options").value;
-        if (type === "4"){
+        if (type === "4" || type === "5"){
             document.getElementById("dateDiv").style.visibility = "visible";
             document.getElementById("startDate").required = true;
             document.getElementById("endDate").required = true;

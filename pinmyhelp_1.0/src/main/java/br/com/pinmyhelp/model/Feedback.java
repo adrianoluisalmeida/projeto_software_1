@@ -22,6 +22,7 @@ public class Feedback extends Record implements Serializable {
     private Integer rating;
     private String comments;
     private HelpSolicitation solicitation;
+    private HelpOffer offer; //Oferta que foi dado feedback
 
     public Feedback() {
     }
@@ -92,9 +93,24 @@ public class Feedback extends Record implements Serializable {
         this.solicitation = solicitation;
     }
 
+
+    /**
+     * @return the offer
+     */
+    public HelpOffer getOffer() {
+        return offer;
+    }
+
+    /**
+     * @param offer the offer to set
+     */
+    public void setOffer(HelpOffer offer) {
+        this.offer = offer;
+    }
+
     @Override
     public String toString() {
         return "Feedback{" + "sender=" + sender + ", rating=" + rating + ", comments=" + comments + '}';
     }
-
+    
 }

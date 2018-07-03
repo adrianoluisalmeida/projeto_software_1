@@ -26,29 +26,23 @@
             <h2>Pesquisando por: "${name}"</h2>
         </c:if>
         <hr />
-        <h5>Total de solicitações: ${fn:length(solicitations)}</h5>
-        <h5>Solicitadas: ${solicitadas}</h5>
-        <h5>Encerradas: ${encerradas}</h5>
-        <h5>Com interessados: ${comInteressados}</h5>
-        <h5>Canceladas: ${canceladas}</h5>
+        <h5>Total de feedbacks ${fn:length(feedbacks)}</h5>
         <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col">Requerente</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Data inicial</th>
-                <th scope="col">Data final</th>
-                <th scope="col">Status</th>
+                <th scope="col">Remetente</th>
+                <th scope="col">Nota</th>
+                <th scope="col">Comentários</th>
+                <th scope="col">Destinatário</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <c:forEach var="solicitation" items="${solicitations}">
-                    <td>${solicitation.claimant.name}</td>
-                    <td>${solicitation.type.type}</td>
-                    <td><custom:localDateFormat localDate="${solicitation.startDate}" /></td>
-                    <td><custom:localDateFormat localDate="${solicitation.endDate}" /></td>
-                    <td>${solicitation.status.status}</td>
+                <c:forEach var="feedback" items="${feedbacks}">
+                    <td>${feedback.sender.email}</td>
+                    <td>${feedback.rating}</td>
+                    <td>${feedback.comments}</td>
+                    <td>${feedback.offer.voluntary.email}</td>
                 </c:forEach>
               </tr>
             </tbody>

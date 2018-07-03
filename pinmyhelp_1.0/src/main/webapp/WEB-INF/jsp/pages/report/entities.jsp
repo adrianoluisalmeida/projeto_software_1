@@ -19,8 +19,12 @@
         <!-- JQuery -->
         <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
     </head>
-    <body>
-        <h1>${title}</h1><hr />
+    <body style="margin: 15px">
+        <h1>${title}</h1>
+        <c:if test="${not empty name}">
+            <h2>Pesquisando por: "${name}"</h2>
+        </c:if>
+        <hr />
         <table class="table table-striped">
         <thead>
           <tr>

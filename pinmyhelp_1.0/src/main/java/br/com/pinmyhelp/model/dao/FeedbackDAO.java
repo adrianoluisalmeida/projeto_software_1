@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class FeedbackDAO extends AbstractDAO<Feedback> {
     
     public FeedbackDAO() {
-        setCreateSql("INSERT INTO feedback(rating, comments, sender_id, solicitation_id) VALUES(?,?,?,?)");
+        setCreateSql("INSERT INTO feedback(rating, comments, sender_id, solicitation_id, offer_id) VALUES(?,?,?,?,?)");
         setUpdateSql("UPDATE feedback SET rating = ?, comments = ? WHERE solicitation_id = ?");
         setDeleteSql("DELETE FROM feedback WHERE feedback_id = ?");
         setFindOneSql("SELECT * FROM feedback WHERE feedback_id = ?");
@@ -34,6 +34,7 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         ps.setString(2, f.getComments());
         ps.setInt(3, f.getSender().getId());
         ps.setInt(4, f.getSolicitation().getId());
+        ps.setInt(4, f.getOffer().getId());
     }
 
     @Override
@@ -63,6 +64,8 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         f.setSender(uDao.findOne(rs.getInt("sender_id")));
         HelpSolicitationDAO hsDao = new HelpSolicitationDAO();
         f.setSolicitation(hsDao.findOne(rs.getInt("solicitation_id")));
+        HelpOfferDAO hoDao = new HelpOfferDAO();
+        f.setOffer(hoDao.findOne(rs.getInt("offer_id")));
         return f;
     }
 
