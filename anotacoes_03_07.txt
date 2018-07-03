@@ -1,0 +1,42 @@
+- campo adicionado no banco de dados: descrição oferta de ajuda
+	- Rodar script sql de novo 
+	ou	
+	- ALTER TABLE help_offer ADD COLUMN offer_observation text AFTER offer_status;
+
+
+- CONTROLE USUÁRIOS:
+	-adicionado controle de usuário para algumas páginas, como index e my de solicitações e ofertas, para usuário não acessar direto pelo link
+
+
+- CONTROLE STATUS AJUDA E OFERTA:
+	- adicionados controles quando: oferece ajuda, aprova ajuda e rejeita ajuda.
+		- Oferece ajuda: Solicitação recebe status EM ABERTO COM VOLUNTÁRIOS; oferta recebe status OFERTADA;
+		- Aprova ajuda: Solicitação recebe status ENCERRADA; oferta recebe status APROVADA; outras ofertas dessa solicitação recebem status REJEITADA;
+	- NO front: Na lista de ofertas recebidas, só aparece os botões aprovar e rejeitar se a situação da oferta é "OFERTADA"
+		- caso já tenha sido APROVADA aparece "Oferta aprovada", e caso tenha status REJEITADA aparece como "Oferta rejeitada"
+
+
+- LISTA DE OFERTAS DE DETERMINADA SOLICITAÇÃO:
+	- adicionado botão "Ofertas" nos cards das solicitações (ficou meio feio, da pra melhorar): botão manda para lista de ofertas dessa solicitação
+
+
+------------------------------------------------------------------------------
+
+
+- O QUE FALTA:
+	- Cancelar oferta: 
+		- Será deletada ou mudada o status para CANCELADA? Decidir e terminar de implementar método delete, não está pegando offer_id do
+		-caso oferta tenha sido Aprovada, será permitido cancelar? 
+			- Se sim, deve ser mandado notificação ao requerente
+			- Se não, quando oferta for Aprovada ou Rejeitada substituir no front botão "Cancelar oferta" (x) pela situação, da mesma maneira da lista de ofertas recebidas
+
+	- LISTA SOLICITAÇÕES:
+		- Trocar botão "ajudar" por "Visualizar oferta" para voluntários/entidades que já tenham realizada oferta para aquela solicitação
+		- Desabilitar botão "ajudar" quando solicitação é ENCERRADA
+	
+	-NOTIFICAÇÕES:
+		- Notificação aos voluntários quando aprova e rejeita oferta
+		- Se editar e excluir solicitação:
+			- Se situação da solicitação é EM ABERTO COM VOLUNTÁRIOS ---> notificar os voluntários 
+			- Se situação da solicitação é ENCERRADA ---> notificar voluntário cuja situação está como APROVADA
+

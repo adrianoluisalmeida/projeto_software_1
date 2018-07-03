@@ -11,17 +11,17 @@ package br.com.pinmyhelp.model.types;
  */
 public enum OfferStatus {
     
-    //HelpTypes - change
-    S1(1,"Ofertada"),
-    S2(2,"Aceita"),
-    S3(3,"Recusada");
+    OFERTADA(1,"Ofertada"),
+    APROVADA(2,"Aprovada"),
+    REJEITADA(3,"Rejeitada"),
+    CANCELADA(4, "Cancelada");
     
     private final int id; //number to save on DB
-    private final String type; //description to show
+    private final String status; //description to show
     
     OfferStatus(int id, String type){
         this.id = id;
-        this.type = type;
+        this.status = type;
     }
 
     /**
@@ -34,8 +34,8 @@ public enum OfferStatus {
     /**
      * @return the type
      */
-    public String getType() {
-        return type;
+    public String getStatus() {
+        return status;
     }
     
     public static OfferStatus get(int id){

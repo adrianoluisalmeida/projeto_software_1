@@ -29,8 +29,9 @@
                 </p>          
                 <!-- Button -->
                 <div class="row justify-content-center">
-                    <a href="${pageContext.request.contextPath}/solicitations/edit/${solicitation.id}" class="btn btn-blue-grey float-left">Editar</a>
-                    <a data-target="#cancel-sol" data-toggle="modal" data-id="${solicitation.id}" class="confirmation btn btn-danger float-left">Excluir</a>
+                    <a href="${pageContext.request.contextPath}/solicitations/edit/${solicitation.id}" class="btn btn-blue-grey btn-sm float-left">Editar</a>
+                    <a data-target="#cancel-sol" data-toggle="modal" data-id="${solicitation.id}" class="confirmation btn btn-danger btn-sm float-left">Excluir</a>
+                    <a href="${pageContext.request.contextPath}/offers/${solicitation.id}" class="btn btn-pink btn-sm float-left">Ofertas</a>
                 </div>
             </div>
         </div>

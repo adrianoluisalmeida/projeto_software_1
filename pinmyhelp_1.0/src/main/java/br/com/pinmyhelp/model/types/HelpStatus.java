@@ -13,7 +13,7 @@ public enum HelpStatus {
     
     //HelpTypes - change
     SOLICITADA(1,"Em aberto"),
-    ENCERRRADA(2,"Encerrada"),
+    ENCERRADA(2,"Encerrada"),
     CANCELADA(3, "Cancelada"),
     INTERESSE(4, "Em aberto (há voluntários)");
     

@@ -115,7 +115,7 @@ public class ReportController {
         mov.addObject("title", "Solicitações de ajuda");
         mov.addObject("solicitations",list);
         mov.addObject("solicitadas",list.stream().filter(s -> s.getStatus() == HelpStatus.SOLICITADA).count());
-        mov.addObject("encerradas",list.stream().filter(s -> s.getStatus() == HelpStatus.ENCERRRADA).count());
+        mov.addObject("encerradas",list.stream().filter(s -> s.getStatus() == HelpStatus.ENCERRADA).count());
         mov.addObject("comInteressados",list.stream().filter(s -> s.getStatus() == HelpStatus.INTERESSE).count());
         mov.addObject("canceladas",list.stream().filter(s -> s.getStatus() == HelpStatus.CANCELADA).count());
         return mov;

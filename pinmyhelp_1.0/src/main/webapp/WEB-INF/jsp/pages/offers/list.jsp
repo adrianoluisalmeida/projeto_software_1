@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <a class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Excluir</a>
+                <a class="btn btn-danger" href="${pageContext.request.contextPath}/offers/delete/${offer.id}"><i class="fa fa-times" aria-hidden="true"></i> Excluir</a>
                 <a class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> Manter</a>
             </div>
         </div>

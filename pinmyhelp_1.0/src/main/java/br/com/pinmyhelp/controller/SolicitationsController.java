@@ -59,6 +59,9 @@ public class SolicitationsController {
             mav.addObject("solicitations", helpSolicitationDAO.find("claimant_id != ? ", u.getId()));
         else
             mav.addObject("solicitations", helpSolicitationDAO.findAll()); // filtar pro proximadade
+        
+        //FALTA: se voluntário/entidade já ofertou ajuda em alguma solicitação, 
+        //o botão "ajudar" na lista de solicitações deve mudar para "visualizar oferta"
         return mav;
     }
 
@@ -74,6 +77,7 @@ public class SolicitationsController {
         mav.addObject("page", "solicitations/my");
         Collection<HelpSolicitation> helps = helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), null);
         mav.addObject("solicitations", helps);
+        
         return mav;
     }
 
