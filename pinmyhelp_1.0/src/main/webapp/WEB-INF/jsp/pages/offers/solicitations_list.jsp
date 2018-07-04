@@ -30,7 +30,7 @@
                 <c:choose>
                     <c:when test="${not empty solicitation.helpOffer}">
                         <div class="row justify-content-center">
-                            <a href="${pageContext.request.contextPath}/offers/viewOffer/${solicitation.helpOffer.id}" class="btn btn-pink float-left">Visualizar oferta</a>
+                            <a href="${pageContext.request.contextPath}/offers/offer/${solicitation.helpOffer.id}" class="btn btn-pink float-left">Visualizar oferta</a>
                         </div>
                     </c:when>
                     <c:otherwise>
