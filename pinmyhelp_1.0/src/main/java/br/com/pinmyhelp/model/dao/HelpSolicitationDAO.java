@@ -100,8 +100,8 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         ps.setString(9, h.getAddress().getNeighborhood());
         ps.setString(10,h.getAddress().getStreet());
         ps.setInt(11, h.getAddress().getNumber());
-        ps.setDouble(12, h.getLocation().getLatitude());
-        ps.setDouble(13, h.getLocation().getLongitude());
+        ps.setDouble(12, h.getAddress().getLocation().getLatitude());
+        ps.setDouble(13, h.getAddress().getLocation().getLongitude());
         ps.setInt(14, h.getClaimant() != null ? h.getClaimant().getId() : h.getEntity().getId());
         // Primary key
         ps.setInt(15, h.getId());
@@ -133,6 +133,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
         a.setNeighborhood(rs.getString("s_neighborhood"));
         a.setStreet(rs.getString("s_street"));
         a.setNumber(rs.getInt("s_number"));
+        a.setLocation( new GeoLocation(rs.getDouble("s_latitude"), rs.getDouble("s_longitude")) );
         h.setAddress(a);
         h.setLocation( new GeoLocation(rs.getDouble("s_latitude"), rs.getDouble("s_longitude")) );
         PersonDAO pdao = new PersonDAO();
