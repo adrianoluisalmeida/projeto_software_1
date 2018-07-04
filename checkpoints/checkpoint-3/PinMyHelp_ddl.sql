@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS help_offer (
     offer_observation   TEXT              NULL, 
     offer_created       TIMESTAMP         NOT NULL DEFAULT NOW(),
     offer_updated       TIMESTAMP         NULL     ON UPDATE NOW(),
+    reject_cause        TEXT              NULL,
     solicitation_id     INT               NOT NULL,
     voluntary_id        INT               NULL,     # can be Entity or Person with type = 'Voluntary'
     PRIMARY KEY         (offer_id),
