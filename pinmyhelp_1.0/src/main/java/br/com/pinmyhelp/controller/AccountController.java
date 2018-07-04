@@ -206,7 +206,12 @@ public class AccountController {
         ModelAndView mov = new ModelAndView("app");
         mov.addObject("page", "account/profile");
         Person person = personDAO.findOne(id);
-        mov.addObject("person", person);
+        if (person != null){
+            mov.addObject("person", person);
+        }else{
+            Entity entity = entityDAO.findOne(id);
+            mov.addObject("entity", entity);
+        }
         return mov;
     }
 
@@ -215,6 +220,7 @@ public class AccountController {
      *
      * @param request
      * @param session
+     * @param redirectAttrs 
      * @return
      */
     @RequestMapping(value = "/account/update/profile", method = POST)
@@ -235,29 +241,50 @@ public class AccountController {
             }
             ConnectionManager.openConnection();
             Person person = personDAO.findOne(id);
-            if (fileName != null) {
-                if (person.getProfilePicture() != null) {
-                    String oldFileName = String.format("%s/%s", request.getServletContext().getRealPath("/upload"), person.getProfilePicture());
-                    File file = new File(oldFileName);
-                    System.out.println(file.getAbsolutePath());
-                    if (file.exists()) {
-                        file.delete();
+            if (person != null){
+                if (fileName != null) {
+                    if (person.getProfilePicture() != null) {
+                        String oldFileName = String.format("%s/%s", request.getServletContext().getRealPath("/upload"), person.getProfilePicture());
+                        File file = new File(oldFileName);
+                        if (file.exists()) {
+                            file.delete();
+                        }
                     }
+                    person.setProfilePicture(fileName);
+                    session.setAttribute("profilePicture", person.getProfilePicture());
                 }
-                person.setProfilePicture(fileName);
+                String bio = request.getParameter("bio").trim();
+                if (bio.length() > 0) {
+                    person.setBiography(bio.trim());
+                } else {
+                    person.setBiography(null);
+                }
+                personDAO.update(person);
+            }else{
+                Entity entity = entityDAO.findOne(id);
+                if (fileName != null) {
+                    if (entity.getLogo() != null) {
+                        String oldFileName = String.format("%s/%s", request.getServletContext().getRealPath("/upload"), entity.getLogo());
+                        File file = new File(oldFileName);
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                    }
+                    entity.setLogo(fileName);
+                    session.setAttribute("profilePicture", entity.getLogo());
+                }
+                String bio = request.getParameter("bio").trim();
+                if (bio.length() > 0) {
+                    entity.setNotes(bio.trim());
+                } else {
+                    entity.setNotes(null);
+                }
+                entityDAO.update(entity);
             }
-            String bio = request.getParameter("bio").trim();
-            if (bio.length() > 0) {
-                person.setBiography(bio);
-            } else {
-                person.setBiography(null);
-            }
-            personDAO.update(person);
             ConnectionManager.closeConnection();
         } catch (IOException | IllegalStateException ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         redirectAttrs.addFlashAttribute("msg_success", "Perfil alterado com sucesso!");
         return new ModelAndView("redirect:/dashboard");
     }

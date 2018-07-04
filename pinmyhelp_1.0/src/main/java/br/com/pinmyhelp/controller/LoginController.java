@@ -49,11 +49,13 @@ public class LoginController {
         if (person != null){
             session.setAttribute("person", person);
             session.setAttribute("type", person.getType());
+            session.setAttribute("profilePicture", person.getProfilePicture());
         } else {
             Entity entity = entityDAO.findOne(loggedUser.getId());
             if (entity != null){
                 session.setAttribute("entity", entity);
                 session.setAttribute("type", "Entity");
+                session.setAttribute("profilePicture", entity.getLogo());
             } else {
                 return new ModelAndView("login");
             }
