@@ -9,6 +9,7 @@ import br.com.pinmyhelp.model.dao.HelpOfferDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
+import br.com.pinmyhelp.model.types.HelpStatus;
 import com.google.gson.Gson;
 import java.util.Collection;
 
@@ -82,7 +83,7 @@ public class DashboardController {
             mav.addObject("solicitations", solicitations);
 
             Gson gson = new Gson();
-            String userJSONString = gson.toJson(helpSolicitationDAO.findAll());
+            String userJSONString = gson.toJson(helpSolicitationDAO.find("solicitation_status != ?",  HelpStatus.CANCELADA.getId()));
             mav.addObject("gson", userJSONString);
         }
         mav.addObject("title", "Dashboard");

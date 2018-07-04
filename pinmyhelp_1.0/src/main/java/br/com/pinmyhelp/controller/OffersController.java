@@ -14,9 +14,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -92,7 +90,7 @@ public class OffersController {
         return mav;
     }
     
-    @RequestMapping("/offers/viewOffer/{offer_id}")
+    @RequestMapping("/offers/offer/{offer_id}")
     public ModelAndView seeHelp(HttpSession session, @PathVariable(value = "offer_id") int offer_id) {
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Solicitações - Visualizar oferta ajuda");
@@ -124,7 +122,7 @@ public class OffersController {
         }
         return new ModelAndView("redirect:/offers/my");
     }
-
+    
     @RequestMapping(value = "/offers/approve/{offer_id}", method = GET)
     public ModelAndView approve(@PathVariable(value = "offer_id") int offer_id, RedirectAttributes redirectAttrs) {
         HelpOffer helpOffer = helpOfferDAO.findOne(offer_id);
@@ -141,7 +139,7 @@ public class OffersController {
                 Collection<HelpOffer> othersOffers = helpOfferDAO.find("offer_id != ? and solicitation_id = ?", params);
                 for (HelpOffer offer : othersOffers) {
                     offer.setStatus(OfferStatus.REJEITADA);
-                    helpOfferDAO.update(offer);
+                    helpOfferDAO.update(offer); // da pra criar um update só na tbl oferta, filtrado pelo id da solicitacao
                 }
             }
         }
@@ -165,6 +163,15 @@ public class OffersController {
         helpOffer.setStatus(OfferStatus.CANCELADA);
         helpOfferDAO.update(helpOffer);
         redirectAttrs.addFlashAttribute("msg_success", "Oferta cancelada com sucesso!");      
+        return new ModelAndView("redirect:/offers/my");
+    }
+    
+    @RequestMapping(value = "/offers/open/{offer_id}", method = GET)
+    public ModelAndView reOpen(@PathVariable(value = "offer_id") int offer_id, RedirectAttributes redirectAttrs) {
+        HelpOffer helpOffer = helpOfferDAO.findOne(offer_id);
+        helpOffer.setStatus(OfferStatus.OFERTADA);
+        helpOfferDAO.update(helpOffer);
+        redirectAttrs.addFlashAttribute("msg_success", "Eba! Oferta reaberta com sucesso!");      
         return new ModelAndView("redirect:/offers/my");
     }
 

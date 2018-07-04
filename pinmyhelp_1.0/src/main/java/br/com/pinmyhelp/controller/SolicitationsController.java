@@ -14,10 +14,8 @@ import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +64,7 @@ public class SolicitationsController {
         if (type.equals("Entity")) {
             solicitations = helpSolicitationDAO.find("claimant_id != ? ", u.getId());
         } else {
-            solicitations = helpSolicitationDAO.findAll();
+            solicitations = helpSolicitationDAO.find("solicitation_status != ?",  HelpStatus.CANCELADA.getId());
         }
 
         //se voluntário/entidade já ofertou ajuda em alguma solicitação, 
@@ -176,13 +174,16 @@ public class SolicitationsController {
 
         help.setStatus(HelpStatus.SOLICITADA);
         helpSolicitationDAO.update(help);
-        redirectAttrs.addFlashAttribute("msg_success", "Solicitação Alterada com sucesso!");
+        redirectAttrs.addFlashAttribute("msg_success", "Solicitação alterada com sucesso!");
         return new ModelAndView("redirect:/solicitations/my");
     }
 
     @RequestMapping(value = "/solicitations/delete/{idRequest}", method = GET)
     public ModelAndView delete(@PathVariable(value = "idRequest") int id, HttpSession session, RedirectAttributes redirectAttrs) {
-        helpSolicitationDAO.delete(new HelpSolicitation(id));
+        //helpSolicitationDAO.delete(new HelpSolicitation(id));
+        HelpSolicitation help = helpSolicitationDAO.findOne(id);
+        help.setStatus(HelpStatus.CANCELADA);
+        helpSolicitationDAO.update(help);
         redirectAttrs.addFlashAttribute("msg_success", "Solicitação removida com sucesso!");
         return new ModelAndView("redirect:/solicitations/my");
     }
