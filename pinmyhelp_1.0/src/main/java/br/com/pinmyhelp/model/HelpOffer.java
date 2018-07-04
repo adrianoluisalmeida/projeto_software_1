@@ -19,6 +19,7 @@ public class HelpOffer extends Record implements Serializable {
     private Entity entity;
     private OfferStatus status;
     private String observation;
+    private String rejectCause;
     private HelpSolicitation helpSolicitation;
     private Feedback feedback; // feedback do Requerente (ou Entidade) sobre a oferta
     
@@ -78,14 +79,33 @@ public class HelpOffer extends Record implements Serializable {
         this.status = status;
     }
 
+    /**
+     * @return the observation
+     */
     public String getObservation() {
         return observation;
     }
 
+    /**
+     * @param observation the observation to set
+     */
     public void setObservation(String observation) {
         this.observation = observation;
     }
 
+    /**
+     * @return the rejectCause
+     */
+    public String getRejectCause() {
+        return rejectCause;
+    }
+
+    /**
+     * @param rejectCause the rejectCause to set
+     */
+    public void setRejectCause(String rejectCause) {
+        this.rejectCause = rejectCause;
+    }
     
     /**
      * @return the helpSolicitation
@@ -111,7 +131,7 @@ public class HelpOffer extends Record implements Serializable {
 
     @Override
     public String toString() {
-        return "HelpOffer{" + "voluntary=" + voluntary + ", entity=" + entity + ", status=" + status + ", observation=" + observation + ", helpSolicitation=" + helpSolicitation + ", feedback=" + feedback + '}';
+        return "HelpOffer{" + "voluntary=" + voluntary + ", entity=" + entity + ", status=" + status + ", observation=" + observation + ", rejectCause=" + rejectCause + ", helpSolicitation=" + helpSolicitation + ", feedback=" + feedback + '}';
     }
 
 }
