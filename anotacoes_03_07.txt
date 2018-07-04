@@ -27,18 +27,21 @@
 	- Se o usuário já ofertou ajuda para solicitação, aparece botão "Visualizar oferta"
 	- Se a solicitação já foi encerrada e o usuário não realizou oferta para esta solicitação, não aparece botão nenhum. (Poderia ser desabilitado o botão ou inserir outra informação ali)
 
+- Cancelar oferta: 
+		- método delete finalizado / após cancelar pode "reabir"
 
 ------------------------------------------------------------------------------
 
-
 - O QUE FALTA:
-	- Cancelar oferta: 
-		-Terminar de implementar método delete, não está pegando offer_id
-	
-	-NOTIFICAÇÕES:
-		- Notificação aos voluntários quando aprova e rejeita oferta
+	- FEEDBACK
+	- NOTIFICAÇÕES:
+		- Notificação aos voluntários quando aprova e rejeita oferta 
 		- Se editar e excluir solicitação:
 			- Se situação da solicitação é EM ABERTO COM VOLUNTÁRIOS ---> notificar os voluntários 
 			- Se situação da solicitação é ENCERRADA ---> notificar voluntário cuja situação está como APROVADA
-		-(EXTRA: Somente se sobrar tempo)
+		- Notificar requerenete quanto ele receber oferta de ajuda
+		- (EXTRA: Somente se sobrar tempo)
 			-caso oferta tenha sido Aprovada, ao cancelar deve ser mandado notificação ao requerente
+	- SE SOBRAR TEMPO: PRIORIZAR SOLICITAÇÕES MAIS RECENTES (ORDER BY PELA DATA), REVISAR STATUS DAS OFERTAS/SOLICITACOES...
+	- REVISAR SISTEMA/TESTES
+
