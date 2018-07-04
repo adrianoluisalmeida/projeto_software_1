@@ -21,7 +21,7 @@
     <link href="${pageContext.request.contextPath}/assets/css/jquery.toast.min.css" rel="stylesheet">
 </head>
 <body>
-
+    <a href="${pageContext.request.contextPath}/"><i class="fa fa-chevron-left pull-left pink-text" style="margin-left:5px; font-size: 20px;"></i></a>
     <div class="container">
     <div class="col-md-6 center-block" style="margin: 0 auto; margin-top: 10%">
         <section class="form-elegant">
