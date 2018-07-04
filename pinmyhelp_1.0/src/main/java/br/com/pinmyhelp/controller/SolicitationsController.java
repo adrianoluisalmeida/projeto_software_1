@@ -76,7 +76,7 @@ public class SolicitationsController {
         if (type.equals("Entity")) {
             solicitations = helpSolicitationDAO.find("claimant_id != ? ", u.getId());
         } else {
-            solicitations = helpSolicitationDAO.findAll();
+            solicitations = helpSolicitationDAO.find("solicitation_status != ?",  HelpStatus.CANCELADA.getId());
         }
         solicitations.forEach(helpSolicitationDAO::setOffers);//utiliza o método setOffers do HelpSolicitationDAO em cada elemento da collection
         /*
@@ -188,13 +188,16 @@ public class SolicitationsController {
 
         help.setStatus(HelpStatus.SOLICITADA);
         helpSolicitationDAO.update(help);
-        redirectAttrs.addFlashAttribute("msg_success", "Solicitação Alterada com sucesso!");
+        redirectAttrs.addFlashAttribute("msg_success", "Solicitação alterada com sucesso!");
         return new ModelAndView("redirect:/solicitations/my");
     }
 
     @RequestMapping(value = "/solicitations/delete/{idRequest}", method = GET)
     public ModelAndView delete(@PathVariable(value = "idRequest") int id, HttpSession session, RedirectAttributes redirectAttrs) {
-        helpSolicitationDAO.delete(new HelpSolicitation(id));
+        //helpSolicitationDAO.delete(new HelpSolicitation(id));
+        HelpSolicitation help = helpSolicitationDAO.findOne(id);
+        help.setStatus(HelpStatus.CANCELADA);
+        helpSolicitationDAO.update(help);
         redirectAttrs.addFlashAttribute("msg_success", "Solicitação removida com sucesso!");
         return new ModelAndView("redirect:/solicitations/my");
     }
@@ -202,7 +205,7 @@ public class SolicitationsController {
     @RequestMapping(value = "/solicitations/rate/{idRequest}" , method = GET)
     public ModelAndView rate(@PathVariable(value="idRequest") int id, HttpSession session){
         ModelAndView mav = new ModelAndView("app");
-        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
+        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_VOLUNTARY)) {
             mav.addObject("title", "Acesso negado");
             mav.addObject("page", "accessDenied");
             return mav;
@@ -217,7 +220,7 @@ public class SolicitationsController {
     
     @RequestMapping(value = "/solicitations/done", method = POST)
     public ModelAndView done(Feedback f, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttrs){
-        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
+        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_VOLUNTARY)) {
             ModelAndView mav = new ModelAndView("app");
             mav.addObject("title", "Acesso negado");
             mav.addObject("page", "accessDenied");

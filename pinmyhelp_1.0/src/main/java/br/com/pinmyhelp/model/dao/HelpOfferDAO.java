@@ -32,7 +32,7 @@ public class HelpOfferDAO extends AbstractDAO<HelpOffer> {
                 + " voluntary_id"
                 + ") VALUES"
                 + "(?, ?, ?, ?)");
-        setUpdateSql("UPDATE help_offer SET offer_status = ? WHERE offer_id =  ?");
+        setUpdateSql("UPDATE help_offer SET offer_status = ?, reject_cause = ? WHERE offer_id =  ?");
         setDeleteSql("DELETE FROM help_offer WHERE offer_id =  ?");
         setFindOneSql("SELECT * FROM help_offer WHERE offer_id =  ?");
         setFindSql("SELECT * FROM help_offer WHERE solicitation_id = ?");
@@ -50,7 +50,8 @@ public class HelpOfferDAO extends AbstractDAO<HelpOffer> {
     @Override
     protected void fillUpdate(PreparedStatement ps, HelpOffer ho) throws SQLException {
         ps.setInt(1, ho.getStatus().getId());
-        ps.setInt(2, ho.getId());
+        ps.setString(2, ho.getRejectCause());
+        ps.setInt(3, ho.getId());
     }
 
     @Override
@@ -69,6 +70,7 @@ public class HelpOfferDAO extends AbstractDAO<HelpOffer> {
         ho.setId(rs.getInt("offer_id"));
         ho.setStatus(OfferStatus.get(rs.getInt("offer_status")));
         ho.setObservation(rs.getString("offer_observation"));
+        ho.setRejectCause(rs.getString("reject_cause"));
         HelpSolicitationDAO hsDAO = new HelpSolicitationDAO();
         HelpSolicitation hs = hsDAO.findOne(rs.getInt("solicitation_id"));
         ho.setHelpSolicitation(hs);
@@ -89,7 +91,7 @@ public class HelpOfferDAO extends AbstractDAO<HelpOffer> {
     }
     
     public Collection<HelpOffer> findByClaimantId(Integer id, Integer limit) {
-        String base = "natural join help_solicitation where claimant_id = ? order by start_date";
+        String base = "natural join help_solicitation where claimant_id = ? order by offer_created DESC";
         if (limit != null && limit > 0)
             return findJoinable(base + " limit " + limit, new String[]{String.valueOf(id)});
         return findJoinable(base, new String[]{String.valueOf(id)});

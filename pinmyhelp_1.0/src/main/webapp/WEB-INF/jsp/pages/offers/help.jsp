@@ -14,15 +14,15 @@
     </div>
     <div class="col-md-4 mt-3">
         <h3>Requerente</h3>
-        <table class="table table-striped">
+        <table class="table table-striped mt-3">
             <c:if test="${not empty solicitation.claimant}">
                 <tr>
                     <td><b>Nome</b></td>
                     <td>${solicitation.claimant.name}</td>
                 </tr>
                 <tr>
-                    <td><b>CPF</b></td>
-                    <td>${solicitation.claimant.cpf}</td>
+                    <td><b>Data de nascimento</b></td>
+                    <td><custom:localDateFormat localDate="${solicitation.claimant.bornDate}"/></td>
                 </tr>
                 <tr>
                     <td><b>E-mail</b></td>

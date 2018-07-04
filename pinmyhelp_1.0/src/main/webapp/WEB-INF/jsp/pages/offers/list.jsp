@@ -33,7 +33,7 @@
             <b><custom:localDateFormat localDate="${offer.helpSolicitation.startDate}"/></b>
         </td>
         <td>
-            <a type="button" href="${pageContext.request.contextPath}/offers/viewOffer/${offer.id}" class="btn btn-blue-grey btn-rounded btn-table btn-sm" data-toggle="tooltip"
+            <a type="button" href="${pageContext.request.contextPath}/offers/offer/${offer.id}" class="btn btn-blue-grey btn-rounded btn-table btn-sm" data-toggle="tooltip"
                data-placement="top" title="Visualizar Oferta">
                 <i class="fa fa-info-circle"></i>
             </a> 
@@ -137,19 +137,19 @@
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <a class="btn btn-danger" href="${pageContext.request.contextPath}/offers/cancel/${offer.id}"><i class="fa fa-times" aria-hidden="true"></i> Excluir</a>
+                <a class="btn btn-danger" id="delete-offer-anchor" href="${pageContext.request.contextPath}/offers/cancel/${offer.id}"><i class="fa fa-times" aria-hidden="true"></i> Excluir</a>
                 <a class="btn btn-default" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> Manter</a>
             </div>
         </div>
     </div>
 </div>
-
+                
 <script>
     $(function () {
-        var urlDeleteBase = "${pageContext.request.contextPath}/offers/delete/";
+        var urlDeleteBase = "${pageContext.request.contextPath}/offers/cancel/";
         $("#my-offers").on("click", "a.confirmation", function () {
             var id_offer = $(this).data("id");
-            $("input#id_offer_delete").val(urlDeleteBase + id_offer);
+            $("a#delete-offer-anchor").attr("href", urlDeleteBase + id_offer);
         });
     });
 </script>

@@ -16,6 +16,9 @@ import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.OfferStatus;
 import br.com.pinmyhelp.model.types.Rating;
+import br.com.pinmyhelp.model.types.HelpStatus;
+import br.com.pinmyhelp.model.types.OfferStatus;
+import br.com.pinmyhelp.util.MessagesUtils;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -96,7 +99,7 @@ public class OffersController {
         }
         User u = (User) session.getAttribute("user");
         mav.addObject("title", "Minhas ofertas");
-        mav.addObject("offers", helpOfferDAO.find("voluntary_id = ? ", u.getId()));
+        mav.addObject("offers", helpOfferDAO.find("voluntary_id = ? ORDER BY offer_created DESC", u.getId()));
         mav.addObject("page", "offers/my");
         return mav;
     }
@@ -110,7 +113,7 @@ public class OffersController {
         return mav;
     }
     
-    @RequestMapping("/offers/viewOffer/{offer_id}")
+    @RequestMapping("/offers/offer/{offer_id}")
     public ModelAndView seeHelp(HttpSession session, @PathVariable(value = "offer_id") int offer_id) {
         ModelAndView mav = new ModelAndView("app");
         mav.addObject("title", "Solicitações - Visualizar oferta ajuda");
@@ -137,12 +140,13 @@ public class OffersController {
             if (helpSolicitation != null) {
                 helpSolicitation.setStatus(HelpStatus.INTERESSE);
                 helpSolicitationDAO.update(helpSolicitation);
+                messageDAO.create(MessagesUtils.createMessageReceived(helpSolicitation, helpOffer));
             }
             redirectAttrs.addFlashAttribute("msg_success", "Oferta realizada com sucesso!");
         }
         return new ModelAndView("redirect:/offers/my");
     }
-
+    
     @RequestMapping(value = "/offers/approve/{offer_id}", method = GET)
     public ModelAndView approve(@PathVariable(value = "offer_id") int offer_id, RedirectAttributes redirectAttrs) {
         HelpOffer helpOffer = helpOfferDAO.findOne(offer_id);
@@ -153,13 +157,15 @@ public class OffersController {
                 helpOfferDAO.update(helpOffer);
                 helpSolicitation.setStatus(HelpStatus.ENCERRADA);
                 helpSolicitationDAO.update(helpSolicitation);
+                messageDAO.create(MessagesUtils.createMessageApproved(helpSolicitation, helpOffer)); // fazer async
                 redirectAttrs.addFlashAttribute("msg_success", "Oferta aprovada com sucesso!");
                 //Se aprova uma oferta, todas outras dessa solicitação devem ser rejeitadas
                 Object[] params = {offer_id, helpSolicitation.getId()};
                 Collection<HelpOffer> othersOffers = helpOfferDAO.find("offer_id != ? and solicitation_id = ?", params);
                 for (HelpOffer offer : othersOffers) {
                     offer.setStatus(OfferStatus.REJEITADA);
-                    helpOfferDAO.update(offer);
+                    helpOfferDAO.update(offer); // da pra criar um update só na tbl oferta, filtrado pelo id da solicitacao
+                    messageDAO.create(MessagesUtils.createMessageClosed(helpSolicitation, offer)); // fazer async
                 }
             }
         }
@@ -167,11 +173,23 @@ public class OffersController {
     }
 
     @RequestMapping(value = "/offers/reject", method = POST)
-    public ModelAndView reject(@Valid HelpOffer offer, BindingResult result, @RequestParam("offer_id") int offer_id, RedirectAttributes redirectAttrs) {
+    public ModelAndView reject(@RequestParam("offer_id") int offer_id, @RequestParam("reject_cause") String rejectCause, RedirectAttributes redirectAttrs, HttpSession session) {
+        User user = (User) session.getAttribute("user");
         HelpOffer helpOffer = helpOfferDAO.findOne(offer_id);
+        if ( rejectCause.isEmpty() ) {
+            ModelAndView mav = new ModelAndView("app");
+            mav.addObject("title", "Ofertas");
+            mav.addObject("page", "offers/index");
+            mav.addObject("offers", helpOfferDAO.findByClaimantId(user.getId(), null));
+            mav.addObject("error_reject_cause", "Por favor, descreva o motivo da recusa da oferta de ajuda");
+            mav.addObject("error_offer_id", offer_id);
+            return mav;
+        }
         if (helpOffer != null) {
             helpOffer.setStatus(OfferStatus.REJEITADA);
+            helpOffer.setRejectCause(rejectCause);
             helpOfferDAO.update(helpOffer);
+            messageDAO.create(MessagesUtils.createMessageRejected(helpOffer.getHelpSolicitation(), helpOffer, helpOffer.getRejectCause()));
             redirectAttrs.addFlashAttribute("msg_success", "Oferta rejeitada com sucesso!");
         }
         return new ModelAndView("redirect:/offers");
@@ -182,14 +200,25 @@ public class OffersController {
         HelpOffer helpOffer = helpOfferDAO.findOne(offer_id);
         helpOffer.setStatus(OfferStatus.CANCELADA);
         helpOfferDAO.update(helpOffer);
+        messageDAO.create(MessagesUtils.createMessageReceived(helpOffer.getHelpSolicitation(), helpOffer));
         redirectAttrs.addFlashAttribute("msg_success", "Oferta cancelada com sucesso!");      
+        return new ModelAndView("redirect:/offers/my");
+    }
+    
+    @RequestMapping(value = "/offers/open/{offer_id}", method = GET)
+    public ModelAndView reOpen(@PathVariable(value = "offer_id") int offer_id, RedirectAttributes redirectAttrs) {
+        HelpOffer helpOffer = helpOfferDAO.findOne(offer_id);
+        helpOffer.setStatus(OfferStatus.OFERTADA);
+        helpOfferDAO.update(helpOffer);
+        redirectAttrs.addFlashAttribute("msg_success", "Eba! Oferta reaberta com sucesso!");      
+        messageDAO.create(MessagesUtils.createMessageReceived(helpOffer.getHelpSolicitation(), helpOffer));
         return new ModelAndView("redirect:/offers/my");
     }
 
     @RequestMapping(value = "/offers/rate/{idRequest}" , method = GET)
     public ModelAndView rate(@PathVariable(value="idRequest") int id, HttpSession session){
         ModelAndView mav = new ModelAndView("app");
-        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_VOLUNTARY)) {
+        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
             mav.addObject("title", "Acesso negado");
             mav.addObject("page", "accessDenied");
             return mav;
@@ -204,7 +233,7 @@ public class OffersController {
     
     @RequestMapping(value = "/offers/done", method = POST)
     public ModelAndView done(Feedback f, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttrs){
-        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_VOLUNTARY)) {
+        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
             ModelAndView mav = new ModelAndView("app");
             mav.addObject("title", "Acesso negado");
             mav.addObject("page", "accessDenied");

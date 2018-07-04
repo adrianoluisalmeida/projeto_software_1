@@ -32,7 +32,7 @@
             <b><custom:localDateFormat localDate="${offer.helpSolicitation.startDate}"/></b>
         </td>
         <td>
-            <a type="button" href="${pageContext.request.contextPath}/offers/viewOffer/${offer.id}" class="btn btn-blue-grey btn-rounded btn-table btn-sm" data-toggle="tooltip"
+            <a type="button" href="${pageContext.request.contextPath}/offers/offer/${offer.id}" class="btn btn-blue-grey btn-rounded btn-table btn-sm" data-toggle="tooltip"
                data-placement="top" title="Visualizar Oferta">
                 <i class="fa fa-info-circle"></i>
             </a> 
@@ -131,8 +131,11 @@
             <form action="${pageContext.request.contextPath}/offers/reject" method="post">
                 <div class="modal-body mx-3">
                     <div class="md-form mb-5">
-                        <textarea type="text" type="text" name="" id="Form-reason" class="form-control md-textarea validate" required></textarea>
+                        <textarea type="text" type="text" name="reject_cause" id="Form-reason" class="form-control md-textarea validate"></textarea>
                         <label data-error="wrong" data-success="right" for="Form-reason">Descreva o motivo pelo qual você não aceita essa oferta</label>
+                        <c:if test="${not empty error_reject_cause}">                            
+                            <span class="error">${error_reject_cause}</span>
+                        </c:if>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
@@ -150,5 +153,9 @@
                 var id_offer = $(this).data("id");
                 $("input#id_offer_reject").val(id_offer);
             });
+            <c:if test="${not empty error_reject_cause}">              
+            $("input#id_offer_reject").val('${error_offer_id}');
+            $("#reject-offer").modal('show');                
+            </c:if>        
         });
     </script>
