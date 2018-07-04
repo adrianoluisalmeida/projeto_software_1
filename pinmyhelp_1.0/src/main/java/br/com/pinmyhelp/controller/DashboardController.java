@@ -71,7 +71,7 @@ public class DashboardController {
             }
         } else if (type.equals(Person.TYPE_VOLUNTARY)) {
             pageDashboard = "voluntary/dashboard";
-            solicitations = helpSolicitationDAO.findAll();
+            solicitations = helpSolicitationDAO.find("solicitation_status != ? order by solicitation_created DESC limit 3",  HelpStatus.CANCELADA.getId());
             Collection<HelpOffer> offers = helpOfferDAO.find("voluntary_id = ? ", ((User) session.getAttribute("user")).getId());
             for (HelpOffer offer : offers) {
                 for (HelpSolicitation solicitation : solicitations) {
