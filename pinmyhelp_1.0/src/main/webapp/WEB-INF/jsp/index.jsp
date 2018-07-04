@@ -137,8 +137,8 @@
 
                 <div class="row featurette">
                     <div class="col-md-7">
-                        <h2>Primeiramente: <span class="text-muted">O que é o Pyn My Help?</span></b></h2>
-                          <p class="lead">Pin My Help é um site desenvolvido com a finalidade de proporcionar a colaboração entre pessoas
+                        <h2>Primeiramente: <span class="text-muted">O que é o<br>Pyn My Help?</span></b></h2>
+                          <p class="lead" align="justify">Pin My Help é um site desenvolvido com a finalidade de proporcionar a colaboração entre pessoas
                           que precisam de ajuda com aquelas que tem interesse em ajudar. O intuito é criar um ambiente que facilite encontrar
                           voluntários dispostos a estender a mão para qualquer tipo de necessidade que o requerente tenha, desde ajuda com limpeza
                           e organização até ajuda com compras ou locomoção. Permite que cada um faça sua parte para tornar a vida de quem precisa
@@ -155,7 +155,7 @@
                 <div class="row featurette">
                     <div class="col-md-7 order-md-2">
                           <h2>E... <span class="text-muted">Como funciona?</span></h2>
-                          <p class="lead">Para iniciar é muito fácil: basta criar um cadastro no nosso site, clique em "Entrar no sistema" na parte
+                          <p class="lead" align="justify">Para iniciar é muito fácil: basta criar um cadastro no nosso site, clique em "Entrar no sistema" na parte
                           superior direita ou clique nos botões das imagens que passam logo acima. Você pode se cadastrar como requerente (se precisa
                           de algum tipo de ajuda) ou voluntário (se quiser oferecer sua ajuda) ou então como entidade (podendo solicitar ou oferecer
                           ajuda através dela). Feito isso, basta o requerente fazer seu pedido de solicitação de ajuda e aguardar até o usuário mais
@@ -172,7 +172,7 @@
                 <div class="row featurette">
                     <div class="col-md-7">
                           <h2>Por fim... <span class="text-muted">Quem pode entrar?</span></h2>
-                          <p class="lead">Todas as pessoas que necessitem de qualquer tipo ajuda ou as que queiram ajudar são bem-vindas aqui.
+                          <p class="lead" align="justify">Todas as pessoas que necessitem de qualquer tipo ajuda ou as que queiram ajudar são bem-vindas aqui.
                           Aos requerentes, basta terem alguma necessidade e aos voluntários, basta ter disponibilidade e um pouco de amor para
                           doar ao próximo. Você pode fazer parte desta corrente do bem que só tende a crescer e se multiplicar!
                           Vem com a gente! 😘
