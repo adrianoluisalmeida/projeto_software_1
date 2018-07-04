@@ -35,10 +35,10 @@
 - O QUE FALTA:
 	- FEEDBACK
 	- NOTIFICAÇÕES:
-		- Notificação aos voluntários quando aprova e rejeita oferta 
+		- Notificação aos voluntários quando aprova e rejeita oferta (OK)
 		- Se editar e excluir solicitação:
-			- Se situação da solicitação é EM ABERTO COM VOLUNTÁRIOS ---> notificar os voluntários 
-			- Se situação da solicitação é ENCERRADA ---> notificar voluntário cuja situação está como APROVADA
+			- Se situação da solicitação é EM ABERTO COM VOLUNTÁRIOS ---> notificar os voluntários  
+			- Se situação da solicitação é ENCERRADA ---> notificar voluntário cuja situação está como APROVADA 
 		- Notificar requerenete quanto ele receber oferta de ajuda
 		- (EXTRA: Somente se sobrar tempo)
 			-caso oferta tenha sido Aprovada, ao cancelar deve ser mandado notificação ao requerente
