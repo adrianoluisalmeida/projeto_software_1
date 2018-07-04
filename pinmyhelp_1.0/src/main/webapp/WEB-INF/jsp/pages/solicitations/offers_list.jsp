@@ -32,7 +32,7 @@
             <b><custom:localDateFormat localDate="${offer.helpSolicitation.startDate}"/></b>
         </td>
         <td>
-            <a type="button" href="${pageContext.request.contextPath}/offers/viewOffer/${offer.id}" class="btn btn-blue-grey btn-rounded btn-table btn-sm" data-toggle="tooltip"
+            <a type="button" href="${pageContext.request.contextPath}/offers/offer/${offer.id}" class="btn btn-blue-grey btn-rounded btn-table btn-sm" data-toggle="tooltip"
                data-placement="top" title="Visualizar Oferta">
                 <i class="fa fa-info-circle"></i>
             </a> 
@@ -131,7 +131,7 @@
             <form action="${pageContext.request.contextPath}/offers/reject" method="post">
                 <div class="modal-body mx-3">
                     <div class="md-form mb-5">
-                        <textarea type="text" type="text" name="" id="Form-reason" class="form-control md-textarea validate" required></textarea>
+                        <textarea type="text" type="text" name="message" id="Form-reason" class="form-control md-textarea validate" required></textarea>
                         <label data-error="wrong" data-success="right" for="Form-reason">Descreva o motivo pelo qual você não aceita essa oferta</label>
                     </div>
                 </div>

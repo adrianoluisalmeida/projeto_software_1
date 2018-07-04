@@ -30,7 +30,7 @@
             </div>
             <hr>
             <h3>Meu endereço <!-- <a id="btn-get-address" class="btn btn-pink float-right waves-effect waves-light">Usar endereço atual</a> --></h3> 
-            <c:if test="${empty address.postalCode}">
+            <c:if test="${empty address.postalCode && empty person.address.postalCode}">
                 <p><i class="fa fa-info-circle"></i> Você ainda não possui nenhum endereço cadastrado em seu perfil, com isso o endereço abaixo será considerado seu endereço atual até atualização
                     de seu <a href="${pageContext.request.contextPath}/account/edit/person/${sessionScope.user.id}" class="font-weight-light ml-1">Cadastro</a>.
                 </p>
