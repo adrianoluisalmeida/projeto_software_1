@@ -83,6 +83,8 @@ public class HelpOfferDAO extends AbstractDAO<HelpOffer> {
                 ho.setEntity(e);
         }
         ho.setId(rs.getInt("offer_id"));
+        FeedbackDAO fDao = new FeedbackDAO();
+        ho.setFeedback(fDao.findByOffer(ho));
         return ho;
     }
     

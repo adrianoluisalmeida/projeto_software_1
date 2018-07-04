@@ -8,11 +8,13 @@ package br.com.pinmyhelp.model.dao;
 import br.com.pinmyhelp.database.AbstractDAO;
 import br.com.pinmyhelp.model.Address;
 import br.com.pinmyhelp.model.Entity;
+import br.com.pinmyhelp.model.HelpOffer;
 import br.com.pinmyhelp.model.HelpSolicitation;
 import br.com.pinmyhelp.model.Person;
 import br.com.pinmyhelp.model.types.GeoLocation;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
+import br.com.pinmyhelp.model.types.OfferStatus;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -145,6 +147,8 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
             if (e != null)
                 h.setEntity(e);
         }
+        FeedbackDAO fDao = new FeedbackDAO();
+        h.setFeedback(fDao.findBySolicitation(h));
         return h;
     }
 
@@ -154,5 +158,17 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
             return find(base + " limit " + limit, new String[]{String.valueOf(id)});
         return find(base, new String[]{String.valueOf(id)});
     } 
+    
+    public void setOffers(HelpSolicitation h){
+        HelpOfferDAO hoDao = new HelpOfferDAO();
+        h.setHelpOffers(hoDao.find("solicitation_id = ?", h.getId()));
+        h.setHelpOffer(null);
+        for (HelpOffer o : h.getHelpOffers()){
+            if (o.getStatus().equals(OfferStatus.APROVADA)){
+                h.setHelpOffer(o);
+                break;
+            }
+        }
+    }
     
 }

@@ -54,10 +54,11 @@ public class DashboardController {
         ModelAndView mav = new ModelAndView("app");
         String type = (String) session.getAttribute("type");
         String pageDashboard = "entity/dashboard";
-        Collection<HelpSolicitation> solicitations = null;
+        Collection<HelpSolicitation> solicitations = helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 3);
+        solicitations.forEach(helpSolicitationDAO::setOffers);
         if (type.equals(Person.TYPE_CLAIMANT) || type.equals("Entity")) {
             //consulta MINHAS solicitações
-            mav.addObject("solicitations", helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), 3));
+            mav.addObject("solicitations", solicitations);
             if (type.equals(Person.TYPE_CLAIMANT)) {
                 pageDashboard = "claimant/dashboard";
             } else if (type.equals("Entity")) {

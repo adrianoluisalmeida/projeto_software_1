@@ -37,7 +37,7 @@ public class HelpSolicitation extends Record implements Serializable {
     private GeoLocation location;
     private HelpStatus status;
     private Collection<HelpOffer> helpOffers = new ArrayList<>();
-    private HelpOffer helpOffer;
+    private HelpOffer helpOffer = null;
     private Feedback feedback; // feedback do Voluntario (ou Entidade) sobre a solicitacao
     @Valid
     private Address address;
@@ -215,6 +215,28 @@ public class HelpSolicitation extends Record implements Serializable {
     public void removeMasks(){
         if (address != null && address.getPostalCode() != null)
             address.setPostalCode(FormatUtils.unmaskNumber(address.getPostalCode()));
+    }
+    
+    public boolean getShowOnClaimant(){
+        return !(status.equals(HelpStatus.AVALIADA) || status.equals(HelpStatus.CONCLUIDA) || status.equals(HelpStatus.CANCELADA));
+    }
+    
+    public boolean getShowOnVoluntary(){
+        return !(status.equals(HelpStatus.AVALIADA) || status.equals(HelpStatus.CANCELADA));
+    }
+    
+    public boolean getVoluntaryCanAvaliate(){
+        return status.equals(HelpStatus.CONCLUIDA);
+    }
+    
+    public Integer getVoluntaryId(){
+        if (helpOffer != null){
+            if (helpOffer.getVoluntary() != null)
+                return helpOffer.getVoluntary().getId();
+            else if (helpOffer.getEntity() != null)
+                return helpOffer.getEntity().getId();
+        }
+        return null;
     }
    
 }

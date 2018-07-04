@@ -7,9 +7,13 @@ package br.com.pinmyhelp.model.dao;
 
 import br.com.pinmyhelp.database.AbstractDAO;
 import br.com.pinmyhelp.model.Feedback;
+import br.com.pinmyhelp.model.HelpOffer;
+import br.com.pinmyhelp.model.HelpSolicitation;
+import br.com.pinmyhelp.model.types.Rating;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,16 +34,16 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
 
     @Override
     protected void fillCreate(PreparedStatement ps, Feedback f) throws SQLException {
-        ps.setInt(1, f.getRating());
+        ps.setInt(1, f.getRating().getValue());
         ps.setString(2, f.getComments());
         ps.setInt(3, f.getSender().getId());
-        ps.setInt(4, f.getSolicitation().getId());
-        ps.setInt(4, f.getOffer().getId());
+        ps.setObject(4, f.getSolicitation() != null ? f.getSolicitation().getId() : null);
+        ps.setObject(5, f.getOffer() != null ? f.getOffer().getId() : null);
     }
 
     @Override
     protected void fillUpdate(PreparedStatement ps, Feedback f) throws SQLException {
-        ps.setInt(1, f.getRating());
+        ps.setInt(1, f.getRating().getValue());
         ps.setString(2, f.getComments());
         ps.setInt(3, f.getId());
     }
@@ -62,11 +66,23 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         f.setComments(rs.getString("comments"));
         UserDAO uDao = new UserDAO();
         f.setSender(uDao.findOne(rs.getInt("sender_id")));
-        HelpSolicitationDAO hsDao = new HelpSolicitationDAO();
-        f.setSolicitation(hsDao.findOne(rs.getInt("solicitation_id")));
-        HelpOfferDAO hoDao = new HelpOfferDAO();
-        f.setOffer(hoDao.findOne(rs.getInt("offer_id")));
         return f;
     }
+    
+    public Feedback findBySolicitation(HelpSolicitation h){
+        List<Feedback> list = find("solicitation_id = ?", h.getId());
+        if (list.size() == 1)
+            return list.get(0);
+        return null;
+    }
+    
+    public Feedback findByOffer(HelpOffer o){
+        List<Feedback> list = find("offer_id = ?", o.getId());
+        if (list.size() == 1)
+            return list.get(0);
+        return null;
+    }
+    
+    
 
 }

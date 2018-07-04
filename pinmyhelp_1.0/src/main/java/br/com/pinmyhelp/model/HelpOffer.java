@@ -20,7 +20,7 @@ public class HelpOffer extends Record implements Serializable {
     private OfferStatus status;
     private String observation;
     private HelpSolicitation helpSolicitation;
-    private Feedback feedback; // feedback do Requerente (ou Entidade) sobre a oferta
+    private Feedback feedback = null; // feedback do Requerente (ou Entidade) sobre a oferta
     
     public HelpOffer() {
     }
@@ -109,6 +109,10 @@ public class HelpOffer extends Record implements Serializable {
         this.feedback = feedback;
     }
 
+    public boolean getIsDone(){
+        return this.status.equals(OfferStatus.AVALIADA);
+    }
+    
     @Override
     public String toString() {
         return "HelpOffer{" + "voluntary=" + voluntary + ", entity=" + entity + ", status=" + status + ", observation=" + observation + ", helpSolicitation=" + helpSolicitation + ", feedback=" + feedback + '}';

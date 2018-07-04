@@ -3,21 +3,25 @@ package br.com.pinmyhelp.controller;
 import br.com.pinmyhelp.database.ConnectionManager;
 import br.com.pinmyhelp.model.Claimant;
 import br.com.pinmyhelp.model.Entity;
+import br.com.pinmyhelp.model.Feedback;
 import br.com.pinmyhelp.model.HelpOffer;
 import br.com.pinmyhelp.model.HelpSolicitation;
+import br.com.pinmyhelp.model.Message;
 import br.com.pinmyhelp.model.Person;
 import br.com.pinmyhelp.model.User;
 import br.com.pinmyhelp.model.dao.EntityDAO;
+import br.com.pinmyhelp.model.dao.FeedbackDAO;
 import br.com.pinmyhelp.model.dao.HelpOfferDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
+import br.com.pinmyhelp.model.dao.MessageDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
+import br.com.pinmyhelp.model.types.Rating;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +53,12 @@ public class SolicitationsController {
 
     @Autowired
     HelpOfferDAO helpOfferDAO;
+    
+    @Autowired
+    FeedbackDAO feedbackDAO;
+    
+    @Autowired
+    MessageDAO messageDAO;
 
     @RequestMapping("/solicitations")
     public ModelAndView index(HttpSession session) {
@@ -62,13 +72,14 @@ public class SolicitationsController {
         mav.addObject("title", "Solicitações");
         mav.addObject("page", "solicitations/index");
         User u = (User) session.getAttribute("user");
-        Collection<HelpSolicitation> solicitations = null;
+        Collection<HelpSolicitation> solicitations;
         if (type.equals("Entity")) {
             solicitations = helpSolicitationDAO.find("claimant_id != ? ", u.getId());
         } else {
             solicitations = helpSolicitationDAO.findAll();
         }
-
+        solicitations.forEach(helpSolicitationDAO::setOffers);//utiliza o método setOffers do HelpSolicitationDAO em cada elemento da collection
+        /*
         //se voluntário/entidade já ofertou ajuda em alguma solicitação, 
         Collection<HelpOffer> offers = helpOfferDAO.find("voluntary_id = ? ", u.getId());
         for (HelpOffer offer : offers) {
@@ -77,7 +88,8 @@ public class SolicitationsController {
                     solicitation.setHelpOffer(offer);
                 }               
             }
-        }     
+        } 
+        */
         mav.addObject("solicitations", solicitations);
         return mav;
     }
@@ -93,8 +105,8 @@ public class SolicitationsController {
         mav.addObject("title", "Meus Pedidos");
         mav.addObject("page", "solicitations/my");
         Collection<HelpSolicitation> helps = helpSolicitationDAO.findByClaimantId(((User) session.getAttribute("user")).getId(), null);
+        helps.forEach(helpSolicitationDAO::setOffers);//utiliza o método setOffers do HelpSolicitationDAO em cada elemento da collection
         mav.addObject("solicitations", helps);
-
         return mav;
     }
 
@@ -187,6 +199,63 @@ public class SolicitationsController {
         return new ModelAndView("redirect:/solicitations/my");
     }
 
+    @RequestMapping(value = "/solicitations/rate/{idRequest}" , method = GET)
+    public ModelAndView rate(@PathVariable(value="idRequest") int id, HttpSession session){
+        ModelAndView mav = new ModelAndView("app");
+        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
+            mav.addObject("title", "Acesso negado");
+            mav.addObject("page", "accessDenied");
+            return mav;
+        }
+        mav.addObject("title", "Avaliar ajuda");
+        mav.addObject("page", "solicitations/rate");
+        mav.addObject("action","/solicitations/done");
+        mav.addObject("ratings", Rating.getAll());
+        mav.addObject("solicitationId", id);
+        return mav;
+    }
+    
+    @RequestMapping(value = "/solicitations/done", method = POST)
+    public ModelAndView done(Feedback f, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttrs){
+        if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_CLAIMANT)) {
+            ModelAndView mav = new ModelAndView("app");
+            mav.addObject("title", "Acesso negado");
+            mav.addObject("page", "accessDenied");
+            return mav;
+        }
+        int solicitationId = Integer.valueOf(request.getParameter("solicitationId"));
+        HelpSolicitation sol = helpSolicitationDAO.findOne(solicitationId);
+        helpSolicitationDAO.setOffers(sol);
+        User user = (User)session.getAttribute("user");
+        f.setSender(user);
+        f.setOffer(sol.getHelpOffer());
+        feedbackDAO.create(f);
+        sol.setStatus(HelpStatus.CONCLUIDA);
+        helpSolicitationDAO.update(sol);
+        Message message = new Message();
+        String prefix = "?";
+        String sender = "?";
+        if (sol.getClaimant() != null){
+            prefix = "O requerente: ";
+            sender = sol.getClaimant().getName();
+        }else if (sol.getEntity() != null){
+            prefix = "A entidade: ";
+            sender = sol.getEntity().getName();
+        }
+        if (f.getOffer() != null){
+            HelpOffer offer = f.getOffer();
+            if (offer.getVoluntary() != null)
+                message.setUser(offer.getVoluntary());
+            else if (offer.getEntity() != null)
+                message.setUser(offer.getEntity());
+        }
+        message.setTitle("Você recebeu uma avaliação!");
+        message.setContent(String.format("%s%s avaliou sua ajuda com nota %d", prefix, sender, f.getRating().getValue()));
+        messageDAO.create(message);
+        redirectAttrs.addFlashAttribute("msg_success", "Feedback enviado!");
+        return new ModelAndView("redirect:/dashboard");
+    }
+    
     private Boolean validateDates(LocalDate startDate, LocalDate endDate, BindingResult result, ModelAndView mv) {
         Boolean formatError = false;
         if (startDate == null || result.hasFieldErrors("startDate")) {

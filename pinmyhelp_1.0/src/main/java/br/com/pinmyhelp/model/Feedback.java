@@ -6,6 +6,7 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
+import br.com.pinmyhelp.model.types.Rating;
 import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -19,7 +20,7 @@ public class Feedback extends Record implements Serializable {
     private User sender;
     @NotNull(message = "Você deve dar uma nota de avaliação")
     @Pattern(regexp = "[\\d]{6}", message = "Tipo de dado inválido no campo avaliação.")
-    private Integer rating;
+    private Rating rating;
     private String comments;
     private HelpSolicitation solicitation;
     private HelpOffer offer; //Oferta que foi dado feedback
@@ -31,9 +32,9 @@ public class Feedback extends Record implements Serializable {
         super(id);
     }
 
-    public Feedback(User sender, Integer rating, String comments) {
+    public Feedback(User sender, int rating, String comments) {
         this.sender = sender;
-        this.rating = rating;
+        this.rating = Rating.get(rating);
         this.comments = comments;
     }
 
@@ -54,15 +55,15 @@ public class Feedback extends Record implements Serializable {
     /**
      * @return the rating
      */
-    public Integer getRating() {
+    public Rating getRating() {
         return rating;
     }
 
     /**
      * @param rating the rating to set
      */
-    public void setRating(Integer rating) {
-        this.rating = rating;
+    public void setRating(int rating) {
+        this.rating = Rating.get(rating);
     }
 
     /**
@@ -110,7 +111,24 @@ public class Feedback extends Record implements Serializable {
 
     @Override
     public String toString() {
-        return "Feedback{" + "sender=" + sender + ", rating=" + rating + ", comments=" + comments + '}';
+        StringBuilder builder = new StringBuilder();
+        builder.append("Feedback{ sender_id = ");
+        builder.append(sender.getId());
+        builder.append(", rating = ");
+        builder.append(rating.getValue());
+        builder.append(", comments = ");
+        builder.append(comments);
+        if (solicitation != null){
+            builder.append(", solicitation_id = ");
+            builder.append(solicitation.getId());
+        }
+        if (offer != null){
+            builder.append(", offer_id = ");
+            builder.append(offer.getId());
+        }
+        builder.append("}");
+        //return "Feedback{" + "sender=" + sender + ", rating=" + rating + ", comments=" + comments + '}';
+        return builder.toString();
     }
     
 }

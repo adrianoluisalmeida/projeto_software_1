@@ -14,7 +14,8 @@ public enum OfferStatus {
     OFERTADA(1,"Ofertada"),
     APROVADA(2,"Aprovada"),
     REJEITADA(3,"Rejeitada"),
-    CANCELADA(4, "Cancelada");
+    CANCELADA(4, "Cancelada"),
+    AVALIADA(5, "Avaliada");
     
     private final int id; //number to save on DB
     private final String status; //description to show

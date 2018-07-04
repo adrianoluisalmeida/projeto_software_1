@@ -2,6 +2,7 @@
 <%@taglib tagdir="/WEB-INF/tags" prefix="custom"%> 
 <div id="sol-list">
 <c:forEach var="solicitation" items="${solicitations}">
+    <c:if test="${solicitation.showOnClaimant}">
     <div class=" col-md-4 float-left">
         <div class="card">
             <!-- Card image -->
@@ -29,13 +30,20 @@
                 </p>          
                 <!-- Button -->
                 <div class="row justify-content-center">
-                    <a href="${pageContext.request.contextPath}/solicitations/edit/${solicitation.id}" class="btn btn-blue-grey btn-sm float-left">Editar</a>
-                    <a data-target="#cancel-sol" data-toggle="modal" data-id="${solicitation.id}" class="confirmation btn btn-danger btn-sm float-left">Excluir</a>
+                    
+                    <c:if test="${empty solicitation.helpOffer}">
+                        <a href="${pageContext.request.contextPath}/solicitations/edit/${solicitation.id}" class="btn btn-blue-grey btn-sm float-left">Editar</a>
+                        <a data-target="#cancel-sol" data-toggle="modal" data-id="${solicitation.id}" class="confirmation btn btn-danger btn-sm float-left">Excluir</a>
+                    </c:if>
+                    <c:if test="${not empty solicitation.helpOffer}">
+                        <a href="${pageContext.request.contextPath}/solicitations/rate/${solicitation.id}" class="btn btn-blue-grey btn-sm float-left">Avaliar</a>
+                    </c:if>    
                     <a href="${pageContext.request.contextPath}/offers/${solicitation.id}" class="btn btn-pink btn-sm float-left">Ofertas</a>
                 </div>
             </div>
         </div>
     </div>
+    </c:if>
 <!-- Card -->
 </c:forEach>
 </div> 
