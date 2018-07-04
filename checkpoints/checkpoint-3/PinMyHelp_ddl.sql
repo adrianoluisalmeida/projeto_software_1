@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS help_solicitation (
 CREATE TABLE IF NOT EXISTS help_offer (
     offer_id            INT               AUTO_INCREMENT,
     offer_status        INT               NOT NULL, # TODO: change type to ENUM 
-    offer_observation	TEXT 		  NULL, 
+    offer_observation   TEXT              NULL, 
     offer_created       TIMESTAMP         NOT NULL DEFAULT NOW(),
     offer_updated       TIMESTAMP         NULL     ON UPDATE NOW(),
     solicitation_id     INT               NOT NULL,
@@ -124,11 +124,11 @@ CREATE TABLE IF NOT EXISTS feedback (
 
 #DROP TABLE IF EXISTS message
 CREATE TABLE IF NOT EXISTS message(
-	message_id 		  INT          	AUTO_INCREMENT,
-    user_id 		  INT 			NOT NULL,
-    title			  VARCHAR(255) 	NOT NULL,
-    content			  TEXT 			NOT NULL,
-    is_readed		  BOOLEAN			NOT NULL DEFAULT FALSE,
-    PRIMARY KEY 	  (message_id),
-    FOREIGN KEY       (user_id)  REFERENCES `user` (user_id)
+    message_id         INT                AUTO_INCREMENT,
+    user_id            INT                NOT NULL,
+    title              VARCHAR(255)       NOT NULL,
+    content            TEXT               NOT NULL,
+    is_readed          BOOLEAN            NOT NULL DEFAULT FALSE,
+    PRIMARY KEY        (message_id),
+    FOREIGN KEY        (user_id)          REFERENCES `user` (user_id)
 )ENGINE = InnoDB;
