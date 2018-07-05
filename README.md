@@ -13,7 +13,7 @@ Prof. Daniel Welfer.
 2. [~~April 12, 2018 - 1st Checkpoint~~](checkpoints/checkpoint-1)
 3. [~~May 3, 2018 - 2nd Checkpoint~~](checkpoints/checkpoint-2)
 4. [~~June 7, 2018 - 3th Checkpoint~~](checkpoints/checkpoint-3)
-5. [July 5, 2018 - 4th Checkpoint](checkpoints/checkpoint-4)
+5. [~~July 5, 2018 - 4th Checkpoint~~](checkpoints/checkpoint-4)
 
 ### Artifacts
 
@@ -26,12 +26,23 @@ Prof. Daniel Welfer.
     + [Software Requirements Specification (SRS)](checkpoints/checkpoint-1/PinMyHelp-SRS.pdf)
     
 - [X] **2nd Checkpoint**
-    + [Use case diagram (.asta)](checkpoints/checkpoint-2/PinMyHelp-UseCaseDiagram.asta)
-    + [Use case diagram (.png)](checkpoints/checkpoint-2/PinMyHelp-UseCaseDiagram.png)
-    + [Class diagram (.asta)](checkpoints/checkpoint-2/PinMyHelp-ClassDiagram.asta)
-    + [Class diagram (.png) ](checkpoints/checkpoint-2/PinMyHelp-ClassDiagram.png)
+    + [Gantt Pin My Help (.pod)](checkpoints/checkpoint-2/PinMyHelp-Gantt.pod)
+    + [Modeling Pin My Help (.asta)](checkpoints/checkpoint-2/PinMyHelp-Modeling.asta)
+    + [Prototypes Pin My Help (.bmpr)](checkpoints/checkpoint-2/PinMyHelp-Prototypes.bmpr)
+    + [Modeling Images Pin My Help ](checkpoints/checkpoint-2/PinMyHelp-Modeling-Images)
+    + [Prototypes Images Pin My Help ](checkpoints/checkpoint-2/PinMyHelp-Prototypes-Images)
     
 - [X] **3th Checkpoint**
-
-    
-- [ ] **4th Checkpoint**
+    + [Gantt Pin My Help (.pod)](checkpoints/checkpoint-3/PinMyHelp-Gantt.pod)
+    + [Modeling Pin My Help (.asta)](checkpoints/checkpoint-3/PinMyHelp-Modeling.asta)
+    + [Modeling Images Pin My Help ](checkpoints/checkpoint-3/PinMyHelp-Modeling-Images)	
+    + [Model ER Pin My Help (.png)](checkpoints/checkpoint-3/PinMyHelp-Model-ER.png)
+     + [Script SQL Pin My Help (.sql)](checkpoints/checkpoint-3/PinMyHelp_ddl.sql)	
+ 
+- [X] **4th Checkpoint**
+    + [Gantt Pin My Help (.pod)](checkpoints/checkpoint-4/PinMyHelp-Gantt.pod)
+    + [Modeling Pin My Help (.asta)](checkpoints/checkpoint-4/PinMyHelp-Modeling.asta)	
+    + [Class Diagram Pin My Help (.png)](checkpoints/checkpoint-4/PinMyHelp-ClassDiagram.png)
+    + [Model ER Pin My Help (.png)](checkpoints/checkpoint-4/PinMyHelp-Model-ER.png)
+    + [Script SQL Pin My Help (.sql)](checkpoints/checkpoint-4/PinMyHelp_ddl.sql)	
+ 
