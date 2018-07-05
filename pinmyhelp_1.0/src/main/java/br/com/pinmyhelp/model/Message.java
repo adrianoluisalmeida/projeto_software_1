@@ -6,20 +6,28 @@
 package br.com.pinmyhelp.model;
 
 import br.com.pinmyhelp.database.Record;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  *
  * @author roger
  */
-public class Message extends Record{
+public class Message extends Record implements Serializable {
     
     private User user;
     private String title;
     private String content;
+    private LocalDate createdDate;
     private boolean isReaded;
 
-    public Message(){}
+    public Message(){
+    }
     
+    public Message(User user) {
+        this.user = user;
+    }
+        
     public Message(User user, String title, String content, boolean isReaded) {
         this.user = user;
         this.title = title;
@@ -74,7 +82,21 @@ public class Message extends Record{
     public void setContent(String content) {
         this.content = content;
     }
+    
+    /**
+     * @return the createdDate
+     */
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
 
+    /**
+     * @param createdDate the createdDate to set
+     */
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
+    }
+    
     /**
      * @return the isReaded
      */
@@ -88,22 +110,10 @@ public class Message extends Record{
     public void setIsReaded(boolean isReaded) {
         this.isReaded = isReaded;
     }
-    
+
     @Override
-    public String toString(){
-        StringBuilder builder = new StringBuilder();
-        builder.append("Message{ id = ");
-        builder.append(id);
-        builder.append(", userId = ");
-        builder.append(user.getId());
-        builder.append(", title = ");
-        builder.append(title);
-        builder.append(", content = ");
-        builder.append(content);
-        builder.append(", isReaded = ");
-        builder.append(isReaded);
-        builder.append("}");
-        return builder.toString();
+    public String toString() {
+        return "Message{" + "user=" + user + ", title=" + title + ", content=" + content + ", createdDate=" + createdDate + ", isReaded=" + isReaded + '}';
     }
     
 }
