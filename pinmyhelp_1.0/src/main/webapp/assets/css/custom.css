@@ -17,3 +17,11 @@
 .error {
     color: red;
 }
+
+h2 { 
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.05rem;
+    font-size: 50px;
+    min-width: 62em
+}
