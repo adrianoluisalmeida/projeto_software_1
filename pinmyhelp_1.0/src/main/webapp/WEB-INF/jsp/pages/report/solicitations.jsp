@@ -31,6 +31,8 @@
         <h5>Encerradas: ${encerradas}</h5>
         <h5>Com interessados: ${comInteressados}</h5>
         <h5>Canceladas: ${canceladas}</h5>
+        <h5>Concluidas: ${concluidas}</h5>
+        <h5>Avaliadas: ${avaliadas}</h5>
         <table class="table table-striped">
             <thead>
               <tr>
