@@ -39,11 +39,24 @@
                 </c:choose>
             </c:if>
         </p>
-        <hr>
+        <hr/>
+        <c:if test="${offer.status == 'APROVADA'}">
+        <h4>Local</h4> 
+        <p>
+            ${offer.helpSolicitation.address.street} Nº ${offer.helpSolicitation.address.number}<br/>
+            <c:if test="${not empty offer.helpSolicitation.address.complement}">
+                ${offer.helpSolicitation.address.complement}<br/>
+            </c:if>
+            ${offer.helpSolicitation.address.neighborhood} - ${offer.helpSolicitation.address.city}, 
+            ${offer.helpSolicitation.address.state}<br/>
+            CEP: ${offer.helpSolicitation.address.postalCode}
+        </p>                              
+        </c:if>
+        
+        <hr/>
         <c:if test="${type != 'Claimant'}">
             <a href="${pageContext.request.contextPath}/offers/my" class="float-right">Ver todas minhas ofertas</a>        
         </c:if>
-
     </div>
     
     <div class="col-md-4 mt-3">

@@ -21,6 +21,7 @@
                     <c:when test="${not empty offer.helpSolicitation.claimant}"><b>${offer.helpSolicitation.claimant.name}</b></c:when>
                     <c:when test="${not empty offer.helpSolicitation.entity}"><b>${offer.helpSolicitation.entity.name}</b></c:when>
                 </c:choose>
+                <i class="fa fa-user-plus"></i>
             </a>
         </td>
         <td>
@@ -63,6 +64,11 @@
                     <i class="fa fa-times"></i>
                 </p> 
             </c:if>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5">
+            <hr/>
         </td>
     </tr>
     <!-- Modal -->
