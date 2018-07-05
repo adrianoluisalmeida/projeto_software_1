@@ -9,4 +9,4 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:parseDate value="${localDate}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
-<fmt:formatDate value="${parsedDate}" pattern="dd/MM/yyyy" />
+<fmt:formatDate value="${parsedDate}" pattern="dd MMMM, yyyy" />
