@@ -127,6 +127,8 @@ public class ReportController {
         mav.addObject("encerradas",list.stream().filter(s -> s.getStatus() == HelpStatus.ENCERRADA).count());
         mav.addObject("comInteressados",list.stream().filter(s -> s.getStatus() == HelpStatus.INTERESSE).count());
         mav.addObject("canceladas",list.stream().filter(s -> s.getStatus() == HelpStatus.CANCELADA).count());
+        mav.addObject("concluidas",list.stream().filter(s -> s.getStatus() == HelpStatus.CONCLUIDA).count());
+        mav.addObject("avaliadas",list.stream().filter(s -> s.getStatus() == HelpStatus.AVALIADA).count());
         return mav;
     };
     
