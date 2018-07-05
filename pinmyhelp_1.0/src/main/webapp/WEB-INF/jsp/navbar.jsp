@@ -1,5 +1,4 @@
 <!--NAVBAR CLAIMANT-->
-
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -62,8 +61,8 @@
                         <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <c:choose>
-                            <c:when test="${not empty profile.imageUrl}">
-                                <img src="${profile.imageUrl}" width="30px"
+                            <c:when test="${not empty sessionScope.profilePicture}">
+                                <img src="${pageContext.request.contextPath}/upload/${sessionScope.profilePicture}" width="30px"
                                      class="rounded-circle z-depth-0" alt="avatar image">
                             </c:when>
                             <c:otherwise>

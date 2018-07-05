@@ -54,3 +54,5 @@ nbactions.xml
 
 # database config
 /pinmyhelp_1.0/src/main/java/br/com/pinmyhelp/database/Database.java
+
+upload/

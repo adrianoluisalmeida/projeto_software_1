@@ -90,7 +90,7 @@ public class PersonDAO extends AbstractDAO<Person>{
         ps.setString(13, p.getAddress().getCity());
         ps.setString(14, p.getAddress().getNeighborhood());
         ps.setString(15, p.getAddress().getStreet());
-        ps.setInt(16, p.getAddress().getNumber());
+        ps.setObject(16, p.getAddress().getNumber());
         ps.setString(17, p.getAddress().getComplement());
         ps.setDouble(18, p.getAddress().getLocation().getLatitude());
         ps.setDouble(19, p.getAddress().getLocation().getLongitude());
