@@ -15,6 +15,14 @@
         <h4>Situação</h4> 
         <p>${offer.helpSolicitation.status.status}</p>
         <hr>
+        <c:if test="${offer.helpSolicitation.status.status == 'Avaliada' || offer.helpSolicitation.status.status == 'Concluida'}">
+            <h4>Avaliação</h4>
+            <p>${offer.feedback.rating.description}</p>
+            <hr/>
+            <h4>Comentários</h4>
+            <p>${offer.feedback.comments}</p>
+            <hr />
+        </c:if>
     </div>
     <div class="col-md-4 mt-3">
         <h3>Oferta</h3>
@@ -25,40 +33,48 @@
         <h4>Situação</h4> 
         <p>${offer.status.status}
             <c:if test="${offer.status == 'CANCELADA' &&  
-                         (offer.helpSolicitation.status == 'SOLICITADA' || 
+                          (offer.helpSolicitation.status == 'SOLICITADA' || 
                           offer.helpSolicitation.status == 'INTERESSE')}"> <%-- se oferta cancelada e a sol. continua em aberto --%>
                 <c:choose>
                     <c:when test="${not empty offer.voluntary && 
-                                  offer.voluntary.id == user.id}"> <%-- se eh o voluntario --%>
-                        <a href="${pageContext.request.contextPath}/offers/open/${offer.id}" class="btn btn-pink btn-rounded btn-sm">Reabrir</a>
+                                    offer.voluntary.id == user.id}"> <%-- se eh o voluntario --%>
+                            <a href="${pageContext.request.contextPath}/offers/open/${offer.id}" class="btn btn-pink btn-rounded btn-sm">Reabrir</a>
                     </c:when>
                     <c:when test="${not empty offer.entity && 
-                                  offer.entity.id == user.id}">  <%-- ou se eh a entidade --%>
-                        <a href="${pageContext.request.contextPath}/offers/open/${offer.id}" class="btn btn-pink btn-rounded btn-sm">Reabrir</a>
+                                    offer.entity.id == user.id}">  <%-- ou se eh a entidade --%>
+                            <a href="${pageContext.request.contextPath}/offers/open/${offer.id}" class="btn btn-pink btn-rounded btn-sm">Reabrir</a>
                     </c:when>
                 </c:choose>
             </c:if>
         </p>
         <hr/>
         <c:if test="${offer.status == 'APROVADA'}">
-        <h4>Local</h4> 
-        <p>
-            ${offer.helpSolicitation.address.street} Nº ${offer.helpSolicitation.address.number}<br/>
-            <c:if test="${not empty offer.helpSolicitation.address.complement}">
-                ${offer.helpSolicitation.address.complement}<br/>
-            </c:if>
-            ${offer.helpSolicitation.address.neighborhood} - ${offer.helpSolicitation.address.city}, 
-            ${offer.helpSolicitation.address.state}<br/>
-            CEP: ${offer.helpSolicitation.address.postalCode}
-        </p>                              
+            <h4>Local</h4> 
+            <p>
+                ${offer.helpSolicitation.address.street} Nº ${offer.helpSolicitation.address.number}<br/>
+                <c:if test="${not empty offer.helpSolicitation.address.complement}">
+                    ${offer.helpSolicitation.address.complement}<br/>
+                </c:if>
+                ${offer.helpSolicitation.address.neighborhood} - ${offer.helpSolicitation.address.city}, 
+                ${offer.helpSolicitation.address.state}<br/>
+                CEP: ${offer.helpSolicitation.address.postalCode}
+            </p>                              
         </c:if>
-        
+
         <hr/>
+        <c:if test="${offer.helpSolicitation.status.status == 'Avaliada'}">
+            <h4>Avaliação</h4>
+            <p>${offer.helpSolicitation.feedback.rating.description}</p>
+            <hr/>
+            <h4>Comentários</h4>
+            <p>${offer.helpSolicitation.feedback.comments}</p>
+            <hr />
+        </c:if>
         <c:if test="${type != 'Claimant'}">
             <a href="${pageContext.request.contextPath}/offers/my" class="float-right">Ver todas minhas ofertas</a>        
         </c:if>
     </div>
-    
+
     <div class="col-md-4 mt-3">
         <h3>Requerente</h3>
         <hr>
