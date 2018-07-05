@@ -7,9 +7,12 @@ import br.com.pinmyhelp.model.dao.EntityDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
 import br.com.pinmyhelp.database.ConnectionManager;
+import br.com.pinmyhelp.model.Message;
+import br.com.pinmyhelp.model.dao.MessageDAO;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +21,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -43,6 +45,9 @@ public class AccountController {
 
     @Autowired
     EntityDAO entityDAO;
+    
+    @Autowired
+    MessageDAO messageDAO;
 
     @RequestMapping(value = "/account/create", method = GET)
     public String register() {
@@ -262,6 +267,23 @@ public class AccountController {
         return new ModelAndView("redirect:/dashboard");
     }
 
+    @RequestMapping(value = "/account/messages/my", method = GET)
+    public ModelAndView getMessages(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        session.setAttribute("new_messages", messageDAO.findMessages(user.getId(), false)); // isReaded = false
+        session.setAttribute("old_messages", messageDAO.findMessages(user.getId(), true));   // isReaded = true
+        ModelAndView mav = new ModelAndView("app");
+        mav.addObject("page", "account/messages");
+        return mav;
+    }
+    
+    @RequestMapping(value = "/account/messages/my/read", method = GET)
+    public ModelAndView readMessages(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        messageDAO.update(new Message(user)); // important: messageDAO.update set all user messages as TRUE by default
+        return getMessages(session);
+    }    
+    
     /**
      * Verifica se o usuário passado como parâmetro é o mesmo que está logado no
      * sistema

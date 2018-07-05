@@ -7,6 +7,7 @@ import br.com.pinmyhelp.model.User;
 import br.com.pinmyhelp.model.dao.EntityDAO;
 import br.com.pinmyhelp.model.dao.HelpOfferDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
+import br.com.pinmyhelp.model.dao.MessageDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
 import br.com.pinmyhelp.model.types.HelpStatus;
@@ -40,6 +41,9 @@ public class DashboardController {
 
     @Autowired
     HelpOfferDAO helpOfferDAO;
+    
+    @Autowired
+    MessageDAO messageDAO;
 
     @RequestMapping("/dashboard")
     public ModelAndView index(HttpSession session) {
@@ -52,6 +56,7 @@ public class DashboardController {
     }
 
     public ModelAndView redirectDashboard(HttpSession session) {
+        User user = (User) session.getAttribute("user");
         ModelAndView mav = new ModelAndView("app");
         String type = (String) session.getAttribute("type");
         String pageDashboard = "entity/dashboard";
@@ -89,6 +94,8 @@ public class DashboardController {
         }
         mav.addObject("title", "Dashboard");
         mav.addObject("page", pageDashboard);
+        session.setAttribute("new_messages", messageDAO.findMessages(user.getId(), false)); // isReaded = false
+        session.setAttribute("old_messages", messageDAO.findMessages(user.getId(), true));   // isReaded = true
         return mav;
     }
 }

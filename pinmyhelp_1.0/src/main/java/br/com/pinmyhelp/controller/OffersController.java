@@ -13,8 +13,6 @@ import br.com.pinmyhelp.model.dao.HelpOfferDAO;
 import br.com.pinmyhelp.model.dao.HelpSolicitationDAO;
 import br.com.pinmyhelp.model.dao.MessageDAO;
 import br.com.pinmyhelp.model.dao.PersonDAO;
-import br.com.pinmyhelp.model.types.HelpStatus;
-import br.com.pinmyhelp.model.types.OfferStatus;
 import br.com.pinmyhelp.model.types.Rating;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.OfferStatus;
