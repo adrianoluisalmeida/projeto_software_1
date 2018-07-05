@@ -12,6 +12,7 @@ import br.com.pinmyhelp.model.dao.PersonDAO;
 import br.com.pinmyhelp.model.dao.UserDAO;
 import br.com.pinmyhelp.model.types.HelpStatus;
 import com.google.gson.Gson;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
@@ -86,10 +87,15 @@ public class DashboardController {
                     }
                 }
             }
-            mav.addObject("solicitations", solicitations);
+            Collection<HelpSolicitation> filteredSolicitations = new ArrayList<>();
+            for (HelpSolicitation s : solicitations) {
+                if (s.getStatus().getId() <= 2 || s.getHelpOffer() != null)
+                    filteredSolicitations.add(s);
+            }
+            mav.addObject("solicitations", filteredSolicitations);
 
             Gson gson = new Gson();
-            String userJSONString = gson.toJson(helpSolicitationDAO.find("solicitation_status != ?",  HelpStatus.CANCELADA.getId()));
+            String userJSONString = gson.toJson(filteredSolicitations);
             mav.addObject("gson", userJSONString);
         }
         mav.addObject("title", "Dashboard");

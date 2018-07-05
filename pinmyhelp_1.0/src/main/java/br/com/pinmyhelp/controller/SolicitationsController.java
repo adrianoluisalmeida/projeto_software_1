@@ -19,6 +19,7 @@ import br.com.pinmyhelp.model.types.HelpStatus;
 import br.com.pinmyhelp.model.types.HelpType;
 import br.com.pinmyhelp.model.types.Rating;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
@@ -53,10 +54,10 @@ public class SolicitationsController {
 
     @Autowired
     HelpOfferDAO helpOfferDAO;
-    
+
     @Autowired
     FeedbackDAO feedbackDAO;
-    
+
     @Autowired
     MessageDAO messageDAO;
 
@@ -76,21 +77,28 @@ public class SolicitationsController {
         if (type.equals("Entity")) {
             solicitations = helpSolicitationDAO.find("claimant_id != ? ", u.getId());
         } else {
-            solicitations = helpSolicitationDAO.find("solicitation_status != ?",  HelpStatus.CANCELADA.getId());
+            solicitations = helpSolicitationDAO.find("solicitation_status != ? order by solicitation_created DESC limit 3", HelpStatus.CANCELADA.getId());
+            Collection<HelpOffer> offers = helpOfferDAO.find("voluntary_id = ? ", ((User) session.getAttribute("user")).getId());
+
         }
-        solicitations.forEach(helpSolicitationDAO::setOffers);//utiliza o método setOffers do HelpSolicitationDAO em cada elemento da collection
-        /*
+
         //se voluntário/entidade já ofertou ajuda em alguma solicitação, 
         Collection<HelpOffer> offers = helpOfferDAO.find("voluntary_id = ? ", u.getId());
         for (HelpOffer offer : offers) {
             for (HelpSolicitation solicitation : solicitations) {
                 if ((offer.getHelpSolicitation().getId()).equals(solicitation.getId())) {
                     solicitation.setHelpOffer(offer);
-                }               
+                }
             }
-        } 
-        */
-        mav.addObject("solicitations", solicitations);
+        }
+        Collection<HelpSolicitation> filteredSolicitations = new ArrayList<>();
+        for (HelpSolicitation s : solicitations) {
+            if (s.getStatus().getId() <= 2 || s.getHelpOffer() != null) {
+                filteredSolicitations.add(s);
+            }
+        }
+        mav.addObject("solicitations", filteredSolicitations);
+
         return mav;
     }
 
@@ -202,8 +210,8 @@ public class SolicitationsController {
         return new ModelAndView("redirect:/solicitations/my");
     }
 
-    @RequestMapping(value = "/solicitations/rate/{idRequest}" , method = GET)
-    public ModelAndView rate(@PathVariable(value="idRequest") int id, HttpSession session){
+    @RequestMapping(value = "/solicitations/rate/{idRequest}", method = GET)
+    public ModelAndView rate(@PathVariable(value = "idRequest") int id, HttpSession session) {
         ModelAndView mav = new ModelAndView("app");
         if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_VOLUNTARY)) {
             mav.addObject("title", "Acesso negado");
@@ -212,14 +220,14 @@ public class SolicitationsController {
         }
         mav.addObject("title", "Avaliar ajuda");
         mav.addObject("page", "solicitations/rate");
-        mav.addObject("action","/solicitations/done");
+        mav.addObject("action", "/solicitations/done");
         mav.addObject("ratings", Rating.getAll());
         mav.addObject("solicitationId", id);
         return mav;
     }
-    
+
     @RequestMapping(value = "/solicitations/done", method = POST)
-    public ModelAndView done(Feedback f, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttrs){
+    public ModelAndView done(Feedback f, HttpServletRequest request, HttpSession session, RedirectAttributes redirectAttrs) {
         if (session.getAttribute("type") == null || session.getAttribute("type").equals(Person.TYPE_VOLUNTARY)) {
             ModelAndView mav = new ModelAndView("app");
             mav.addObject("title", "Acesso negado");
@@ -229,7 +237,7 @@ public class SolicitationsController {
         int solicitationId = Integer.valueOf(request.getParameter("solicitationId"));
         HelpSolicitation sol = helpSolicitationDAO.findOne(solicitationId);
         helpSolicitationDAO.setOffers(sol);
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         f.setSender(user);
         f.setOffer(sol.getHelpOffer());
         feedbackDAO.create(f);
@@ -238,19 +246,20 @@ public class SolicitationsController {
         Message message = new Message();
         String prefix = "?";
         String sender = "?";
-        if (sol.getClaimant() != null){
+        if (sol.getClaimant() != null) {
             prefix = "O requerente: ";
             sender = sol.getClaimant().getName();
-        }else if (sol.getEntity() != null){
+        } else if (sol.getEntity() != null) {
             prefix = "A entidade: ";
             sender = sol.getEntity().getName();
         }
-        if (f.getOffer() != null){
+        if (f.getOffer() != null) {
             HelpOffer offer = f.getOffer();
-            if (offer.getVoluntary() != null)
+            if (offer.getVoluntary() != null) {
                 message.setUser(offer.getVoluntary());
-            else if (offer.getEntity() != null)
+            } else if (offer.getEntity() != null) {
                 message.setUser(offer.getEntity());
+            }
         }
         message.setTitle("Você recebeu uma avaliação!");
         message.setContent(String.format("%s%s avaliou sua ajuda com nota %d", prefix, sender, f.getRating().getValue()));
@@ -258,7 +267,7 @@ public class SolicitationsController {
         redirectAttrs.addFlashAttribute("msg_success", "Feedback enviado!");
         return new ModelAndView("redirect:/dashboard");
     }
-    
+
     private Boolean validateDates(LocalDate startDate, LocalDate endDate, BindingResult result, ModelAndView mv) {
         Boolean formatError = false;
         if (startDate == null || result.hasFieldErrors("startDate")) {

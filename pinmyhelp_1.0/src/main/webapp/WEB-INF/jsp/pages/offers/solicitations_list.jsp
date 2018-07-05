@@ -1,8 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="custom"%> 
 <c:forEach var="solicitation" items="${solicitations}">
-    <c:choose>
-    <c:when test="${solicitation.showOnVoluntary and (empty solicitation.voluntaryId or solicitation.voluntaryId == sessionScope.user.id)}">
     <div class=" col-md-4 float-left">
         <div class="card">
             <!-- Card image -->
@@ -25,32 +23,38 @@
                     <custom:localDateFormat localDate="${solicitation.startDate}"/>
                 </p>
                 <p class="card-text">
-                    <b>Situação</b><br>
+                    <b>Situação solicitação</b><br>
                     ${solicitation.status.status}
+                </p>
+                <p class="card-text">
+                    <b>Situação da sua oferta</b><br>
+                    <c:choose>
+                        <c:when test="${not empty solicitation.helpOffer}">
+                            ${solicitation.helpOffer.status.status}
+                        </c:when>
+                        <c:otherwise>
+                            Você ainda não realizou oferta.
+                        </c:otherwise>
+                    </c:choose>
                 </p>
                 <!-- Button -->
                 <div class="row justify-content-center">
-                <c:if test="${solicitation.voluntaryCanAvaliate}">
+                    <c:if test="${solicitation.voluntaryCanAvaliate}">
                         <a href="${pageContext.request.contextPath}/offers/rate/${solicitation.helpOffer.id}" class="btn btn-blue-grey btn-sm float-left">Avaliar</a>
-                </c:if>
-                <c:choose>
-                    <c:when test="${not empty solicitation.helpOffer}">
-                        <a href="${pageContext.request.contextPath}/offers/offer/${solicitation.helpOffer.id}" class="btn btn-pink btn-sm float-left">Visualizar oferta</a>
-                    </c:when>
-                    <c:otherwise>
-                        <c:if test="${solicitation.status != 'ENCERRADA'}">
-                            <a href="${pageContext.request.contextPath}/offers/help/${solicitation.id}" class="btn btn-pink btn-sm float-left">Ajudar</a>
-                        </c:if>
-                    </c:otherwise>
-                </c:choose>
+                    </c:if>
+                    <c:choose>
+                        <c:when test="${not empty solicitation.helpOffer}">
+                            <a href="${pageContext.request.contextPath}/offers/offer/${solicitation.helpOffer.id}" class="btn btn-pink btn-sm float-left">Visualizar oferta</a>
+                        </c:when>
+                        <c:otherwise>
+                            <c:if test="${solicitation.status.id == 1 || solicitation.status.id == 2}">
+                                <a href="${pageContext.request.contextPath}/offers/help/${solicitation.id}" class="btn btn-pink btn-sm float-left">Ajudar</a>
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
     </div>
     <!-- Card -->
-    </c:when>
-    <c:otherwise>
-        <p>Ainda não há nenhuma solicitação de ajuda.</p>
-    </c:otherwise>
-    </c:choose>
 </c:forEach>
