@@ -37,14 +37,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <c:forEach var="feedback" items="${feedbacks}">
-                    <td>${feedback.sender.email}</td>
-                    <td>${feedback.rating}</td>
-                    <td>${feedback.comments}</td>
-                    <td>${feedback.offer.voluntary.email}</td>
-                </c:forEach>
-              </tr>
+              <c:forEach var="feedback" items="${feedbacks}">
+                <tr>
+                      <td>${feedback.sender.email}</td>
+                      <td>${feedback.rating.value} - ${feedback.rating.description}</td>
+                      <td>${feedback.comments}</td>
+                      <td>${feedback.offer.voluntary.email}</td>
+                </tr>
+              </c:forEach>
             </tbody>
           </table>
     </body>
