@@ -126,10 +126,11 @@ CREATE TABLE IF NOT EXISTS feedback (
 #DROP TABLE IF EXISTS message
 CREATE TABLE IF NOT EXISTS message(
     message_id         INT                AUTO_INCREMENT,
-    user_id            INT                NOT NULL,
+    message_created    TIMESTAMP          NOT NULL DEFAULT NOW(),
     title              VARCHAR(255)       NOT NULL,
     content            TEXT               NOT NULL,
     is_readed          BOOLEAN            NOT NULL DEFAULT FALSE,
+    user_id            INT                NOT NULL,
     PRIMARY KEY        (message_id),
     FOREIGN KEY        (user_id)          REFERENCES `user` (user_id)
 )ENGINE = InnoDB;

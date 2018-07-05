@@ -91,7 +91,7 @@ public class HelpOfferDAO extends AbstractDAO<HelpOffer> {
     }
     
     public Collection<HelpOffer> findByClaimantId(Integer id, Integer limit) {
-        String base = "natural join help_solicitation where claimant_id = ? order by offer_created DESC";
+        String base = "natural join help_solicitation where claimant_id = ? order by offer_status ASC, offer_created DESC";
         if (limit != null && limit > 0)
             return findJoinable(base + " limit " + limit, new String[]{String.valueOf(id)});
         return findJoinable(base, new String[]{String.valueOf(id)});

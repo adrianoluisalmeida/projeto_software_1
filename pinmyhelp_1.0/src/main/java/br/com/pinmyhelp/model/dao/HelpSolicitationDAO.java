@@ -154,7 +154,7 @@ public class HelpSolicitationDAO extends AbstractDAO<HelpSolicitation> {
     }
 
     public List<HelpSolicitation> findByClaimantId(Integer id, Integer limit) {
-        String base = "claimant_id = ? order by solicitation_created DESC";
+        String base = "claimant_id = ? order by solicitation_status ASC, solicitation_created DESC";
         if (limit != null && limit > 0)    
             return find(base + " limit " + limit, new String[]{String.valueOf(id)});
         return find(base, new String[]{String.valueOf(id)});

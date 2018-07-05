@@ -21,13 +21,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageDAO extends AbstractDAO<Message> {
     
-    public MessageDAO(){
+    public MessageDAO(){    
         setCreateSql("INSERT INTO message (user_id, title, content) VALUES (?, ?, ?)");
-        setUpdateSql("UPDATE message SET title = ?, content = ?, is_readed = ? WHERE message_id = ?");
+        setUpdateSql("UPDATE message SET is_readed = TRUE WHERE user_id = ?"); // IMPORTANT
         setDeleteSql("DELETE FROM message WHERE message_id = ?");
-        setFindOneSql("SELECT * FROM message  NATURAL JOIN user WHERE message_id = ?");
-        setFindSql("SELECT * FROM message NATURAL JOIN user WHERE message.user_id = ?");
-        setFindAllSql("SELECT * FROM message NATURAL JOIN user");
+        setFindOneSql("SELECT * FROM message WHERE message_id = ?");
+        setFindSql("SELECT * FROM message WHERE user_id = ?");
+        setFindAllSql("SELECT * FROM message");
     }
 
     @Override
@@ -39,10 +39,7 @@ public class MessageDAO extends AbstractDAO<Message> {
 
     @Override
     protected void fillUpdate(PreparedStatement ps, Message m) throws SQLException {
-        ps.setString(1, m.getTitle());
-        ps.setString(2, m.getContent());
-        ps.setBoolean(3, m.isIsReaded());
-        ps.setInt(4, m.getId());
+        ps.setInt(1, m.getUser().getId());
     }
 
     @Override
@@ -62,20 +59,17 @@ public class MessageDAO extends AbstractDAO<Message> {
         m.setTitle(rs.getString("title"));
         m.setContent(rs.getString("content"));
         m.setIsReaded(rs.getBoolean("is_readed"));
-        User user = new User();
-        user.setId(rs.getInt("user_id"));
-        user.setEmail(rs.getString("email"));
-        user.setAdmin(rs.getBoolean("is_admin"));
-        m.setUser(user);
+        m.setCreatedDate((rs.getTimestamp("message_created").toLocalDateTime().toLocalDate()));
         return m;
     }
     
-    public List<Message> findMessages(int userId){
-        return find("user_id = ?", userId);
+    public List<Message> findMessages(int userId, Boolean isReaded){
+        return find("user_id = ? AND is_readed is " + Boolean.toString(isReaded) + " ORDER BY message_created DESC",  
+                new String[]{String.valueOf(userId)});
     }
     
     public List<Message> findMessages(User user){
-        return findMessages(user.getId());
+        return find("user_id = ? ORDER BY message_created DESC", user.getId());
     }
     
 }
