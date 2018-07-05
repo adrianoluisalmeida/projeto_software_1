@@ -55,7 +55,8 @@
                     <c:when test="${page eq 'offers/index'}">$("#nav-offers").addClass("active");</c:when>                
                     <c:when test="${fn:contains(page, 'solicitations')}">$("#nav-my-solicitations").addClass("active");</c:when>
                     <c:when test="${fn:contains(page, 'offers')}">$("#nav-my-offers").addClass("active");</c:when>
-                    <c:otherwise>$("#nav-dashboard").addClass("active");</c:otherwise>
+                    <c:when test="${fn:contains(page, 'account/messages')}">$("#messages").addClass("active");</c:when>
+                    <c:otherwise>$("#nav-profile").addClass("active");</c:otherwise>
                 </c:choose>
             });
         </script>
