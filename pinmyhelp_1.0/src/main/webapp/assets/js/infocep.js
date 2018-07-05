@@ -50,24 +50,27 @@ $(function () {
                     case "route":
                         //alert(String(address[i].long_name));
                         $("#Form-street").val(String(address[i].long_name));
-//                        $inputs.filter("#Form-street")
+                        $inputs.filter("#Form-street").focus();
 //                                .val(String(address[i].long_name))
 //                                .focus();
                         break;
                     case "political":
                         $("#Form-neighborhood").val(String(address[i].long_name));
+                          $inputs.filter("#Form-neighborhood").focus();
 //                        $inputs.filter("#Form-neighborhood")
 //                                .val(String(address[i].long_name))
 //                                .focus();
                         break;
                     case "administrative_area_level_2":
                           $("#Form-city").val(String(address[i].long_name));
+                            $inputs.filter("#Form-city").focus();
 //                        $inputs.filter("#Form-city")
 //                                .val(String(address[i].long_name))
 //                                .focus();
                         break;
                     case  "administrative_area_level_1":
                          $("#Form-uf").val(String(address[i].short_name));
+                          $inputs.filter("#Form-uf").focus();
 //                        $inputs.filter("#Form-uf")
 //                                .val(String(address[i].short_name))
 //                                .focus();
@@ -97,7 +100,7 @@ $(function () {
         var cep = $(this).val().replace(/\D/g, ''); // only numbers
         if (cep !== "") { // if not empty
             var $inputs = $("div.md-form input.address-input");
-            $inputs.prop("disabled", true);
+          //  $inputs.prop("disabled", true);
 
             var address = "https://viacep.com.br/ws/" + cep + "/json/";
 
@@ -111,7 +114,7 @@ $(function () {
 
                     showLocation(location);
                 });
-                $inputs.prop("disabled", false);
+                //$inputs.prop("disabled", false);
                 //console.log(result);
                 //showLocation(location);
             });
