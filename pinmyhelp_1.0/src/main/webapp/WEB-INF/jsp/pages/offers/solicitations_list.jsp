@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="custom"%> 
 <c:forEach var="solicitation" items="${solicitations}">
-    <c:if test="${solicitation.showOnVoluntary and (empty solicitation.voluntaryId or solicitation.voluntaryId == sessionScope.user.id)}">
+    <c:choose>
+    <c:when test="${solicitation.showOnVoluntary and (empty solicitation.voluntaryId or solicitation.voluntaryId == sessionScope.user.id)}">
     <div class=" col-md-4 float-left">
         <div class="card">
             <!-- Card image -->
@@ -47,5 +48,9 @@
         </div>
     </div>
     <!-- Card -->
-    </c:if>
+    </c:when>
+    <c:otherwise>
+        <p>Ainda não há nenhuma solicitação de ajuda.</p>
+    </c:otherwise>
+    </c:choose>
 </c:forEach>
