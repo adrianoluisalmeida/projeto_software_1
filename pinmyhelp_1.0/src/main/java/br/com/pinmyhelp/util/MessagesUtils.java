@@ -10,6 +10,8 @@ import br.com.pinmyhelp.model.HelpOffer;
 import br.com.pinmyhelp.model.HelpSolicitation;
 import br.com.pinmyhelp.model.Message;
 import br.com.pinmyhelp.model.User;
+import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -28,42 +30,38 @@ public class MessagesUtils {
     private static final String END = "Agradecemos sua disposição e esperamos que continue ajudando com o PinMyHelp! :)";
     
     public static String offerApproved(HelpSolicitation help) {
-        return "A oferta de ajuda para '" + help.getType().getType() + "' com " + getReceiver(help) 
-                + " foi aprovada. A data de início está marcada para dia " + help.getStartDate()
-                + " em " + help.getAddress().getCity() + ", no bairro " + help.getAddress().getNeighborhood()
-                + ", rua " + help.getAddress().getStreet() + " Nº " + help.getAddress().getNumber()
-                + ". Veja mais em 'Minhas Ofertas'. \n" + END;
+        return "A sua oferta de ajuda para '" + help.getType().getType() + "' com " + getReceiver(help) 
+                + " foi aprovada. A data de início está marcada para dia " + FormatUtils.toString(Date.valueOf(help.getStartDate()), "dd/MM/yyyy")
+                + ". Veja mais em 'Minhas Ofertas'.<br/>" + END;
     }     
     
     public static String offerClosed(HelpSolicitation help) {
         return "A solicitação de ajuda para '" + help.getType().getType() + "' com " + getReceiver(help)
-                + " já foi finalizada, outro voluntário se ofereceu para a tarefa.\n" + END;
+                + " já foi finalizada, outro voluntário se ofereceu para a tarefa e teve a"
+                + " oferta aceita.<br/>" + END;
     }
    
     public static String offerRejected(HelpSolicitation help, String cause) {
         return "Sua oferta de ajuda para '" + help.getType().getType() + "' com " + getReceiver(help)
-                + " acabou não sendo aprovada. Motivo segundo o requerente: '" + cause 
-                + "\n " + END;
+                + " acabou não sendo aprovada. Motivo segundo o requerente: \"" + cause 
+                + "\"<br/> " + END;
     }
     
     public static String solicitationDeleted(HelpSolicitation help) {
         return "A solicitação de ajuda para '" + help.getType().getType() + "' com " + getReceiver(help)
-                + " foi cancelada pelo requerente.\n" + END;  
+                + " foi cancelada pelo requerente.<br/>" + END;  
     }
     
     public static String offerReceived(HelpSolicitation help, HelpOffer offer) {
-        return "<escrever>";        
+        return "Você recebeu uma oferta de ajuda para '" + help.getType().getType() + "' " + getReceiver(offer)
+                + ". Confira em 'Todas ofertas.";        
     }
     
     private static String offerDeleted(HelpSolicitation help, HelpOffer offer) {
-        return "<escrever>";
+        return "Você recebeu uma oferta de ajuda para '" + help.getType().getType() + "' " + getReceiver(offer)
+                + " foi cancelada pelo mesmo.";          
     }
-            
-    private static String getReceiver(HelpSolicitation help) {
-        return help.getClaimant() != null ? "o requerente " + help.getClaimant().getName() :
-                                            "a entidade " + help.getEntity().getName();
-    }
-   
+    
     public static Message createMessageApproved(HelpSolicitation help, HelpOffer offer) {
         return createMessage(offer, TITLE_OFFER_APPROVED, offerApproved(help));
 
@@ -104,6 +102,16 @@ public class MessagesUtils {
         else
             m.setUser(new User(help.getClaimant().getId()));
         return m;
+    }
+
+    private static String getReceiver(HelpSolicitation help) {
+        return help.getClaimant() != null ? "o requerente " + help.getClaimant().getName() :
+                                            "a entidade " + help.getEntity().getName();
+    }
+    
+    private static String getReceiver(HelpOffer offer) {
+        return offer.getVoluntary() != null ? "do voluntário " + offer.getVoluntary().getName() :
+                                              "da entidade " + offer.getEntity().getName();
     }
     
 }
