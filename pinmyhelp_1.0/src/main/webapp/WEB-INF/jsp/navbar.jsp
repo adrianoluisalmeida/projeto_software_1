@@ -52,7 +52,9 @@
             <!-- Icons -->
             <ul class="navbar-nav ml-auto nav-flex-icons justify-content-center">
                 <li id="messages" class="nav-item">
-                    <a class="nav-link waves-effect waves-light"> <c:if test="${not empty messages}">messages.quantity</c:if>
+                    <a  href="${pageContext.request.contextPath}/account/messages/my" 
+                        class="nav-link waves-effect waves-light"> 
+                        <c:if test="${not empty new_messages}">${fn:length(new_messages)}</c:if>
                         <i class="fa fa-envelope"></i>
                     </a>
                 </li>

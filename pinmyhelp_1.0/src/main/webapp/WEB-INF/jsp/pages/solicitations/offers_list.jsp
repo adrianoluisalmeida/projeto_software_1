@@ -26,6 +26,7 @@
                     <c:when test="${not empty offer.voluntary}"><b>${offer.voluntary.name}</b></c:when>
                     <c:when test="${not empty offer.entity}"><b>${offer.entity.name}</b></c:when>
                 </c:choose>
+                <i class="fa fa-user-plus"></i>
             </a>
         </td>
         <td>
@@ -60,6 +61,9 @@
                 </p> 
             </c:if>
         </td>
+    </tr>
+    <tr>
+        <td colspan="5"></td>
     </tr>
     <!-- Modal -->
     <div class="modal fade" id="voluntary-offer${counter.count}-more" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

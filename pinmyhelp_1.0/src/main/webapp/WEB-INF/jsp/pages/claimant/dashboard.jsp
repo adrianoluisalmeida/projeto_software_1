@@ -6,7 +6,7 @@
     <c:choose>
         <c:when test="${not empty solicitations}">
             <div class="col-md-12 mt-3">
-                <h3>Meus Últimos Pedidos de Ajuda <a href="${pageContext.request.contextPath}/solicitations/create" class="btn btn-pink btn-sm float-right">Novo pedido</a></h3>
+                <h3>Meus útimos pedidos de ajuda <a href="${pageContext.request.contextPath}/solicitations/create" class="btn btn-pink btn-sm float-right">Novo pedido</a></h3>
             </div>
             <div class="clearfix"></div>
             <jsp:include page="../solicitations/list.jsp" flush="true" />
