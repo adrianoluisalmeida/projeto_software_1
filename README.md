@@ -1,6 +1,6 @@
 # PinMyHelp 
 
-A software to help people to find volunteer opportunities online developed to the (ELC1073) Software Project I discipline, offered by UFSM to the Information Systems course. 
+A software to help people to find volunteer opportunities online developed to the (ELC1073) Software Project I discipline, offered by UFSM to the Information Systems course. The source code is avaliable at [pinmyhelp_1.0](/pinmyhelp_1.0).
 
 ### Group members
 Adriano Almeida ([adrianoluisalmeida](https://github.com/adrianoluisalmeida)), Isabella Sakis ([isasakis](https://github.com/isasakis)), Marinara Rübenich ([MarinaraRubenichF](https://github.com/MarinaraRubenichF)), Rhauani Fazul ([rwfazul](https://github.com/rwfazul)) and Roger Couto ([rogercouto](https://github.com/rogercouto)).
